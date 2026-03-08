@@ -5,1291 +5,1316 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ANGELES GROUP · TeamProjects</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<!-- Supabase JS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<!-- React -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#08090d;--surface:#0f1117;--surface2:#161b26;--surface3:#1c2133;
-  --border:#1e2538;--border2:#283048;
-  --accent:#f59e0b;--accent2:#fb923c;--accentD:#d97706;
-  --green:#22c55e;--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;--cyan:#06b6d4;
-  --text:#dde3f0;--text2:#7d8ba0;--text3:#3d4a5c;
-  --r:10px;--shadow:0 4px 32px rgba(0,0,0,.6);
+  --bg:#08090d;--sf:#0f1117;--sf2:#161b26;--sf3:#1c2133;
+  --bd:#1e2538;--bd2:#283048;
+  --ac:#f59e0b;--ac2:#fb923c;
+  --gn:#22c55e;--rd:#ef4444;--bl:#3b82f6;--pu:#a855f7;
+  --tx:#dde3f0;--tx2:#7d8ba0;--tx3:#3d4a5c;
+  --r:10px;
 }
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5;overflow-x:hidden}
+body{background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5;overflow-x:hidden}
 button{font-family:'DM Sans',sans-serif;cursor:pointer;border:none;outline:none}
-input,select,textarea{font-family:'DM Sans',sans-serif;outline:none;background:var(--surface);color:var(--text)}
+input,select,textarea{font-family:'DM Sans',sans-serif;outline:none}
 ::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:99px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.fade{animation:fadeIn .35s ease both}
-.spin{animation:spin .8s linear infinite}
-.pulse{animation:pulse 1.5s ease infinite}
-
-/* badges */
-.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap}
-.bg{background:rgba(74,85,104,.15);color:#8892a4;border:1px solid rgba(74,85,104,.2)}
-.bb{background:rgba(59,130,246,.1);color:#3b82f6;border:1px solid rgba(59,130,246,.18)}
-.bg2{background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.18)}
-.br{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.18)}
-.ba{background:rgba(245,158,11,.1);color:#f59e0b;border:1px solid rgba(245,158,11,.18)}
-.bp{background:rgba(168,85,247,.1);color:#a855f7;border:1px solid rgba(168,85,247,.18)}
+.fade{animation:fadeIn .3s ease both}
 
 /* inputs */
-.input{width:100%;background:var(--surface2);border:1.5px solid var(--border2);color:var(--text);border-radius:var(--r);padding:9px 13px;font-size:13px;transition:border .2s,box-shadow .2s}
-.input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(245,158,11,.1)}
-.input::placeholder{color:var(--text3)}
-.lbl{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text2);margin-bottom:5px;display:block}
+.inp{width:100%;background:var(--sf2);border:1.5px solid var(--bd2);color:var(--tx);border-radius:var(--r);padding:9px 13px;font-size:13px;transition:border .2s,box-shadow .2s}
+.inp:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(245,158,11,.1)}
+.inp::placeholder{color:var(--tx3)}
+.lbl{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tx2);margin-bottom:5px;display:block}
 .fg{margin-bottom:14px}
 
 /* buttons */
-.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--r);font-size:13px;font-weight:600;transition:all .2s;white-space:nowrap;cursor:pointer}
-.btn-p{background:var(--accent);color:#000;border:none}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--r);font-size:13px;font-weight:600;transition:all .2s;white-space:nowrap;cursor:pointer;border:none}
+.btn-p{background:var(--ac);color:#000}
 .btn-p:hover{background:#fbbf24;transform:translateY(-1px);box-shadow:0 4px 20px rgba(245,158,11,.3)}
-.btn-g{background:transparent;color:var(--text2);border:1.5px solid var(--border2)}
-.btn-g:hover{border-color:var(--border2);color:var(--text);background:var(--surface2)}
+.btn-g{background:transparent;color:var(--tx2);border:1.5px solid var(--bd2)}
+.btn-g:hover{color:var(--tx);background:var(--sf2)}
 .btn-d{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.18)}
-.btn-d:hover{background:rgba(239,68,68,.18)}
-.btn-s{padding:6px 12px!important;font-size:12px!important}
-.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+.btn-s{padding:5px 11px!important;font-size:12px!important}
 
 /* layout */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
-.pb{height:5px;background:var(--surface3);border-radius:99px;overflow:hidden}
-.pf{height:100%;border-radius:99px;transition:width .6s ease}
-.mo{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .2s ease}
-.md{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:28px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 32px 100px rgba(0,0,0,.7)}
-.sb{position:fixed;left:0;top:0;bottom:0;width:228px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
-.ni{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:8px;margin:2px 8px;color:var(--text2);cursor:pointer;transition:all .2s;font-size:13px;font-weight:500;user-select:none}
-.ni:hover{background:var(--surface2);color:var(--text)}
-.ni.act{background:rgba(245,158,11,.08);color:var(--accent);border:1px solid rgba(245,158,11,.12)}
-.ns{padding:14px 16px 5px;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3)}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px}
+.pb{height:5px;background:var(--sf3);border-radius:99px;overflow:hidden}
+.pf{height:100%;border-radius:99px;transition:width .5s}
+
+/* modal */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
+.md{background:var(--sf);border:1px solid var(--bd2);border-radius:16px;padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 100px rgba(0,0,0,.7);animation:fadeIn .2s ease}
+
+/* sidebar */
+.sb{position:fixed;left:0;top:0;bottom:0;width:228px;background:var(--sf);border-right:1px solid var(--bd);display:flex;flex-direction:column;z-index:100}
+.ni{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:8px;margin:2px 8px;color:var(--tx2);cursor:pointer;transition:all .2s;font-size:13px;font-weight:500;user-select:none}
+.ni:hover{background:var(--sf2);color:var(--tx)}
+.ni.act{background:rgba(245,158,11,.08);color:var(--ac);border:1px solid rgba(245,158,11,.12)}
+.ns{padding:14px 16px 5px;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tx3)}
 .main{margin-left:228px;min-height:100vh;padding:30px}
+
+/* table */
 .tbl{width:100%;border-collapse:collapse}
-.tbl th{padding:10px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)}
-.tbl td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
-.tbl tr:hover td{background:var(--surface2)}
+.tbl th{padding:10px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--tx3);border-bottom:1px solid var(--bd)}
+.tbl td{padding:11px 14px;border-bottom:1px solid var(--bd);vertical-align:middle}
+.tbl tr:hover td{background:var(--sf2)}
 .tbl tr:last-child td{border-bottom:none}
-.av{border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#000;flex-shrink:0}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap}
+.b-gray{background:rgba(74,85,104,.15);color:#8892a4;border:1px solid rgba(74,85,104,.2)}
+.b-blue{background:rgba(59,130,246,.1);color:#3b82f6;border:1px solid rgba(59,130,246,.18)}
+.b-green{background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.18)}
+.b-red{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.18)}
+.b-amber{background:rgba(245,158,11,.1);color:#f59e0b;border:1px solid rgba(245,158,11,.18)}
+
+/* avatar */
+.av{border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#000;flex-shrink:0}
+
+/* toast */
+#toast{position:fixed;top:20px;right:20px;z-index:9999;padding:12px 20px;border-radius:10px;font-weight:600;font-size:13px;box-shadow:0 8px 40px rgba(0,0,0,.5);display:none;max-width:360px;animation:fadeIn .3s ease}
 
 /* config banner */
-.cfg-banner{background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(251,146,60,.08));border:1px solid rgba(245,158,11,.25);border-radius:12px;padding:20px 24px;margin-bottom:28px}
+#cfg-banner{background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(251,146,60,.08));border:1px solid rgba(245,158,11,.25);border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:12px;color:var(--tx2);line-height:1.7;display:none}
+
+/* stars */
+.star{font-size:18px;cursor:pointer;transition:transform .1s;display:inline-block;line-height:1}
+.star:hover{transform:scale(1.3)}
 </style>
 </head>
 <body>
-<div id="root"></div>
-<script type="text/babel">
-const {useState,useEffect,useRef,useCallback,useMemo}=React;
 
-// ═══════════════════════════════════════════════════════════════
-//  ⚙  CONFIGURACIÓN SUPABASE
-//  1. Ve a supabase.com → Tu proyecto → Settings → API
-//  2. Copia "Project URL" y "anon public key"
-//  3. Pégalos aquí abajo
-// ═══════════════════════════════════════════════════════════════
-const SUPABASE_URL = "https://kmjercxkgypegtaxugdf.supabase.co";          // ej: https://xyzabc.supabase.co
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttamVyY3hrZ3lwZWd0YXh1Z2RmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MjQ2MTEsImV4cCI6MjA4ODUwMDYxMX0.ii-zRmr19HACkZc6SbwVDZJjpO7ixEXAXjCGEQ2UrkA";     // ej: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+<div id="toast"></div>
 
-// Detectar si está configurado
-const IS_CONFIGURED = !SUPABASE_URL.includes("REEMPLAZA") && !SUPABASE_KEY.includes("REEMPLAZA");
-const supabase = IS_CONFIGURED ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+<!-- LOGIN -->
+<div id="page-login" class="fade" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);position:relative;overflow:hidden">
+  <div style="position:absolute;top:8%;left:3%;width:600px;height:600px;background:radial-gradient(circle,rgba(245,158,11,.04) 0%,transparent 65%);border-radius:50%;pointer-events:none"></div>
+  <div style="position:absolute;bottom:5%;right:3%;width:400px;height:400px;background:radial-gradient(circle,rgba(59,130,246,.04) 0%,transparent 65%);border-radius:50%;pointer-events:none"></div>
+  <div style="width:100%;max-width:440px;padding:0 20px;z-index:1">
+    <div style="text-align:center;margin-bottom:36px">
+      <!-- Logo Angeles Group -->
+      <div style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1e3a5f,#0f2340);border:1px solid rgba(59,130,246,.3);border-radius:10px;padding:8px 16px;margin-bottom:10px">
+        <span style="font-size:22px">🦅</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:#60a5fa;letter-spacing:2px">ANGELES GROUP</span>
+      </div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--ac);letter-spacing:3px;line-height:1">TeamProjects</div>
+      <div style="font-size:13px;color:var(--tx3);margin-top:4px;letter-spacing:.5px">Sistema de control de Proyectos en equipo</div>
+    </div>
+    <div class="card" style="border:1px solid var(--bd2)">
+      <div class="fg"><label class="lbl">Correo electrónico</label>
+        <input class="inp" type="email" id="login-email" placeholder="usuario@empresa.com" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="fg"><label class="lbl">Contraseña</label>
+        <input class="inp" type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div id="login-err" style="display:none;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#ef4444;padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:14px"></div>
+      <button class="btn btn-p" style="width:100%;justify-content:center;padding:11px" onclick="doLogin()">
+        <span id="login-btn-txt">Ingresar al sistema →</span>
+      </button>
+      <div style="margin-top:16px;padding:12px 14px;background:var(--sf2);border-radius:8px;font-size:11px;color:var(--tx3);line-height:1.85">
+        <strong style="color:var(--tx2)">Cuentas demo:</strong><br>
+        🛡 super@angelesgroup.io / Angeles2024!<br>
+        ⚙ carlos@obrafirme.pe / Admin123!<br>
+        👤 maria@obrafirme.pe / User123!
+      </div>
+    </div>
+  </div>
+</div>
 
-// ─── HELPERS ──────────────────────────────────────────────────
-const TODAY = new Date(); TODAY.setHours(0,0,0,0);
-const fmtToday = TODAY.toISOString().split('T')[0];
-const fmt = d => d instanceof Date ? d.toISOString().split('T')[0] : d;
-const addD = (d,n) => { const x=new Date(d); x.setDate(x.getDate()+n); return x; };
-const diffD = (a,b) => Math.max(0, Math.round((new Date(b)-new Date(a))/86400000));
-const ini = n => n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-const s2p = s => [0,20,40,60,80,100][s]??0;
-const uid = pfx => pfx+(Date.now())+Math.random().toString(36).slice(2,6);
-const COLS = ['#f59e0b','#22c55e','#3b82f6','#a855f7','#06b6d4','#fb923c','#ec4899','#14b8a6'];
+<!-- APP -->
+<div id="page-app" style="display:none">
+  <!-- Sidebar -->
+  <nav class="sb">
+    <div style="padding:18px 16px;border-bottom:1px solid var(--bd)">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#1e3a5f,#0f2340);border:1px solid rgba(59,130,246,.25);border-radius:8px;padding:5px 10px;margin-bottom:6px">
+        <span style="font-size:13px">🦅</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:11px;color:#60a5fa;letter-spacing:1.5px">ANGELES GROUP</span>
+      </div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--ac);letter-spacing:1.5px;line-height:1">TeamProjects</div>
+      <div style="font-size:9px;color:var(--tx3);letter-spacing:.5px">Control de Proyectos en equipo</div>
+    </div>
+    <div id="sb-nav" style="flex:1;overflow-y:auto;padding:6px 0"></div>
+    <div style="border-top:1px solid var(--bd);padding:10px">
+      <div style="display:flex;align-items:center;gap:8px;padding:8px;margin-bottom:4px">
+        <div id="sb-av" class="av" style="width:30px;height:30px;font-size:11px"></div>
+        <div style="flex:1;min-width:0">
+          <div id="sb-name" style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
+          <div id="sb-role" style="font-size:10px;color:var(--tx3)"></div>
+        </div>
+        <button onclick="toggleNotifs()" style="background:transparent;border:1px solid var(--bd2);color:var(--tx2);border-radius:8px;padding:5px 7px;font-size:14px;cursor:pointer;position:relative" id="notif-btn">
+          🔔<span id="notif-badge" style="display:none;position:absolute;top:-4px;right:-4px;background:var(--rd);color:#fff;min-width:15px;height:15px;border-radius:50%;font-size:9px;display:none;align-items:center;justify-content:center;font-weight:700"></span>
+        </button>
+      </div>
+      <div class="ni" onclick="showView('profile')">👤 <span>Mi Perfil</span></div>
+      <div class="ni" onclick="doLogout()">→ <span>Cerrar sesión</span></div>
+    </div>
+  </nav>
 
-// Super Admin (local, no en DB)
+  <!-- Notif panel -->
+  <div id="notif-panel" style="display:none;position:fixed;bottom:80px;left:232px;width:320px;background:var(--sf2);border:1px solid var(--bd2);border-radius:14px;z-index:200;box-shadow:0 16px 60px rgba(0,0,0,.6)">
+    <div style="padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center">
+      <span style="font-weight:700;font-size:13px">🔔 Notificaciones</span>
+      <button class="btn btn-g btn-s" onclick="markAllRead()">Leídas ✓</button>
+    </div>
+    <div id="notif-list" style="max-height:280px;overflow-y:auto"></div>
+  </div>
+
+  <!-- Main -->
+  <main class="main">
+    <div id="cfg-banner">
+      ⚙ <strong style="color:var(--ac)">Modo Offline</strong> — Los datos se guardan solo en este navegador. Configura Supabase para acceso desde cualquier lugar.
+    </div>
+    <div id="view-content" class="fade"></div>
+  </main>
+</div>
+
+<!-- MODAL container -->
+<div id="modal-wrap" style="display:none" class="mo" onclick="if(event.target===this)closeModal()">
+  <div class="md" id="modal-inner"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  SUPABASE CONFIG
+// ═══════════════════════════════════════════════════
+const SUPABASE_URL = "https://kmjercxkgypegtaxugdf.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttamVyY3hrZ3lwZWd0YXh1Z2RmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MjQ2MTEsImV4cCI6MjA4ODUwMDYxMX0.ii-zRmr19HACkZc6SbwVDZJjpO7ixEXAXjCGEQ2UrkA";
+
+const IS_CFG = !SUPABASE_URL.includes("REEMPLAZA");
+const sb = IS_CFG ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+// ═══════════════════════════════════════════════════
+//  SUPER ADMIN (local, no en DB)
+// ═══════════════════════════════════════════════════
 const SUPER = {id:'sa',name:'Super Admin',email:'super@angelesgroup.io',role:'superadmin',password:'Angeles2024!'};
 
-function calcStatus(task){
-  const now=new Date(fmtToday), start=new Date(task.start_date||task.startDate), end=new Date(task.end_date||task.endDate);
-  const done=(task.evidence&&(Array.isArray(task.evidence)?task.evidence:JSON.parse(task.evidence||'[]')).length>0)||task.stars===5;
-  if(done) return now<=end?{label:'Ejecutado en plazo',cls:'bg2',icon:'✓'}:{label:'Ejecutado fuera de plazo',cls:'ba',icon:'✓'};
-  if(task.stars>0) return now<=end?{label:'En proceso – en plazo',cls:'bb',icon:'▶'}:{label:'En proceso – fuera de plazo',cls:'br',icon:'⚠'};
-  if(now<start) return {label:'No iniciado',cls:'bg',icon:'○'};
-  return {label:'No iniciado – fuera de plazo',cls:'br',icon:'✕'};
+// ═══════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════
+let SESSION = null;
+let SEL_PROJ = null;
+let NOTIFS = [];
+const COLS = ['#f59e0b','#22c55e','#3b82f6','#a855f7','#06b6d4','#fb923c'];
+
+const TODAY = new Date(); TODAY.setHours(0,0,0,0);
+const fmtD = d => { const x = new Date(d); return x.toLocaleDateString('es-PE'); };
+const fmtISO = d => d instanceof Date ? d.toISOString().split('T')[0] : d;
+const addD = (d,n) => { const x=new Date(d); x.setDate(x.getDate()+n); return fmtISO(x); };
+const diffD = (a,b) => Math.max(0,Math.round((new Date(b)-new Date(a))/86400000));
+const ini = n => n.trim().split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+const s2p = s => [0,20,40,60,80,100][s]||0;
+const uid = p => p+Date.now()+Math.random().toString(36).slice(2,5);
+const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const getEv = t => { try{const e=t.evidence; return Array.isArray(e)?e:(typeof e==='string'?JSON.parse(e||'[]'):[]);}catch{return[];} };
+
+function calcSt(task){
+  const now=TODAY, s=new Date(task.start_date), e=new Date(task.end_date);
+  const done=getEv(task).length>0||task.stars===5;
+  if(done) return now<=e?{label:'Ejecutado en plazo',cls:'b-green',icon:'✓'}:{label:'Ejecutado fuera de plazo',cls:'b-amber',icon:'✓'};
+  if(task.stars>0) return now<=e?{label:'En proceso – en plazo',cls:'b-blue',icon:'▶'}:{label:'En proceso – fuera de plazo',cls:'b-red',icon:'⚠'};
+  if(now<s) return {label:'No iniciado',cls:'b-gray',icon:'○'};
+  return {label:'No iniciado – fuera de plazo',cls:'b-red',icon:'✕'};
 }
 
-// ═══════════════════════════════════════════════════════════════
-//  DB LAYER — Supabase o localStorage fallback
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════════
+function toast(msg, type='ok'){
+  const el=document.getElementById('toast');
+  el.textContent=(type==='err'?'✕ ':'✓ ')+msg;
+  el.style.background=type==='err'?'#ef4444':'#22c55e';
+  el.style.color='#fff';
+  el.style.display='block';
+  setTimeout(()=>el.style.display='none',3500);
+}
+
+// ═══════════════════════════════════════════════════
+//  DB LAYER
+// ═══════════════════════════════════════════════════
+const lsG=(k,d)=>{try{const v=localStorage.getItem('tp_'+k);return v?JSON.parse(v):d;}catch{return d;}};
+const lsS=(k,v)=>{try{localStorage.setItem('tp_'+k,JSON.stringify(v));}catch{}};
+const lsUp=(k,item)=>{const a=lsG(k,[]);const i=a.findIndex(x=>x.id===item.id);if(i>=0)a[i]={...a[i],...item};else a.push(item);lsS(k,a);};
+const lsDel=(k,id)=>lsS(k,lsG(k,[]).filter(x=>x.id!==id));
+const lsPatch=(k,id,p)=>{const a=lsG(k,[]);const i=a.findIndex(x=>x.id===id);if(i>=0)a[i]={...a[i],...p};lsS(k,a);};
+
+// Seed demo data into localStorage if empty
+function seedLS(){
+  if(lsG('seeded',false))return;
+  const td=fmtISO(TODAY);
+  lsUp('admins',{id:'adm1',name:'Carlos Vega',email:'carlos@obrafirme.pe',password:'Admin123!',company:'Obra Firme SAC'});
+  ['u1','u2','u3'].forEach((id,i)=>{
+    const names=['María Torres','José Ramírez','Ana Quispe'];
+    const emails=['maria@obrafirme.pe','jose@obrafirme.pe','ana@obrafirme.pe'];
+    lsUp('users',{id,name:names[i],email:emails[i],password:'User123!',admin_id:'adm1'});
+  });
+  lsUp('projects',{id:'p1',name:'Edificio Residencial Los Álamos',description:'Construcción de edificio de 8 pisos en Miraflores',admin_id:'adm1',start_date:addD(TODAY,-30),end_date:addD(TODAY,180)});
+  lsUp('stages',{id:'s1',project_id:'p1',name:'OBRAS PRELIMINARES',order_num:1});
+  lsUp('stages',{id:'s2',project_id:'p1',name:'CIMENTACIÓN',order_num:2});
+  lsUp('stages',{id:'s3',project_id:'p1',name:'ESTRUCTURA',order_num:3});
+  lsUp('activities',{id:'a1',stage_id:'s1',name:'Limpieza y nivelación de terreno'});
+  lsUp('activities',{id:'a2',stage_id:'s1',name:'Instalación de cerco perimétrico'});
+  lsUp('activities',{id:'a3',stage_id:'s2',name:'Excavación masiva'});
+  lsUp('activities',{id:'a4',stage_id:'s2',name:'Zapatas y vigas de cimentación'});
+  lsUp('activities',{id:'a5',stage_id:'s3',name:'Columnas y placas'});
+  const tasks=[
+    {id:'t1',activity_id:'a1',name:'Retiro de desmonte',responsible_id:'u1',start_date:addD(TODAY,-28),end_date:addD(TODAY,-20),stars:5,evidence:'[{"name":"foto.jpg","type":"image"}]',rescheduled:0,reschedule_pending:false},
+    {id:'t2',activity_id:'a1',name:'Nivelación con equipo topográfico',responsible_id:'u2',start_date:addD(TODAY,-20),end_date:addD(TODAY,-12),stars:4,evidence:'[]',rescheduled:0,reschedule_pending:false},
+    {id:'t3',activity_id:'a2',name:'Hincado de postes metálicos',responsible_id:'u3',start_date:addD(TODAY,-15),end_date:addD(TODAY,-8),stars:3,evidence:'[]',rescheduled:1,reschedule_pending:false},
+    {id:'t4',activity_id:'a2',name:'Colocación de malla metálica',responsible_id:'u1',start_date:addD(TODAY,-8),end_date:fmtISO(TODAY),stars:2,evidence:'[]',rescheduled:0,reschedule_pending:false},
+    {id:'t5',activity_id:'a3',name:'Excavación con maquinaria pesada',responsible_id:'u2',start_date:addD(TODAY,2),end_date:addD(TODAY,15),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false},
+    {id:'t6',activity_id:'a3',name:'Entibado y sostenimiento',responsible_id:'u1',start_date:addD(TODAY,10),end_date:addD(TODAY,20),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false},
+    {id:'t7',activity_id:'a4',name:'Encofrado de zapatas',responsible_id:'u3',start_date:addD(TODAY,20),end_date:addD(TODAY,28),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false},
+    {id:'t8',activity_id:'a4',name:"Vaciado de concreto f'c=280",responsible_id:'u2',start_date:addD(TODAY,28),end_date:addD(TODAY,35),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false},
+    {id:'t9',activity_id:'a5',name:'Habilitación de acero columnas',responsible_id:'u1',start_date:addD(TODAY,35),end_date:addD(TODAY,45),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false},
+    {id:'t10',activity_id:'a5',name:'Vaciado de columnas piso 1-4',responsible_id:'u2',start_date:addD(TODAY,45),end_date:addD(TODAY,70),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false},
+  ];
+  tasks.forEach(t=>lsUp('tasks',t));
+  lsS('seeded',true);
+}
+
 const DB = {
-  async getAdmins(){ if(!supabase)return lsGet('admins',[]); const{data}=await supabase.from('admins').select('*'); return data||[]; },
-  async saveAdmin(a){ if(!supabase){lsUpsert('admins',a);return;} await supabase.from('admins').upsert(a); },
-  async delAdmin(id){ if(!supabase){lsDel('admins',id);return;} await supabase.from('admins').delete().eq('id',id); },
-
-  async getUsers(adminId){ if(!supabase)return lsGet('users',[]).filter(u=>!adminId||u.admin_id===adminId||u.adminId===adminId); const{data}=await supabase.from('users').select('*').eq('admin_id',adminId); return data||[]; },
-  async getAllUsers(){ if(!supabase)return lsGet('users',[]); const{data}=await supabase.from('users').select('*'); return data||[]; },
-  async saveUser(u){ if(!supabase){lsUpsert('users',u);return;} await supabase.from('users').upsert(u); },
-  async delUser(id){ if(!supabase){lsDel('users',id);return;} await supabase.from('users').delete().eq('id',id); },
-
-  async getProjects(adminId){ if(!supabase)return lsGet('projects',[]).filter(p=>!adminId||p.admin_id===adminId||p.adminId===adminId); const{data}=await supabase.from('projects').select('*').eq('admin_id',adminId); return data||[]; },
-  async getAllProjects(){ if(!supabase)return lsGet('projects',[]); const{data}=await supabase.from('projects').select('*'); return data||[]; },
-  async saveProject(p){ if(!supabase){lsUpsert('projects',p);return;} await supabase.from('projects').upsert(p); },
-
-  async getStages(projectId){ if(!supabase)return lsGet('stages',[]).filter(s=>s.project_id===projectId||s.projectId===projectId); const{data}=await supabase.from('stages').select('*').eq('project_id',projectId).order('order_num'); return data||[]; },
-  async saveStage(s){ if(!supabase){lsUpsert('stages',s);return;} await supabase.from('stages').upsert(s); },
-
-  async getActivities(stageId){ if(!supabase)return lsGet('activities',[]).filter(a=>a.stage_id===stageId||a.stageId===stageId); const{data}=await supabase.from('activities').select('*').eq('stage_id',stageId); return data||[]; },
-  async saveActivity(a){ if(!supabase){lsUpsert('activities',a);return;} await supabase.from('activities').upsert(a); },
-
-  async getTasks(activityId){ if(!supabase)return lsGet('tasks',[]).filter(t=>t.activity_id===activityId||t.activityId===activityId); const{data}=await supabase.from('tasks').select('*').eq('activity_id',activityId); return data||[]; },
-  async updateTask(id,patch){ if(!supabase){lsPatch('tasks',id,patch);return;} await supabase.from('tasks').update(patch).eq('id',id); },
-  async saveTask(t){ if(!supabase){lsUpsert('tasks',t);return;} await supabase.from('tasks').upsert(t); },
-
-  async addNotif(msg,toUsers){ if(!supabase){const n={id:Date.now(),message:msg,to_users:toUsers,read_by:[],created_at:new Date().toISOString()};lsUpsert('notifs',n);return;} await supabase.from('notifications').insert({message:msg,to_users:toUsers}); },
-  async getNotifs(){ if(!supabase)return lsGet('notifs',[]); const{data}=await supabase.from('notifications').select('*').order('created_at',{ascending:false}).limit(50); return data||[]; },
-  async markRead(id,userId){ if(!supabase){lsPatchArr('notifs',id,'read_by',userId);return;} const{data}=await supabase.from('notifications').select('read_by').eq('id',id).single(); const rb=data?.read_by||[]; if(!rb.includes(userId)) await supabase.from('notifications').update({read_by:[...rb,userId]}).eq('id',id); },
-
-  // Auth helper
   async login(email,pass){
-    if(email===SUPER.email&&pass===SUPER.password) return SUPER;
-    if(!supabase){
-      const admins=lsGet('admins',SEED_ADMINS); const a=admins.find(x=>x.email===email&&x.password===pass); if(a) return{...a,role:'admin'};
-      const users=lsGet('users',SEED_USERS); const u=users.find(x=>x.email===email&&x.password===pass); if(u) return{...u,role:'user'};
+    if(email===SUPER.email&&pass===SUPER.password)return SUPER;
+    if(sb){
+      const{data:a}=await sb.from('admins').select('*').eq('email',email).eq('password',pass);
+      if(a&&a.length)return{...a[0],role:'admin'};
+      const{data:u}=await sb.from('users').select('*').eq('email',email).eq('password',pass);
+      if(u&&u.length)return{...u[0],role:'user'};
       return null;
     }
-    const{data:admins}=await supabase.from('admins').select('*').eq('email',email).eq('password',pass); if(admins?.length) return{...admins[0],role:'admin'};
-    const{data:users}=await supabase.from('users').select('*').eq('email',email).eq('password',pass); if(users?.length) return{...users[0],role:'user'};
+    seedLS();
+    const a=lsG('admins',[]).find(x=>x.email===email&&x.password===pass);
+    if(a)return{...a,role:'admin'};
+    const u=lsG('users',[]).find(x=>x.email===email&&x.password===pass);
+    if(u)return{...u,role:'user'};
     return null;
-  }
+  },
+  async getAdmins(){ if(sb){const{data}=await sb.from('admins').select('*');return data||[];}return lsG('admins',[]); },
+  async saveAdmin(r){ if(sb){await sb.from('admins').upsert(r);}else lsUp('admins',r); },
+  async delAdmin(id){ if(sb){await sb.from('admins').delete().eq('id',id);}else lsDel('admins',id); },
+  async getUsers(aid){ if(sb){const{data}=await sb.from('users').select('*').eq('admin_id',aid);return data||[];}return lsG('users',[]).filter(u=>u.admin_id===aid); },
+  async getAllUsers(){ if(sb){const{data}=await sb.from('users').select('*');return data||[];}return lsG('users',[]); },
+  async saveUser(r){ if(sb){await sb.from('users').upsert(r);}else lsUp('users',r); },
+  async delUser(id){ if(sb){await sb.from('users').delete().eq('id',id);}else lsDel('users',id); },
+  async getProjects(aid){ if(sb){const{data}=await sb.from('projects').select('*').eq('admin_id',aid);return data||[];}return lsG('projects',[]).filter(p=>p.admin_id===aid); },
+  async getAllProjects(){ if(sb){const{data}=await sb.from('projects').select('*');return data||[];}return lsG('projects',[]); },
+  async saveProject(r){ if(sb){await sb.from('projects').upsert(r);}else lsUp('projects',r); },
+  async getStages(pid){ if(sb){const{data}=await sb.from('stages').select('*').eq('project_id',pid).order('order_num');return data||[];}return lsG('stages',[]).filter(s=>s.project_id===pid).sort((a,b)=>a.order_num-b.order_num); },
+  async saveStage(r){ if(sb){await sb.from('stages').upsert(r);}else lsUp('stages',r); },
+  async delStage(id){ if(sb){await sb.from('stages').delete().eq('id',id);}else lsDel('stages',id); },
+  async getActivities(sid){ if(sb){const{data}=await sb.from('activities').select('*').eq('stage_id',sid);return data||[];}return lsG('activities',[]).filter(a=>a.stage_id===sid); },
+  async saveActivity(r){ if(sb){await sb.from('activities').upsert(r);}else lsUp('activities',r); },
+  async getTasks(aid){ if(sb){const{data}=await sb.from('tasks').select('*').eq('activity_id',aid);return data||[];}return lsG('tasks',[]).filter(t=>t.activity_id===aid); },
+  async updateTask(id,p){ if(sb){await sb.from('tasks').update(p).eq('id',id);}else lsPatch('tasks',id,p); },
+  async saveTask(r){ if(sb){await sb.from('tasks').upsert(r);}else lsUp('tasks',r); },
+  async getNotifs(){ if(sb){const{data}=await sb.from('notifications').select('*').order('created_at',{ascending:false}).limit(40);return data||[];}return lsG('notifs',[]).slice(0,40); },
+  async addNotif(msg,toU=[]){ if(sb){await sb.from('notifications').insert({message:msg,to_users:toU,read_by:[]});}else{ lsUp('notifs',{id:Date.now(),message:msg,to_users:toU,read_by:[],created_at:new Date().toISOString()});}},
+  async markRead(id){ if(sb){const{data}=await sb.from('notifications').select('read_by').eq('id',id).single();const rb=data?.read_by||[];if(!rb.includes(SESSION.id))await sb.from('notifications').update({read_by:[...rb,SESSION.id]}).eq('id',id);}else{lsPatch('notifs',id,{read_by:[SESSION.id]});} },
 };
 
-// localStorage helpers
-const lsGet=(k,def)=>{try{const v=localStorage.getItem('tp_'+k);return v?JSON.parse(v):def;}catch{return def;}};
-const lsSet=(k,v)=>{try{localStorage.setItem('tp_'+k,JSON.stringify(v));}catch{}};
-const lsUpsert=(k,item)=>{const arr=lsGet(k,[]);const i=arr.findIndex(x=>x.id===item.id);if(i>=0)arr[i]={...arr[i],...item};else arr.push(item);lsSet(k,arr);};
-const lsDel=(k,id)=>lsSet(k,lsGet(k,[]).filter(x=>x.id!==id));
-const lsPatch=(k,id,patch)=>{const arr=lsGet(k,[]);const i=arr.findIndex(x=>x.id===id);if(i>=0)arr[i]={...arr[i],...patch};lsSet(k,arr);};
-const lsPatchArr=(k,id,field,val)=>{const arr=lsGet(k,[]);const i=arr.findIndex(x=>x.id===id);if(i>=0&&!arr[i][field]?.includes(val)){arr[i][field]=[...(arr[i][field]||[]),val];lsSet(k,arr);}};
-
-// Seed data for localStorage mode
-const SEED_ADMINS=[{id:'adm1',name:'Carlos Vega',email:'carlos@obrafirme.pe',password:'Admin123!',company:'Obra Firme SAC'}];
-const SEED_USERS=[
-  {id:'u1',name:'María Torres',email:'maria@obrafirme.pe',password:'User123!',admin_id:'adm1'},
-  {id:'u2',name:'José Ramírez',email:'jose@obrafirme.pe',password:'User123!',admin_id:'adm1'},
-  {id:'u3',name:'Ana Quispe',email:'ana@obrafirme.pe',password:'User123!',admin_id:'adm1'},
-];
-
-// ═══════════════════════════════════════════════════════════════
-//  APP ROOT
-// ═══════════════════════════════════════════════════════════════
-export default function App(){
-  const [session,setSession]=useState(null);
-  const [view,setView]=useState('dashboard');
-  const [selProj,setSelProj]=useState(null);
-  const [notifs,setNotifs]=useState([]);
-  const [notifOpen,setNotifOpen]=useState(false);
-  const [toast,setToast]=useState(null);
-  const [loading,setLoading]=useState(false);
-
-  // Poll notifs every 15s if supabase configured
-  useEffect(()=>{
-    if(!session)return;
-    const load=async()=>{const n=await DB.getNotifs();setNotifs(n);};
-    load();
-    const iv=IS_CONFIGURED?setInterval(load,15000):null;
-    return()=>iv&&clearInterval(iv);
-  },[session]);
-
-  // Realtime subscription
-  useEffect(()=>{
-    if(!supabase||!session)return;
-    const ch=supabase.channel('notifs').on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},()=>{
-      DB.getNotifs().then(setNotifs);
-    }).subscribe();
-    return()=>supabase.removeChannel(ch);
-  },[session]);
-
-  const showToast=(msg,type='ok')=>{setToast({msg,type});setTimeout(()=>setToast(null),3800);};
-  const addNotif=async(msg,toUsers=[])=>{ await DB.addNotif(msg,toUsers); const n=await DB.getNotifs(); setNotifs(n); };
-
-  if(!session) return <Login onLogin={async(email,pass)=>{
-    setLoading(true);
-    const u=await DB.login(email,pass);
-    setLoading(false);
-    if(u) setSession(u); else showToast('Credenciales incorrectas','err');
-  }} loading={loading} toast={toast}/>;
-
-  const canAdmin=session.role==='admin'||session.role==='superadmin';
-  const myNotifs=notifs.filter(n=>{
-    const toU=n.to_users||n.toUsers||[];
-    return toU.length===0||toU.includes(session.id);
-  });
-  const unread=myNotifs.filter(n=>!(n.read_by||[]).includes(session.id)).length;
-
-  const navTo=(v,pid)=>{if(pid!==undefined)setSelProj(pid);setView(v);setNotifOpen(false);};
-
-  return(
-    <div>
-      {/* Toast */}
-      {toast&&<div style={{position:'fixed',top:20,right:20,zIndex:9999,background:toast.type==='err'?'#ef4444':'#22c55e',color:'#fff',padding:'12px 20px',borderRadius:10,fontWeight:600,fontSize:13,boxShadow:'0 8px 40px rgba(0,0,0,.5)',animation:'fadeIn .3s ease',maxWidth:360}}>
-        {toast.type==='err'?'✕ ':'✓ '}{toast.msg}
-      </div>}
-
-      {/* Sidebar */}
-      <Sidebar session={session} view={view} selProj={selProj} navTo={navTo}
-        unread={unread} notifOpen={notifOpen} setNotifOpen={setNotifOpen}
-        onLogout={()=>{setSession(null);setView('dashboard');setSelProj(null);}}
-        canAdmin={canAdmin}/>
-
-      {/* Notif panel */}
-      {notifOpen&&<NotifPanel notifs={myNotifs} session={session} onClose={()=>setNotifOpen(false)}
-        onRead={async(id)=>{await DB.markRead(id,session.id);const n=await DB.getNotifs();setNotifs(n);}}/>}
-
-      {/* Main */}
-      <main className="main fade" key={view+'_'+selProj}>
-        {!IS_CONFIGURED&&<ConfigBanner/>}
-        {view==='dashboard'&&<DashView session={session} selProj={selProj} showToast={showToast}/>}
-        {view==='tasks'&&<TasksView session={session} selProj={selProj} showToast={showToast} addNotif={addNotif} canAdmin={canAdmin}/>}
-        {view==='gantt'&&<GanttView selProj={selProj}/>}
-        {view==='team'&&<TeamView session={session} selProj={selProj} showToast={showToast} canAdmin={canAdmin}/>}
-        {view==='stages'&&<StagesView session={session} selProj={selProj} showToast={showToast} canAdmin={canAdmin}/>}
-        {view==='admins'&&<AdminsView session={session} showToast={showToast}/>}
-        {view==='newproject'&&<NewProjView session={session} showToast={showToast} onCreated={id=>navTo('tasks',id)}/>}
-        {view==='profile'&&<ProfileView session={session} showToast={showToast} setSession={setSession}/>}
-        {view==='platform'&&<PlatformView/>}
-      </main>
-    </div>
-  );
+// ═══════════════════════════════════════════════════
+//  AUTH
+// ═══════════════════════════════════════════════════
+async function doLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const pass=document.getElementById('login-pass').value;
+  const btn=document.getElementById('login-btn-txt');
+  const err=document.getElementById('login-err');
+  btn.textContent='Verificando...';
+  err.style.display='none';
+  const u=await DB.login(email,pass);
+  btn.textContent='Ingresar al sistema →';
+  if(!u){err.textContent='Credenciales incorrectas';err.style.display='block';return;}
+  SESSION=u;
+  document.getElementById('page-login').style.display='none';
+  document.getElementById('page-app').style.display='block';
+  if(!IS_CFG)document.getElementById('cfg-banner').style.display='block';
+  initApp();
 }
 
-// ─── CONFIG BANNER ──────────────────────────────────────────────
-function ConfigBanner(){
-  return<div className="cfg-banner">
-    <div style={{display:'flex',gap:14,alignItems:'flex-start'}}>
-      <span style={{fontSize:28}}>⚙</span>
-      <div>
-        <div style={{fontWeight:700,fontSize:14,color:'var(--accent)',marginBottom:4}}>Modo Offline — Configurar Supabase para sincronización en la nube</div>
-        <div style={{fontSize:12,color:'var(--text2)',lineHeight:1.7}}>
-          Los datos se guardan en <strong style={{color:'var(--text)'}}>localStorage</strong> de este navegador.<br/>
-          Para acceder desde cualquier lugar y dispositivo, edita el archivo HTML y reemplaza:<br/>
-          <code style={{background:'rgba(0,0,0,.3)',padding:'2px 8px',borderRadius:5,fontSize:11,color:'var(--accent)'}}>SUPABASE_URL</code> y <code style={{background:'rgba(0,0,0,.3)',padding:'2px 8px',borderRadius:5,fontSize:11,color:'var(--accent)'}}>SUPABASE_KEY</code>
-          {' '}con tus credenciales de <a href="https://supabase.com" target="_blank" style={{color:'var(--cyan)'}}>supabase.com</a>.<br/>
-          Consulta el archivo <strong style={{color:'var(--text)'}}>GUIA_SUPABASE.md</strong> incluido para instrucciones paso a paso.
-        </div>
-      </div>
-    </div>
-  </div>;
+function doLogout(){
+  SESSION=null;SEL_PROJ=null;
+  document.getElementById('page-app').style.display='none';
+  document.getElementById('page-login').style.display='flex';
+  document.getElementById('login-email').value='';
+  document.getElementById('login-pass').value='';
 }
 
-// ─── LOGO HEADER COMPONENT ─────────────────────────────────────
-function AppLogo({size='md'}){
-  const big=size==='lg';
-  return<div style={{display:'flex',flexDirection:'column',alignItems:big?'center':'flex-start'}}>
-    <div style={{display:'flex',alignItems:'center',gap:big?12:8}}>
-      {/* Angeles Group badge */}
-      <div style={{background:'linear-gradient(135deg,#1e3a5f,#0f2340)',border:'1px solid rgba(59,130,246,.3)',borderRadius:big?12:8,padding:big?'8px 14px':'5px 10px',display:'flex',alignItems:'center',gap:big?8:5}}>
-        <span style={{fontSize:big?22:14}}>🦅</span>
-        <span style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:big?16:11,color:'#60a5fa',letterSpacing:big?2:1.5}}>ANGELES GROUP</span>
-      </div>
-    </div>
-    <div style={{marginTop:big?6:2}}>
-      <span style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:big?44:22,color:'var(--accent)',letterSpacing:big?3:1.5,lineHeight:1}}>TeamProjects</span>
-    </div>
-    <div style={{fontSize:big?13:9,color:'var(--text3)',marginTop:big?4:0,letterSpacing:big?1:.5,fontWeight:500}}>
-      {big?'Sistema de control de Proyectos en equipo':'Control de Proyectos en equipo'}
-    </div>
-  </div>;
+// ═══════════════════════════════════════════════════
+//  APP INIT
+// ═══════════════════════════════════════════════════
+async function initApp(){
+  updateSidebarUser();
+  await buildSidebar();
+  await loadNotifs();
+  // Realtime
+  if(sb){
+    sb.channel('live').on('postgres_changes',{event:'*',schema:'public',table:'tasks'},()=>{ if(currentView==='tasks')showView('tasks'); if(currentView==='dashboard')showView('dashboard'); })
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},loadNotifs)
+    .subscribe();
+  }
+  // Poll notifs every 20s
+  setInterval(loadNotifs,20000);
+  // Default view
+  if(SESSION.role==='user') showView('tasks');
+  else if(SESSION.role==='superadmin') showView('dashboard');
+  else {
+    const projs=await DB.getProjects(SESSION.id);
+    if(projs.length){SEL_PROJ=projs[0].id;showView('dashboard');}
+    else showView('newproject');
+  }
 }
 
-// ─── SIDEBAR ────────────────────────────────────────────────────
-function Sidebar({session,view,selProj,navTo,unread,notifOpen,setNotifOpen,onLogout,canAdmin}){
-  const [projects,setProjects]=useState([]);
-  useEffect(()=>{
-    if(!session)return;
-    const load=async()=>{
-      const p=session.role==='superadmin'?await DB.getAllProjects():canAdmin?await DB.getProjects(session.id):[];
-      setProjects(p);
-    };
-    load();
-    if(supabase){
-      const ch=supabase.channel('proj_sb').on('postgres_changes',{event:'*',schema:'public',table:'projects'},load).subscribe();
-      return()=>supabase.removeChannel(ch);
-    }
-  },[session,view]);
-
-  return<nav className="sb">
-    <div style={{padding:'18px 16px',borderBottom:'1px solid var(--border)'}}>
-      <AppLogo size="sm"/>
-    </div>
-
-    <div style={{flex:1,overflowY:'auto',padding:'6px 0'}}>
-      {session.role==='superadmin'&&<>
-        <div className="ns">SUPER ADMIN</div>
-        <NI icon="📊" label="Dashboard" act={view==='dashboard'} onClick={()=>navTo('dashboard')}/>
-        <NI icon="🏢" label="Administradores" act={view==='admins'} onClick={()=>navTo('admins')}/>
-        <NI icon="💼" label="Plataforma" act={view==='platform'} onClick={()=>navTo('platform')}/>
-      </>}
-
-      {canAdmin&&<>
-        <div className="ns">PROYECTOS</div>
-        {projects.map(p=>(
-          <NI key={p.id} icon="🏗" label={p.name.length>21?p.name.slice(0,21)+'…':p.name}
-            act={selProj===p.id&&['tasks','gantt','dashboard'].includes(view)}
-            onClick={()=>navTo('dashboard',p.id)}/>
-        ))}
-        <NI icon="＋" label="Nuevo Proyecto" act={view==='newproject'&&!selProj} onClick={()=>navTo('newproject',null)}/>
-      </>}
-
-      {session.role==='user'&&<>
-        <div className="ns">MI TRABAJO</div>
-        <NI icon="✅" label="Mis Tareas" act={view==='tasks'} onClick={()=>navTo('tasks')}/>
-      </>}
-
-      {selProj&&canAdmin&&<>
-        <div className="ns">GESTIÓN</div>
-        <NI icon="📊" label="Dashboard" act={view==='dashboard'} onClick={()=>navTo('dashboard')}/>
-        <NI icon="📐" label="Gantt" act={view==='gantt'} onClick={()=>navTo('gantt')}/>
-        <NI icon="✅" label="Tareas" act={view==='tasks'} onClick={()=>navTo('tasks')}/>
-        <NI icon="👥" label="Equipo" act={view==='team'} onClick={()=>navTo('team')}/>
-        <NI icon="📋" label="Estructura" act={view==='stages'} onClick={()=>navTo('stages')}/>
-      </>}
-    </div>
-
-    <div style={{borderTop:'1px solid var(--border)',padding:10}}>
-      <div style={{display:'flex',alignItems:'center',gap:8,padding:'8px 8px',marginBottom:4}}>
-        <Av name={session.name} size={30}/>
-        <div style={{flex:1,minWidth:0}}>
-          <div style={{fontSize:12,fontWeight:600,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{session.name}</div>
-          <div style={{fontSize:10,color:'var(--text3)'}}>{session.role==='superadmin'?'Super Admin':session.role==='admin'?'Administrador':'Usuario'}</div>
-        </div>
-        <div style={{position:'relative'}}>
-          <button onClick={()=>setNotifOpen(!notifOpen)} style={{background:'transparent',border:'1px solid var(--border2)',color:'var(--text2)',borderRadius:8,padding:'5px 7px',fontSize:14,cursor:'pointer',position:'relative',transition:'all .2s'}}
-            onMouseEnter={e=>{e.target.style.background='var(--surface2)';e.target.style.color='var(--text)';}}
-            onMouseLeave={e=>{e.target.style.background='transparent';e.target.style.color='var(--text2)';}}>
-            🔔{unread>0&&<span style={{position:'absolute',top:-4,right:-4,background:'var(--red)',color:'#fff',minWidth:16,height:16,borderRadius:'50%',fontSize:9,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,padding:'0 2px'}}>{unread}</span>}
-          </button>
-        </div>
-      </div>
-      <NI icon="👤" label="Mi Perfil" act={view==='profile'} onClick={()=>navTo('profile')}/>
-      <NI icon="→" label="Cerrar sesión" onClick={onLogout}/>
-    </div>
-  </nav>;
+function updateSidebarUser(){
+  document.getElementById('sb-av').textContent=ini(SESSION.name);
+  document.getElementById('sb-name').textContent=SESSION.name;
+  document.getElementById('sb-role').textContent=SESSION.role==='superadmin'?'Super Admin':SESSION.role==='admin'?'Administrador':'Usuario';
 }
 
-function NI({icon,label,act,onClick}){
-  return<div className={`ni${act?' act':''}`} onClick={onClick}>
-    <span style={{fontSize:14,flexShrink:0}}>{icon}</span><span style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{label}</span>
-  </div>;
-}
-function Av({name,size=32,style={}}){
-  return<div className="av" style={{width:size,height:size,fontSize:size*.37,...style}}>{ini(name)}</div>;
-}
+async function buildSidebar(){
+  const nav=document.getElementById('sb-nav');
+  let html='';
+  const canAdmin=SESSION.role==='admin'||SESSION.role==='superadmin';
 
-// ─── NOTIF PANEL ────────────────────────────────────────────────
-function NotifPanel({notifs,session,onClose,onRead}){
-  return<div style={{position:'fixed',bottom:80,left:232,width:330,background:'var(--surface2)',border:'1px solid var(--border2)',borderRadius:14,zIndex:200,boxShadow:'0 16px 60px rgba(0,0,0,.6)',animation:'fadeIn .2s ease'}}>
-    <div style={{padding:'13px 16px',borderBottom:'1px solid var(--border)',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-      <span style={{fontWeight:700,fontSize:13}}>🔔 Notificaciones</span>
-      <button className="btn btn-g btn-s" onClick={()=>notifs.forEach(n=>onRead(n.id))}>Marcar todas ✓</button>
-    </div>
-    <div style={{maxHeight:280,overflowY:'auto'}}>
-      {notifs.length===0?<div style={{padding:24,textAlign:'center',color:'var(--text3)',fontSize:12}}>Sin notificaciones recientes</div>:
-      notifs.slice(0,20).map(n=>{
-        const read=(n.read_by||[]).includes(session.id);
-        return<div key={n.id} style={{padding:'10px 16px',borderBottom:'1px solid var(--border)',background:read?'transparent':'rgba(245,158,11,.04)',cursor:'pointer'}}
-          onClick={()=>onRead(n.id)}>
-          <div style={{fontSize:12,lineHeight:1.4}}>{n.message}</div>
-          <div style={{fontSize:10,color:'var(--text3)',marginTop:3}}>{new Date(n.created_at).toLocaleString('es-PE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</div>
-        </div>;
-      })}
-    </div>
-  </div>;
-}
-
-// ─── LOGIN ──────────────────────────────────────────────────────
-function Login({onLogin,loading,toast}){
-  const [email,setEmail]=useState('');
-  const [pass,setPass]=useState('');
-  return<div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'var(--bg)',position:'relative',overflow:'hidden'}}>
-    {/* BG decorations */}
-    <div style={{position:'absolute',top:'8%',left:'3%',width:600,height:600,background:'radial-gradient(circle,rgba(245,158,11,.04) 0%,transparent 65%)',borderRadius:'50%',pointerEvents:'none'}}/>
-    <div style={{position:'absolute',bottom:'5%',right:'3%',width:400,height:400,background:'radial-gradient(circle,rgba(59,130,246,.04) 0%,transparent 65%)',borderRadius:'50%',pointerEvents:'none'}}/>
-    <div style={{position:'absolute',top:'40%',right:'20%',width:200,height:200,background:'radial-gradient(circle,rgba(168,85,247,.03) 0%,transparent 65%)',borderRadius:'50%',pointerEvents:'none'}}/>
-
-    {toast&&<div style={{position:'fixed',top:20,right:20,zIndex:9999,background:toast.type==='err'?'#ef4444':'#22c55e',color:'#fff',padding:'12px 20px',borderRadius:10,fontWeight:600,fontSize:13,boxShadow:'0 8px 40px rgba(0,0,0,.5)',animation:'fadeIn .3s ease'}}>{toast.type==='err'?'✕ ':'✓ '}{toast.msg}</div>}
-
-    <div style={{width:'100%',maxWidth:440,padding:'0 20px',zIndex:1}} className="fade">
-      <div style={{textAlign:'center',marginBottom:36}}>
-        <AppLogo size="lg"/>
-      </div>
-      <div className="card" style={{border:'1px solid var(--border2)'}}>
-        <div className="fg"><label className="lbl">Correo electrónico</label>
-          <input className="input" type="email" placeholder="usuario@empresa.com" value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>e.key==='Enter'&&onLogin(email,pass)}/>
-        </div>
-        <div className="fg"><label className="lbl">Contraseña</label>
-          <input className="input" type="password" placeholder="••••••••" value={pass} onChange={e=>setPass(e.target.value)} onKeyDown={e=>e.key==='Enter'&&onLogin(email,pass)}/>
-        </div>
-        <button className="btn btn-p" style={{width:'100%',justifyContent:'center',padding:11}} onClick={()=>onLogin(email,pass)} disabled={loading}>
-          {loading?<><span className="spin" style={{display:'inline-block',width:14,height:14,border:'2px solid #00000040',borderTop:'2px solid #000',borderRadius:'50%'}}/> Verificando...</>:'Ingresar al sistema →'}
-        </button>
-        <div style={{marginTop:16,padding:'12px 14px',background:'var(--surface2)',borderRadius:8,fontSize:11,color:'var(--text3)',lineHeight:1.85}}>
-          <strong style={{color:'var(--text2)'}}>Cuentas demo:</strong><br/>
-          🛡 super@angelesgroup.io / Angeles2024!<br/>
-          ⚙ carlos@obrafirme.pe / Admin123!<br/>
-          👤 maria@obrafirme.pe / User123!
-        </div>
-      </div>
-    </div>
-  </div>;
-}
-
-// ─── DASHBOARD ──────────────────────────────────────────────────
-function DashView({session,selProj,showToast}){
-  const [data,setData]=useState(null);
-  const [loading,setLoading]=useState(true);
-
-  useEffect(()=>{
-    if(!selProj){setLoading(false);return;}
-    loadAll();
-    if(supabase){
-      const ch=supabase.channel('dash').on('postgres_changes',{event:'UPDATE',schema:'public',table:'tasks'},loadAll).subscribe();
-      return()=>supabase.removeChannel(ch);
-    }
-  },[selProj]);
-
-  async function loadAll(){
-    setLoading(true);
-    const [projects,admins,allUsers]=await Promise.all([DB.getAllProjects(),DB.getAdmins(),DB.getAllUsers()]);
-    const proj=projects.find(p=>p.id===selProj);
-    if(!proj){setData(null);setLoading(false);return;}
-    const stages=await DB.getStages(proj.id);
-    const acts=await Promise.all(stages.map(s=>DB.getActivities(s.id)));
-    const tasks=await Promise.all(acts.flat().map(a=>DB.getTasks(a.id)));
-    const allTasks=tasks.flat();
-    setData({proj,stages,acts:acts.flat(),allTasks,admins,allUsers});
-    setLoading(false);
+  if(SESSION.role==='superadmin'){
+    html+=`<div class="ns">SUPER ADMIN</div>
+    <div class="ni" onclick="showView('dashboard')">📊 <span>Dashboard</span></div>
+    <div class="ni" onclick="showView('admins')">🏢 <span>Administradores</span></div>
+    <div class="ni" onclick="showView('platform')">💼 <span>Plataforma</span></div>`;
   }
 
-  if(loading) return<Loader/>;
-  if(!selProj||!data) return<NoProj/>;
+  if(canAdmin){
+    html+=`<div class="ns">PROYECTOS</div>`;
+    const projs=SESSION.role==='superadmin'?await DB.getAllProjects():await DB.getProjects(SESSION.id);
+    projs.forEach(p=>{
+      const nm=p.name.length>21?p.name.slice(0,21)+'…':p.name;
+      html+=`<div class="ni" onclick="selectProj('${p.id}')" id="ni-proj-${p.id}">🏗 <span title="${esc(p.name)}">${esc(nm)}</span></div>`;
+    });
+    html+=`<div class="ni" onclick="showView('newproject')">＋ <span>Nuevo Proyecto</span></div>`;
+  }
 
-  const{proj,stages,acts,allTasks,allUsers}=data;
-  const total=allTasks.length;
-  const done=allTasks.filter(t=>t.stars===5||getEvArr(t).length>0).length;
-  const inProg=allTasks.filter(t=>t.stars>0&&t.stars<5&&!getEvArr(t).length).length;
-  const overPct=total?Math.round(allTasks.reduce((a,t)=>a+s2p(t.stars),0)/total):0;
+  if(SESSION.role==='user'){
+    html+=`<div class="ns">MI TRABAJO</div>
+    <div class="ni" onclick="showView('tasks')">✅ <span>Mis Tareas</span></div>`;
+  }
+
+  if(SEL_PROJ&&canAdmin){
+    html+=`<div class="ns">GESTIÓN</div>
+    <div class="ni" onclick="showView('dashboard')">📊 <span>Dashboard</span></div>
+    <div class="ni" onclick="showView('gantt')">📐 <span>Gantt</span></div>
+    <div class="ni" onclick="showView('tasks')">✅ <span>Tareas</span></div>
+    <div class="ni" onclick="showView('team')">👥 <span>Equipo</span></div>
+    <div class="ni" onclick="showView('stages')">📋 <span>Estructura</span></div>`;
+  }
+
+  nav.innerHTML=html;
+  markActiveNav();
+}
+
+function markActiveNav(){
+  document.querySelectorAll('.ni').forEach(el=>el.classList.remove('act'));
+  const map={dashboard:'📊',tasks:'✅',gantt:'📐',team:'👥',stages:'📋',admins:'🏢',platform:'💼',newproject:'＋',profile:'👤'};
+  document.querySelectorAll('.ni').forEach(el=>{
+    if(el.textContent.trim().startsWith(map[currentView]||'__'))el.classList.add('act');
+  });
+  if(SEL_PROJ){
+    const el=document.getElementById('ni-proj-'+SEL_PROJ);
+    if(el)el.classList.add('act');
+  }
+}
+
+async function selectProj(id){
+  SEL_PROJ=id;
+  await buildSidebar();
+  showView('dashboard');
+}
+
+// ═══════════════════════════════════════════════════
+//  VIEWS ROUTER
+// ═══════════════════════════════════════════════════
+let currentView='';
+async function showView(v){
+  currentView=v;
+  markActiveNav();
+  const el=document.getElementById('view-content');
+  el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;padding:80px 0;gap:12px;color:var(--tx3)"><div style="width:20px;height:20px;border:2px solid var(--bd2);border-top:2px solid var(--ac);border-radius:50%;animation:spin .8s linear infinite"></div><span>Cargando...</span></div>';
+  el.className='';
+  try{
+    const html=await views[v]();
+    el.innerHTML=html;
+    el.className='fade';
+    if(views[v+'_init'])views[v+'_init']();
+  }catch(e){
+    el.innerHTML=`<div style="color:var(--rd);padding:20px">Error al cargar la vista: ${e.message}</div>`;
+    console.error(e);
+  }
+}
+
+// ═══════════════════════════════════════════════════
+//  NOTIFICATIONS
+// ═══════════════════════════════════════════════════
+async function loadNotifs(){
+  NOTIFS=await DB.getNotifs();
+  const mine=NOTIFS.filter(n=>{const t=n.to_users||[];return t.length===0||t.includes(SESSION.id);});
+  const unread=mine.filter(n=>!(n.read_by||[]).includes(SESSION.id)).length;
+  const badge=document.getElementById('notif-badge');
+  if(unread>0){badge.textContent=unread;badge.style.display='flex';}else badge.style.display='none';
+  renderNotifList(mine);
+}
+
+function renderNotifList(notifs){
+  const el=document.getElementById('notif-list');
+  if(!el)return;
+  if(!notifs.length){el.innerHTML='<div style="padding:24px;text-align:center;color:var(--tx3);font-size:12px">Sin notificaciones</div>';return;}
+  el.innerHTML=notifs.slice(0,20).map(n=>{
+    const read=(n.read_by||[]).includes(SESSION.id);
+    return`<div onclick="readNotif(${n.id})" style="padding:10px 16px;border-bottom:1px solid var(--bd);background:${read?'transparent':'rgba(245,158,11,.04)'};cursor:pointer">
+      <div style="font-size:12px;line-height:1.4">${esc(n.message)}</div>
+      <div style="font-size:10px;color:var(--tx3);margin-top:3px">${new Date(n.created_at).toLocaleString('es-PE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</div>
+    </div>`;
+  }).join('');
+}
+
+async function readNotif(id){await DB.markRead(id);await loadNotifs();}
+async function markAllRead(){for(const n of NOTIFS)await DB.markRead(n.id);await loadNotifs();}
+function toggleNotifs(){
+  const p=document.getElementById('notif-panel');
+  p.style.display=p.style.display==='none'?'block':'none';
+}
+
+async function addNotif(msg,toU=[]){
+  await DB.addNotif(msg,toU);
+  await loadNotifs();
+}
+
+// ═══════════════════════════════════════════════════
+//  MODAL HELPERS
+// ═══════════════════════════════════════════════════
+function openModal(html){
+  document.getElementById('modal-inner').innerHTML=html;
+  document.getElementById('modal-wrap').style.display='flex';
+}
+function closeModal(){document.getElementById('modal-wrap').style.display='none';}
+
+// ═══════════════════════════════════════════════════
+//  VIEW HELPERS
+// ═══════════════════════════════════════════════════
+function hdr(title,sub=''){
+  return`<div style="margin-bottom:22px">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--ac);letter-spacing:1px">${title}</div>
+    ${sub?`<div style="color:var(--tx2);font-size:13px;margin-top:1px">${esc(sub)}</div>`:''}
+  </div>`;
+}
+function avHTML(name,size=32){
+  return`<div class="av" style="width:${size}px;height:${size}px;font-size:${Math.round(size*.37)}px">${ini(name)}</div>`;
+}
+function pbHTML(pct,col='var(--ac)'){
+  return`<div class="pb"><div class="pf" style="width:${pct}%;background:${col}"></div></div>`;
+}
+function kpiCard(icon,label,val,sub,col){
+  return`<div class="card" style="position:relative;overflow:hidden;border:1px solid var(--bd2)">
+    <div style="position:absolute;top:-10px;right:-10px;font-size:56px;opacity:.05">${icon}</div>
+    <div style="font-size:22px;margin-bottom:4px">${icon}</div>
+    <div style="font-size:28px;font-weight:700;color:${col};font-family:'JetBrains Mono',monospace">${val}</div>
+    <div style="font-size:12px;font-weight:600;margin-top:2px">${label}</div>
+    <div style="font-size:11px;color:var(--tx3);margin-top:1px">${sub}</div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+//  VIEWS
+// ═══════════════════════════════════════════════════
+const views = {
+
+// ── DASHBOARD ───────────────────────────────────────
+async dashboard(){
+  if(!SEL_PROJ) return `<div style="text-align:center;padding:80px 0;color:var(--tx3)"><div style="font-size:52px;margin-bottom:16px">🏗</div><div style="font-size:16px;font-weight:600;color:var(--tx2)">Selecciona o crea un proyecto</div></div>`;
+  const allProj=await DB.getAllProjects(); const proj=allProj.find(p=>p.id===SEL_PROJ);
+  if(!proj) return '<div style="color:var(--tx3);padding:40px">Proyecto no encontrado</div>';
+  const stages=await DB.getStages(proj.id);
+  const acts=[]; for(const s of stages){const a=await DB.getActivities(s.id);acts.push(...a);}
+  const allT=[]; for(const a of acts){const t=await DB.getTasks(a.id);allT.push(...t);}
+  const allU=await DB.getAllUsers();
+  const total=allT.length;
+  const done=allT.filter(t=>t.stars===5||getEv(t).length>0).length;
+  const inProg=allT.filter(t=>t.stars>0&&t.stars<5&&!getEv(t).length).length;
+  const overPct=total?Math.round(allT.reduce((a,t)=>a+s2p(t.stars),0)/total):0;
   const totalD=diffD(proj.start_date,proj.end_date);
-  const elapsed=diffD(proj.start_date,fmtToday);
+  const elapsed=diffD(proj.start_date,fmtISO(TODAY));
   const timePct=Math.min(100,Math.round((elapsed/Math.max(1,totalD))*100));
-  const overdue=allTasks.filter(t=>calcStatus(t).label.includes('fuera')).length;
+  const overdue=allT.filter(t=>calcSt(t).label.includes('fuera')).length;
 
-  const byStage=stages.map((s,i)=>{
+  let stageRows='';
+  for(let i=0;i<stages.length;i++){
+    const s=stages[i];
     const sActs=acts.filter(a=>a.stage_id===s.id);
-    const sTasks=allTasks.filter(t=>sActs.some(a=>a.id===t.activity_id));
-    const pct=sTasks.length?Math.round(sTasks.reduce((a,t)=>a+s2p(t.stars),0)/sTasks.length):0;
-    return{s,sTasks,pct,col:COLS[i%COLS.length]};
+    const sT=allT.filter(t=>sActs.some(a=>a.id===t.activity_id));
+    const pct=sT.length?Math.round(sT.reduce((a,t)=>a+s2p(t.stars),0)/sT.length):0;
+    stageRows+=`<div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+        <span style="font-size:12px;font-weight:600">${esc(s.name)}</span>
+        <span style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${pct}%</span>
+      </div>
+      ${pbHTML(pct,COLS[i%COLS.length])}
+      <div style="font-size:10px;color:var(--tx3);margin-top:2px">${sT.length} tareas · ${sT.filter(t=>t.stars===5).length} ejecutadas</div>
+    </div>`;
+  }
+
+  let userRows='';
+  const projUsers=allU.filter(u=>{return allT.some(t=>t.responsible_id===u.id);});
+  projUsers.forEach((u,i)=>{
+    const myT=allT.filter(t=>t.responsible_id===u.id);
+    const pct=Math.round(myT.reduce((a,t)=>a+s2p(t.stars),0)/myT.length);
+    userRows+=`<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+      ${avHTML(u.name,32)}
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+          <span style="font-size:12px;font-weight:600">${esc(u.name)}</span>
+          <span style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${pct}%</span>
+        </div>
+        ${pbHTML(pct,COLS[i%COLS.length])}
+        <div style="font-size:10px;color:var(--tx3);margin-top:2px">${myT.filter(t=>t.stars===5).length}/${myT.length} completadas</div>
+      </div>
+    </div>`;
   });
 
-  const byUser=allUsers.map((u,i)=>{
-    const myT=allTasks.filter(t=>t.responsible_id===u.id);
-    if(!myT.length)return null;
-    const pct=Math.round(myT.reduce((a,t)=>a+s2p(t.stars),0)/myT.length);
-    return{u,myT,pct,done:myT.filter(t=>t.stars===5).length,col:COLS[i%COLS.length]};
-  }).filter(Boolean);
+  const statuses=[
+    {l:'No iniciado',c:'var(--tx3)',v:allT.filter(t=>calcSt(t).label.startsWith('No iniciado')&&!calcSt(t).label.includes('fuera')).length},
+    {l:'Fuera de plazo',c:'var(--rd)',v:allT.filter(t=>calcSt(t).label.includes('fuera')).length},
+    {l:'En proceso',c:'var(--bl)',v:allT.filter(t=>calcSt(t).label.startsWith('En proceso')).length},
+    {l:'Ejecutado',c:'var(--gn)',v:allT.filter(t=>calcSt(t).label.startsWith('Ejecutado')).length},
+  ];
 
-  return<div>
-    <Hdr title="DASHBOARD DEL PROYECTO" sub={proj.name}/>
-    <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:16,marginBottom:24}}>
-      {[
-        {icon:'📈',label:'Avance General',val:`${overPct}%`,sub:`${done}/${total} tareas completadas`,col:'var(--accent)'},
-        {icon:'⏱',label:'Tiempo Transcurrido',val:`${timePct}%`,sub:`${elapsed} / ${totalD} días`,col:'var(--blue)'},
-        {icon:'✅',label:'Ejecutadas',val:done,sub:`${inProg} en proceso`,col:'var(--green)'},
-        {icon:'⚠',label:'Fuera de Plazo',val:overdue,sub:'tareas vencidas',col:'var(--red)'},
-      ].map(k=><KPICard key={k.label} {...k}/>)}
+  return hdr('DASHBOARD DEL PROYECTO',proj.name)+`
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px">
+    ${kpiCard('📈','Avance General',overPct+'%',done+'/'+total+' tareas completadas','var(--ac)')}
+    ${kpiCard('⏱','Tiempo Transcurrido',timePct+'%',elapsed+' / '+totalD+' días','var(--bl)')}
+    ${kpiCard('✅','Ejecutadas',done,inProg+' en proceso','var(--gn)')}
+    ${kpiCard('⚠','Fuera de Plazo',overdue,'tareas vencidas','var(--rd)')}
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+    <div class="card"><div style="font-weight:700;margin-bottom:16px;font-size:13px">📊 Avance por Etapa</div>${stageRows}</div>
+    <div class="card"><div style="font-weight:700;margin-bottom:16px;font-size:13px">👥 Avance por Responsable</div>${userRows||'<div style="color:var(--tx3);font-size:12px">Sin responsables asignados</div>'}</div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:14px;font-size:13px">📋 Estados</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+      ${statuses.map(s=>`<div style="text-align:center;padding:16px 10px;background:var(--sf2);border-radius:10px">
+        <div style="font-size:30px;font-weight:700;color:${s.c};font-family:'JetBrains Mono',monospace">${s.v}</div>
+        <div style="font-size:11px;color:var(--tx2);margin-top:4px">${s.l}</div>
+      </div>`).join('')}
     </div>
-    <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,marginBottom:16}}>
-      <div className="card">
-        <div style={{fontWeight:700,marginBottom:16,fontSize:13}}>📊 Avance por Etapa</div>
-        {byStage.map(item=><div key={item.s.id} style={{marginBottom:14}}>
-          <div style={{display:'flex',justifyContent:'space-between',marginBottom:5}}>
-            <span style={{fontSize:12,fontWeight:600}}>{item.s.name}</span>
-            <span style={{fontSize:12,fontFamily:"'JetBrains Mono',monospace",color:'var(--accent)',fontWeight:700}}>{item.pct}%</span>
-          </div>
-          <div className="pb"><div className="pf" style={{width:`${item.pct}%`,background:item.col}}/></div>
-          <div style={{fontSize:10,color:'var(--text3)',marginTop:2}}>{item.sTasks.length} tareas · {item.sTasks.filter(t=>t.stars===5).length} ejecutadas</div>
-        </div>)}
-      </div>
-      <div className="card">
-        <div style={{fontWeight:700,marginBottom:16,fontSize:13}}>👥 Avance por Responsable</div>
-        {byUser.map(item=><div key={item.u.id} style={{display:'flex',alignItems:'center',gap:12,marginBottom:14}}>
-          <Av name={item.u.name} size={32}/>
-          <div style={{flex:1}}>
-            <div style={{display:'flex',justifyContent:'space-between',marginBottom:5}}>
-              <span style={{fontSize:12,fontWeight:600}}>{item.u.name}</span>
-              <span style={{fontSize:12,fontFamily:"'JetBrains Mono',monospace",color:'var(--accent)',fontWeight:700}}>{item.pct}%</span>
-            </div>
-            <div className="pb"><div className="pf" style={{width:`${item.pct}%`,background:item.col}}/></div>
-            <div style={{fontSize:10,color:'var(--text3)',marginTop:2}}>{item.done}/{item.myT.length} completadas</div>
-          </div>
-        </div>)}
-      </div>
-    </div>
-    <div className="card">
-      <div style={{fontWeight:700,marginBottom:14,fontSize:13}}>📋 Estados</div>
-      <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:12}}>
-        {['No iniciado','Fuera de plazo','En proceso','Ejecutado'].map(l=>{
-          const cnt=l==='No iniciado'?allTasks.filter(t=>calcStatus(t).label.startsWith('No iniciado')&&!calcStatus(t).label.includes('fuera')).length:
-                    l==='Fuera de plazo'?allTasks.filter(t=>calcStatus(t).label.includes('fuera')).length:
-                    l==='En proceso'?allTasks.filter(t=>calcStatus(t).label.startsWith('En proceso')).length:
-                    allTasks.filter(t=>calcStatus(t).label.startsWith('Ejecutado')).length;
-          const col=l==='Ejecutado'?'var(--green)':l==='Fuera de plazo'?'var(--red)':l==='En proceso'?'var(--blue)':'var(--text3)';
-          return<div key={l} style={{textAlign:'center',padding:'16px 10px',background:'var(--surface2)',borderRadius:10}}>
-            <div style={{fontSize:30,fontWeight:700,color:col,fontFamily:"'JetBrains Mono',monospace"}}>{cnt}</div>
-            <div style={{fontSize:11,color:'var(--text2)',marginTop:4}}>{l}</div>
-          </div>;
-        })}
-      </div>
-    </div>
-  </div>;
-}
+  </div>`;
+},
 
-function KPICard({icon,label,val,sub,col}){
-  return<div className="card" style={{position:'relative',overflow:'hidden',border:'1px solid var(--border2)'}}>
-    <div style={{position:'absolute',top:-10,right:-10,fontSize:56,opacity:.05}}>{icon}</div>
-    <div style={{fontSize:22,marginBottom:4}}>{icon}</div>
-    <div style={{fontSize:28,fontWeight:700,color:col,fontFamily:"'JetBrains Mono',monospace"}}>{val}</div>
-    <div style={{fontSize:12,fontWeight:600,marginTop:2}}>{label}</div>
-    <div style={{fontSize:11,color:'var(--text3)',marginTop:1}}>{sub}</div>
-  </div>;
-}
-
-// ─── TASKS VIEW ──────────────────────────────────────────────────
-function TasksView({session,selProj,showToast,addNotif,canAdmin}){
-  const [struct,setStruct]=useState([]);
-  const [allUsers,setAllUsers]=useState([]);
-  const [loading,setLoading]=useState(true);
-  const [expS,setExpS]=useState({});
-  const [expA,setExpA]=useState({});
-  const [reschedModal,setReschedModal]=useState(null);
-  const [evidModal,setEvidModal]=useState(null);
-  const [proj,setProj]=useState(null);
-
-  const load=useCallback(async()=>{
-    if(!selProj&&session.role!=='user'){setLoading(false);return;}
-    setLoading(true);
-    const [allProj,allU]=await Promise.all([DB.getAllProjects(),DB.getAllUsers()]);
-    let p=selProj?allProj.find(x=>x.id===selProj):null;
-    if(session.role==='user'&&!p){
-      // Find project where user has tasks
-      for(const proj of allProj){
-        const stages=await DB.getStages(proj.id);
-        for(const s of stages){const acts=await DB.getActivities(s.id);for(const a of acts){const tasks=await DB.getTasks(a.id);if(tasks.some(t=>t.responsible_id===session.id)){p=proj;break;}}}
-        if(p)break;
-      }
+// ── TASKS ───────────────────────────────────────────
+async tasks(){
+  const canAdmin=SESSION.role==='admin'||SESSION.role==='superadmin';
+  let proj=null;
+  if(SEL_PROJ){const all=await DB.getAllProjects();proj=all.find(p=>p.id===SEL_PROJ);}
+  if(!proj&&SESSION.role==='user'){
+    const allP=await DB.getAllProjects();
+    for(const p of allP){
+      const stages=await DB.getStages(p.id);
+      for(const s of stages){const acts=await DB.getActivities(s.id);for(const a of acts){const tasks=await DB.getTasks(a.id);if(tasks.some(t=>t.responsible_id===SESSION.id)){proj=p;SEL_PROJ=p.id;break;}}if(proj)break;}
+      if(proj)break;
     }
-    if(!p){setLoading(false);return;}
-    setProj(p);
-    setAllUsers(allU);
-    const stages=await DB.getStages(p.id);
-    const result=await Promise.all(stages.map(async s=>{
-      const acts=await DB.getActivities(s.id);
-      const actsWithTasks=await Promise.all(acts.map(async a=>{
-        const tasks=await DB.getTasks(a.id);
-        const filtered=canAdmin?tasks:tasks.filter(t=>t.responsible_id===session.id);
-        return{...a,tasks:filtered};
-      }));
-      return{...s,activities:actsWithTasks.filter(a=>canAdmin||a.tasks.length)};
-    }));
-    setStruct(result.filter(s=>canAdmin||s.activities.length));
-    setLoading(false);
-  },[selProj,session,canAdmin]);
+  }
+  if(!proj)return `<div style="text-align:center;padding:80px 0;color:var(--tx3)"><div style="font-size:52px">🏗</div><div style="font-size:16px;font-weight:600;color:var(--tx2);margin-top:16px">Sin proyecto seleccionado</div></div>`;
 
-  useEffect(()=>{load();},[load]);
+  const stages=await DB.getStages(proj.id);
+  const allU=await DB.getAllUsers();
+  const getU=id=>allU.find(u=>u.id===id)||{name:'Sin asignar'};
 
-  // Realtime
-  useEffect(()=>{
-    if(!supabase)return;
-    const ch=supabase.channel('tasks_live').on('postgres_changes',{event:'*',schema:'public',table:'tasks'},load).subscribe();
-    return()=>supabase.removeChannel(ch);
-  },[load]);
+  let html=hdr('CONTROL DE TAREAS',proj.name+' · '+fmtD(proj.start_date)+' → '+fmtD(proj.end_date));
 
-  const getUser=id=>allUsers.find(u=>u.id===id)||{name:'Sin asignar'};
+  for(let si=0;si<stages.length;si++){
+    const s=stages[si];
+    const acts=await DB.getActivities(s.id);
+    let taskCount=0; let stagePct=0; let stageTasks=0;
+    let actsHTML='';
 
-  const updateTask=async(taskId,patch)=>{
-    await DB.updateTask(taskId,patch);
-    await load();
-  };
+    for(let ai=0;ai<acts.length;ai++){
+      const a=acts[ai];
+      let tasks=await DB.getTasks(a.id);
+      if(!canAdmin)tasks=tasks.filter(t=>t.responsible_id===SESSION.id);
+      if(!tasks.length&&!canAdmin)continue;
+      taskCount+=tasks.length;
+      stageTasks+=tasks.length;
+      stagePct+=tasks.reduce((acc,t)=>acc+s2p(t.stars),0);
 
-  const handleStar=async(task,stars)=>{
-    if(getEvArr(task).length>0||task.stars===5){showToast('Las 5★ se activan al subir evidencia','err');return;}
-    if(stars===5){showToast('Sube la evidencia para completar al 100%','err');return;}
-    if(!canAdmin&&task.responsible_id!==session.id){showToast('Solo el responsable puede actualizar el avance','err');return;}
-    await updateTask(task.id,{stars});
-    await addNotif(`📊 "${task.name}" → ${s2p(stars)}% — actualizado por ${session.name}`);
-    showToast(`Avance actualizado a ${s2p(stars)}%`);
-  };
+      let rows='';
+      tasks.forEach(task=>{
+        const u=getU(task.responsible_id);
+        const days=diffD(task.start_date,task.end_date);
+        const st=calcSt(task);
+        const ev=getEv(task);
+        const canAct=canAdmin||task.responsible_id===SESSION.id;
+        const stars=[1,2,3,4,5].map(n=>{
+          const filled=n<=task.stars;
+          const clickable=canAct&&n<5;
+          return`<span class="star" style="color:${filled?'var(--ac)':'var(--bd2)'};cursor:${clickable?'pointer':'default'}"
+            onclick="${clickable?`updateStar('${task.id}',${n})`:'void 0'}"
+            title="${n<5?'Marcar '+s2p(n)+'%':'Se activa con evidencia'}">★</span>`;
+        }).join('');
 
-  const handleEvidence=async(task,files)=>{
-    if(!files||!files.length)return;
-    const cur=getEvArr(task);
-    const newEvs=Array.from(files).map(f=>({name:f.name,type:f.type.startsWith('image')?'image':f.type==='application/pdf'?'pdf':f.type.startsWith('video')?'video':'doc',size:f.size}));
-    await updateTask(task.id,{evidence:JSON.stringify([...cur,...newEvs]),stars:5});
-    await addNotif(`📎 Evidencia cargada en "${task.name}" por ${session.name} — ¡100%! ⭐⭐⭐⭐⭐`);
-    showToast('Evidencia cargada — Tarea al 100% ⭐⭐⭐⭐⭐');
-    setEvidModal(null);
-  };
+        rows+=`<tr>
+          <td>
+            <div style="font-weight:600;font-size:12px;max-width:180px">${esc(task.name)}</div>
+            ${task.rescheduled>0?`<div style="font-size:10px;color:var(--ac)">🔄 Reprog. ${task.rescheduled}×</div>`:''}
+            ${task.reschedule_pending?`<div style="font-size:10px;color:var(--rd)">⏳ Pendiente aprobación</div>`:''}
+          </td>
+          <td><div style="display:flex;align-items:center;gap:7px">${avHTML(u.name,26)}<span style="font-size:12px">${esc(u.name)}</span></div></td>
+          <td><span style="font-size:11px;font-family:'JetBrains Mono',monospace">${fmtD(task.start_date)}</span></td>
+          <td><span style="font-size:11px;font-family:'JetBrains Mono',monospace">${fmtD(task.end_date)}</span></td>
+          <td><span style="font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace">${days}d</span></td>
+          <td>
+            <div>${stars}</div>
+            <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${s2p(task.stars)}%</div>
+          </td>
+          <td><span class="badge ${st.cls}">${st.icon} ${st.label}</span></td>
+          <td>${ev.length>0
+            ?`<button class="badge b-green" style="cursor:pointer;border:1px solid rgba(34,197,94,.18)" onclick="viewEvidence('${task.id}')">📎 ${ev.length} archivo${ev.length>1?'s':''}</button>`
+            :canAct?`<button class="btn btn-g btn-s" onclick="uploadEvidence('${task.id}')">↑ Subir</button>`:'<span style="color:var(--tx3);font-size:11px">—</span>'}
+          </td>
+          <td>
+            ${canAct&&(task.rescheduled||0)<3&&!task.reschedule_pending?`<button class="btn btn-g btn-s" onclick="openReschedule('${task.id}')" title="Reprogramar">🔄</button>`:''}
+            ${canAdmin&&task.reschedule_pending?`<button class="btn btn-p btn-s" onclick="approveReschedule('${task.id}')">✓ Aprobar</button>`:''}
+          </td>
+        </tr>`;
+      });
 
-  const handleReschedule=async(task,ns,ne,reason)=>{
-    if((task.rescheduled||0)>=3){showToast('Máximo 3 reprogramaciones','err');return;}
-    if(canAdmin){
-      await updateTask(task.id,{start_date:ns,end_date:ne,rescheduled:(task.rescheduled||0)+1,reschedule_pending:false});
-      await addNotif(`🔄 "${task.name}" reprogramada por ${session.name}`);
-      showToast('Reprogramación aplicada');
-    } else {
-      await updateTask(task.id,{pending_start:ns,pending_end:ne,pending_reason:reason,reschedule_pending:true});
-      await addNotif(`🔄 Solicitud de reprogramación: "${task.name}" por ${session.name}`);
-      showToast('Solicitud enviada al administrador');
+      actsHTML+=`
+      <div style="margin-bottom:6px">
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 16px;background:var(--sf);border:1px solid var(--bd);border-radius:8px;cursor:pointer;margin-bottom:4px" onclick="toggleAct('act-body-${a.id}',this)">
+          <span style="font-size:11px;color:var(--tx3)">▶</span>
+          <span style="font-weight:600;font-size:13px;flex:1">Actividad ${si+1}.${ai+1}: ${esc(a.name)}</span>
+          <span style="font-size:11px;color:var(--tx3)">${tasks.length} tareas</span>
+        </div>
+        <div id="act-body-${a.id}" style="display:none;background:var(--sf);border:1px solid var(--bd);border-radius:8px;overflow:hidden;margin-bottom:2px">
+          <div style="overflow-x:auto">
+          <table class="tbl" style="min-width:900px">
+            <thead><tr>
+              <th>Tarea</th><th>Responsable</th><th>Inicio</th><th>Fin</th><th>Días</th>
+              <th>Progreso</th><th>Estado</th><th>Evidencia</th><th>Acciones</th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+          </div>
+        </div>
+      </div>`;
     }
-    setReschedModal(null);
-  };
 
-  const approveResched=async(task)=>{
-    await updateTask(task.id,{start_date:task.pending_start,end_date:task.pending_end,rescheduled:(task.rescheduled||0)+1,reschedule_pending:false,pending_start:null,pending_end:null,pending_reason:null});
-    await addNotif(`✅ Reprogramación aprobada: "${task.name}"`);
-    showToast('Reprogramación aprobada');
-  };
-
-  if(loading) return<Loader/>;
-  if(!proj) return<NoProj/>;
-
-  return<div>
-    <Hdr title="CONTROL DE TAREAS" sub={proj.name+' · '+new Date(proj.start_date).toLocaleDateString('es-PE')+' → '+new Date(proj.end_date).toLocaleDateString('es-PE')}/>
-
-    {struct.map((stage,si)=>(
-      <div key={stage.id} style={{marginBottom:10}}>
-        <div style={{display:'flex',alignItems:'center',gap:12,padding:'12px 18px',background:'var(--surface2)',border:'1px solid var(--border2)',borderRadius:10,cursor:'pointer',marginBottom:expS[stage.id]?6:0}}
-          onClick={()=>setExpS(p=>({...p,[stage.id]:!p[stage.id]}))}>
-          <span style={{color:'var(--accent)',fontWeight:700,fontSize:13,flexShrink:0}}>{expS[stage.id]?'▼':'▶'}</span>
-          <span style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:15,letterSpacing:1,color:'var(--accent)',flex:1}}>ETAPA {si+1}: {stage.name}</span>
-          <StagePct stage={stage}/>
+    const sPct=stageTasks?Math.round(stagePct/stageTasks):0;
+    html+=`
+    <div style="margin-bottom:10px">
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;background:var(--sf2);border:1px solid var(--bd2);border-radius:10px;cursor:pointer;margin-bottom:${actsHTML?'6px':'0'}" onclick="toggleStage('stage-body-${s.id}',this)">
+        <span style="color:var(--ac);font-weight:700;font-size:13px;flex-shrink:0">▶</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;color:var(--ac);flex:1">ETAPA ${si+1}: ${esc(s.name)}</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:70px;height:4px;background:var(--sf3);border-radius:99px;overflow:hidden"><div style="height:100%;width:${sPct}%;background:${sPct===100?'var(--gn)':'var(--ac)'};border-radius:99px"></div></div>
+          <span style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${sPct}%</span>
         </div>
-
-        {expS[stage.id]&&<div style={{paddingLeft:12}}>
-          {stage.activities.map((act,ai)=>(
-            <div key={act.id} style={{marginBottom:6}}>
-              <div style={{display:'flex',alignItems:'center',gap:10,padding:'9px 16px',background:'var(--surface)',border:'1px solid var(--border)',borderRadius:8,cursor:'pointer',marginBottom:expA[act.id]?4:0}}
-                onClick={()=>setExpA(p=>({...p,[act.id]:!p[act.id]}))}>
-                <span style={{fontSize:11,color:'var(--text3)',flexShrink:0}}>{expA[act.id]?'▼':'▶'}</span>
-                <span style={{fontWeight:600,fontSize:13,flex:1}}>Actividad {si+1}.{ai+1}: {act.name}</span>
-                <span style={{fontSize:11,color:'var(--text3)'}}>{act.tasks.length} tareas</span>
-              </div>
-
-              {expA[act.id]&&<div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:8,overflow:'hidden',marginBottom:2}}>
-                <div style={{overflowX:'auto'}}>
-                <table className="tbl" style={{minWidth:960}}>
-                  <thead><tr>
-                    <th>Tarea</th><th>Responsable</th><th>Inicio</th><th>Fin</th><th>Días</th>
-                    <th>Progreso ★</th><th>Estado</th><th>Evidencia</th><th>Acciones</th>
-                  </tr></thead>
-                  <tbody>
-                    {act.tasks.map(task=>{
-                      const u=getUser(task.responsible_id);
-                      const days=diffD(task.start_date,task.end_date);
-                      const canAct=canAdmin||task.responsible_id===session.id;
-                      const st=calcStatus(task);
-                      const ev=getEvArr(task);
-                      return<tr key={task.id}>
-                        <td>
-                          <div style={{fontWeight:600,fontSize:12,maxWidth:200}}>{task.name}</div>
-                          {task.rescheduled>0&&<div style={{fontSize:10,color:'var(--accent)'}}>🔄 Reprog. {task.rescheduled}×</div>}
-                          {task.reschedule_pending&&<div style={{fontSize:10,color:'var(--red)'}}>⏳ Pendiente aprobación admin</div>}
-                        </td>
-                        <td>
-                          <div style={{display:'flex',alignItems:'center',gap:7}}>
-                            <Av name={u.name} size={26}/>
-                            <span style={{fontSize:12}}>{u.name}</span>
-                          </div>
-                        </td>
-                        <td><span style={{fontSize:11,fontFamily:"'JetBrains Mono',monospace"}}>{new Date(task.start_date).toLocaleDateString('es-PE')}</span></td>
-                        <td><span style={{fontSize:11,fontFamily:"'JetBrains Mono',monospace"}}>{new Date(task.end_date).toLocaleDateString('es-PE')}</span></td>
-                        <td><span style={{fontSize:12,fontWeight:700,fontFamily:"'JetBrains Mono',monospace"}}>{days}d</span></td>
-                        <td>
-                          <div>
-                            <div style={{display:'flex',gap:2,marginBottom:2}}>
-                              {[1,2,3,4,5].map(s=>(
-                                <span key={s}
-                                  style={{fontSize:18,color:s<=task.stars?'var(--accent)':'var(--border2)',cursor:canAct&&s<5?'pointer':'default',transition:'transform .1s',display:'inline-block'}}
-                                  onClick={()=>canAct&&handleStar(task,s)}
-                                  onMouseEnter={e=>{if(canAct&&s<5)e.target.style.transform='scale(1.3)';}}
-                                  onMouseLeave={e=>e.target.style.transform='scale(1)'}
-                                  title={s<5?`Marcar ${s2p(s)}%`:'Se activa automáticamente con evidencia'}>★</span>
-                              ))}
-                            </div>
-                            <span style={{fontSize:10,fontFamily:"'JetBrains Mono',monospace",color:'var(--accent)',fontWeight:700}}>{s2p(task.stars)}%</span>
-                          </div>
-                        </td>
-                        <td><span className={`badge ${st.cls}`}>{st.icon} {st.label}</span></td>
-                        <td>
-                          {ev.length>0
-                            ?<button className="badge bg2" style={{cursor:'pointer',border:'1px solid rgba(34,197,94,.18)'}} onClick={()=>setEvidModal({task,view:true})}>📎 {ev.length} archivo{ev.length>1?'s':''}</button>
-                            :canAct?<button className="btn btn-g btn-s" onClick={()=>setEvidModal({task,view:false})}>↑ Subir</button>:<span style={{color:'var(--text3)',fontSize:11}}>—</span>}
-                        </td>
-                        <td>
-                          <div style={{display:'flex',gap:5'}}>
-                            {canAct&&(task.rescheduled||0)<3&&!task.reschedule_pending&&
-                              <button className="btn btn-g btn-s" title="Reprogramar" onClick={()=>setReschedModal(task)}>🔄</button>}
-                            {canAdmin&&task.reschedule_pending&&
-                              <button className="btn btn-p btn-s" onClick={()=>approveResched(task)}>✓ Aprobar</button>}
-                          </div>
-                        </td>
-                      </tr>;
-                    })}
-                  </tbody>
-                </table>
-                </div>
-              </div>}
-            </div>
-          ))}
-        </div>}
       </div>
-    ))}
+      <div id="stage-body-${s.id}" style="display:none;padding-left:12px">${actsHTML}</div>
+    </div>`;
+  }
+  return html;
+},
 
-    {reschedModal&&<ReschedModal task={reschedModal} canAdmin={canAdmin} onClose={()=>setReschedModal(null)} onConfirm={handleReschedule}/>}
-    {evidModal&&<EvidModal task={evidModal.task} viewOnly={evidModal.view} onClose={()=>setEvidModal(null)} onUpload={handleEvidence}/>}
-  </div>;
-}
+// ── GANTT ────────────────────────────────────────────
+async gantt(){
+  if(!SEL_PROJ)return '<div style="color:var(--tx3);padding:40px">Sin proyecto seleccionado</div>';
+  const allP=await DB.getAllProjects(); const proj=allP.find(p=>p.id===SEL_PROJ);
+  if(!proj)return '';
+  const stages=await DB.getStages(proj.id);
+  const allTasks=[];
+  const stagesData=[];
+  for(const s of stages){
+    const acts=await DB.getActivities(s.id);
+    const actsData=[];
+    for(const a of acts){const tasks=await DB.getTasks(a.id);actsData.push({...a,tasks});allTasks.push(...tasks);}
+    stagesData.push({...s,activities:actsData});
+  }
+  if(!allTasks.length)return hdr('DIAGRAMA GANTT',proj.name)+'<div style="padding:40px;text-align:center;color:var(--tx3)">Sin tareas aún</div>';
 
-function getEvArr(task){
-  try{const e=task.evidence;return Array.isArray(e)?e:(typeof e==='string'?JSON.parse(e||'[]'):[]);}catch{return[];}
-}
-
-function StagePct({stage}){
-  const tasks=stage.activities?.flatMap(a=>a.tasks)||[];
-  if(!tasks.length)return null;
-  const pct=Math.round(tasks.reduce((a,t)=>a+s2p(t.stars),0)/tasks.length);
-  return<div style={{display:'flex',alignItems:'center',gap:8}}>
-    <div style={{width:70,height:4,background:'var(--surface3)',borderRadius:99,overflow:'hidden'}}>
-      <div style={{height:'100%',width:`${pct}%`,background:pct===100?'var(--green)':'var(--accent)',borderRadius:99}}/>
-    </div>
-    <span style={{fontSize:11,fontFamily:"'JetBrains Mono',monospace",color:'var(--accent)',fontWeight:700}}>{pct}%</span>
-  </div>;
-}
-
-function ReschedModal({task,canAdmin,onClose,onConfirm}){
-  const [ns,setNs]=useState(task.start_date||task.startDate);
-  const [ne,setNe]=useState(task.end_date||task.endDate);
-  const [reason,setReason]=useState('');
-  const left=3-(task.rescheduled||0);
-  return<div className="mo" onClick={e=>e.target===e.currentTarget&&onClose()}>
-    <div className="md" style={{maxWidth:480}}>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:18}}>
-        <div><div style={{fontWeight:700,fontSize:16}}>🔄 Reprogramar Tarea</div>
-        <div style={{fontSize:12,color:'var(--text2)',marginTop:3}}>{task.name}</div></div>
-        <button className="btn btn-g btn-s" onClick={onClose}>✕</button>
-      </div>
-      <div style={{background:'rgba(245,158,11,.08)',border:'1px solid rgba(245,158,11,.2)',borderRadius:8,padding:'10px 14px',marginBottom:16,fontSize:12,color:'var(--accent)'}}>
-        ⚡ Reprogramaciones disponibles: <strong>{left} de 3</strong>{!canAdmin&&' · Requiere aprobación del administrador'}
-      </div>
-      <div className="fg"><label className="lbl">Nueva fecha de inicio 📅</label><input className="input" type="date" value={ns} onChange={e=>setNs(e.target.value)}/></div>
-      <div className="fg"><label className="lbl">Nueva fecha de fin 📅</label><input className="input" type="date" value={ne} onChange={e=>setNe(e.target.value)}/></div>
-      <div className="fg"><label className="lbl">Motivo</label><textarea className="input" rows={3} placeholder="Explica el motivo..." value={reason} onChange={e=>setReason(e.target.value)} style={{resize:'none'}}/></div>
-      {ns&&ne&&<div style={{background:'rgba(59,130,246,.08)',border:'1px solid rgba(59,130,246,.2)',borderRadius:8,padding:'8px 14px',fontSize:12,color:'var(--blue)',marginBottom:14}}>
-        📅 Nueva duración: <strong>{diffD(ns,ne)} días</strong>
-      </div>}
-      <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}>
-        <button className="btn btn-g" onClick={onClose}>Cancelar</button>
-        <button className="btn btn-p" onClick={()=>onConfirm(task,ns,ne,reason)}>{canAdmin?'Reprogramar':'Solicitar aprobación'}</button>
-      </div>
-    </div>
-  </div>;
-}
-
-function EvidModal({task,viewOnly,onClose,onUpload}){
-  const ref=useRef();
-  const ev=getEvArr(task);
-  const icons={image:'🖼',pdf:'📄',video:'🎬',doc:'📝'};
-  return<div className="mo" onClick={e=>e.target===e.currentTarget&&onClose()}>
-    <div className="md" style={{maxWidth:500}}>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:18}}>
-        <div><div style={{fontWeight:700,fontSize:16}}>📎 Evidencia</div>
-        <div style={{fontSize:12,color:'var(--text2)',marginTop:3}}>{task.name}</div></div>
-        <button className="btn btn-g btn-s" onClick={onClose}>✕</button>
-      </div>
-      {ev.length>0&&<div style={{marginBottom:16}}>
-        <div style={{fontSize:12,fontWeight:600,color:'var(--text2)',marginBottom:10}}>Archivos cargados ({ev.length})</div>
-        {ev.map((e,i)=><div key={i} style={{display:'flex',alignItems:'center',gap:12,padding:'10px 14px',background:'var(--surface2)',borderRadius:8,marginBottom:6}}>
-          <span style={{fontSize:22}}>{icons[e.type]||'📄'}</span>
-          <span style={{fontSize:12,flex:1,wordBreak:'break-all'}}>{e.name}</span>
-          <span className="badge bg2">✓</span>
-        </div>)}
-      </div>}
-      {!viewOnly&&<>
-        <div style={{border:'2px dashed var(--border2)',borderRadius:10,padding:'28px 20px',textAlign:'center',cursor:'pointer',transition:'all .2s',marginBottom:14}}
-          onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--accent)';e.currentTarget.style.background='rgba(245,158,11,.03)';}}
-          onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--border2)';e.currentTarget.style.background='transparent';}}
-          onClick={()=>ref.current?.click()}>
-          <div style={{fontSize:34,marginBottom:8}}>↑</div>
-          <div style={{fontWeight:600,fontSize:13}}>Haz clic para seleccionar archivos</div>
-          <div style={{fontSize:11,color:'var(--text3)',marginTop:4}}>Fotos (JPG, PNG), PDF, Word, Videos cortos (MP4)</div>
-          <div style={{fontSize:11,color:'var(--accent)',marginTop:8,fontWeight:600}}>⭐ Al cargar evidencia → Tarea se marca automáticamente al 100%</div>
-        </div>
-        <input ref={ref} type="file" multiple accept="image/*,.pdf,.doc,.docx,video/*" style={{display:'none'}} onChange={e=>onUpload(task,e.target.files)}/>
-      </>}
-      <button className="btn btn-g" style={{width:'100%',justifyContent:'center'}} onClick={onClose}>Cerrar</button>
-    </div>
-  </div>;
-}
-
-// ─── GANTT ───────────────────────────────────────────────────────
-function GanttView({selProj}){
-  const [data,setData]=useState(null);
-  const [loading,setLoading]=useState(true);
-  useEffect(()=>{
-    if(!selProj){setLoading(false);return;}
-    (async()=>{
-      const projects=await DB.getAllProjects(); const proj=projects.find(p=>p.id===selProj);
-      if(!proj){setLoading(false);return;}
-      const stages=await DB.getStages(proj.id);
-      const full=await Promise.all(stages.map(async s=>{
-        const acts=await DB.getActivities(s.id);
-        const withTasks=await Promise.all(acts.map(async a=>({...a,tasks:await DB.getTasks(a.id)})));
-        return{...s,activities:withTasks};
-      }));
-      setData({proj,stages:full}); setLoading(false);
-    })();
-  },[selProj]);
-  if(loading)return<Loader/>;
-  if(!data)return<NoProj/>;
-  const{proj,stages}=data;
-  const allT=stages.flatMap(s=>s.activities.flatMap(a=>a.tasks));
-  if(!allT.length)return<div style={{padding:'60px 0',textAlign:'center',color:'var(--text3)'}}>Sin tareas aún</div>;
-  const dates=allT.flatMap(t=>[new Date(t.start_date),new Date(t.end_date)]);
-  const minD=new Date(Math.min(...dates)), maxD=new Date(Math.max(...dates));
-  const span=diffD(fmt(minD),fmt(maxD))+14;
-  const todayOff=diffD(fmt(minD),fmtToday);
-  const L=t=>(diffD(fmt(minD),t.start_date)/span)*100;
+  const dates=allTasks.flatMap(t=>[new Date(t.start_date),new Date(t.end_date)]);
+  const minD=new Date(Math.min(...dates));
+  const span=diffD(fmtISO(minD),fmtISO(new Date(Math.max(...dates))))+14;
+  const todayOff=diffD(fmtISO(minD),fmtISO(TODAY));
+  const L=t=>(diffD(fmtISO(minD),t.start_date)/span)*100;
   const W=t=>Math.max(.8,(diffD(t.start_date,t.end_date)/span)*100);
 
-  return<div>
-    <Hdr title="DIAGRAMA GANTT" sub={proj.name}/>
-    <div className="card" style={{overflowX:'auto',padding:0}}>
-      <div style={{minWidth:1000,padding:20}}>
-        <div style={{position:'relative',height:28,marginBottom:6,marginLeft:275,borderBottom:'1px solid var(--border)'}}>
-          <div style={{position:'absolute',left:`${(todayOff/span)*100}%`,top:0,bottom:0,width:2,background:'var(--red)',opacity:.8}}/>
-          <div style={{position:'absolute',left:`${(todayOff/span)*100}%`,top:2,background:'var(--red)',color:'#fff',fontSize:10,padding:'2px 8px',borderRadius:4,transform:'translateX(-50%)',whiteSpace:'nowrap',fontWeight:700}}>HOY</div>
-        </div>
-        {stages.map((stage,si)=><div key={stage.id} style={{marginBottom:8}}>
-          <div style={{display:'flex',alignItems:'center',marginBottom:4}}>
-            <div style={{width:275,flexShrink:0,fontFamily:"'Bebas Neue',sans-serif",fontSize:12,letterSpacing:1,color:'var(--accent)',paddingRight:12,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{stage.name}</div>
-            <div style={{flex:1,height:6,background:'var(--surface2)',borderRadius:4,position:'relative'}}>
-              <div style={{position:'absolute',left:`${(todayOff/span)*100}%`,top:-4,bottom:-4,width:1,background:'var(--red)',opacity:.3}}/>
-            </div>
-          </div>
-          {stage.activities.flatMap(a=>a.tasks.map(task=>{
-            const st=calcStatus(task);
-            const bc=st.cls==='bg2'?'#22c55e':st.cls==='br'?'#ef4444':st.cls==='bb'?'#3b82f6':st.cls==='ba'?'#f59e0b':'#4a5568';
-            return<div key={task.id} style={{display:'flex',alignItems:'center',marginBottom:4}}>
-              <div style={{width:275,flexShrink:0,fontSize:11,color:'var(--text2)',paddingRight:12,paddingLeft:16,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}} title={task.name}>· {task.name}</div>
-              <div style={{flex:1,position:'relative',height:22}}>
-                <div style={{position:'absolute',left:`${(todayOff/span)*100}%`,top:0,bottom:0,width:1,background:'var(--red)',opacity:.2}}/>
-                <div style={{position:'absolute',left:`${L(task)}%`,width:`${W(task)}%`,height:22,background:`${bc}16`,border:`1px solid ${bc}40`,borderRadius:4,overflow:'hidden',cursor:'default',transition:'filter .15s',top:0,display:'flex',alignItems:'center',padding:'0 7px'}}
-                  title={`${task.name} · ${s2p(task.stars)}%`}
-                  onMouseEnter={e=>e.currentTarget.style.filter='brightness(1.4)'}
-                  onMouseLeave={e=>e.currentTarget.style.filter='none'}>
-                  {s2p(task.stars)>0&&<div style={{position:'absolute',left:0,top:0,bottom:0,width:`${s2p(task.stars)}%`,background:`${bc}30`,borderRadius:3}}/>}
-                  <span style={{position:'relative',zIndex:1,fontSize:10,fontWeight:700,color:bc,whiteSpace:'nowrap'}}>{s2p(task.stars)}%</span>
-                </div>
-              </div>
-            </div>;
-          }))}
-        </div>)}
-        <div style={{display:'flex',gap:14,marginTop:18,paddingTop:14,borderTop:'1px solid var(--border)',flexWrap:'wrap'}}>
-          {[['#22c55e','Ejecutado en plazo'],['#f59e0b','Fuera de plazo — ejecutado'],['#3b82f6','En proceso – en plazo'],['#ef4444','Fuera de plazo'],['#4a5568','No iniciado']].map(([c,l])=>(
-            <div key={l} style={{display:'flex',alignItems:'center',gap:6,fontSize:11,color:'var(--text2)'}}>
-              <div style={{width:12,height:12,background:c,borderRadius:3,opacity:.7}}/>{l}
-            </div>
-          ))}
-        </div>
+  let rows='';
+  stagesData.forEach(stage=>{
+    rows+=`<div style="display:flex;align-items:center;margin-bottom:4px">
+      <div style="width:260px;flex-shrink:0;font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:1px;color:var(--ac);padding-right:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(stage.name)}</div>
+      <div style="flex:1;height:6px;background:var(--sf2);border-radius:4px;position:relative">
+        <div style="position:absolute;left:${(todayOff/span)*100}%;top:-4px;bottom:-4px;width:1px;background:var(--rd);opacity:.3"></div>
       </div>
-    </div>
-  </div>;
-}
-
-// ─── TEAM ────────────────────────────────────────────────────────
-function TeamView({session,selProj,showToast,canAdmin}){
-  const [users,setUsers]=useState([]);
-  const [allTasks,setAllTasks]=useState([]);
-  const [modal,setModal]=useState(false);
-  const [form,setForm]=useState({name:'',email:'',password:''});
-  const [loading,setLoading]=useState(true);
-
-  const load=async()=>{
-    setLoading(true);
-    const [u,allProj]=await Promise.all([DB.getUsers(session.id),DB.getAllProjects()]);
-    setUsers(u);
-    const proj=allProj.find(p=>p.id===selProj);
-    if(proj){
-      const stages=await DB.getStages(proj.id);
-      const acts=await Promise.all(stages.map(s=>DB.getActivities(s.id)));
-      const tasks=await Promise.all(acts.flat().map(a=>DB.getTasks(a.id)));
-      setAllTasks(tasks.flat());
-    }
-    setLoading(false);
-  };
-  useEffect(()=>{load();},[selProj]);
-
-  const createUser=async()=>{
-    if(!form.name||!form.email||!form.password){showToast('Completa todos los campos','err');return;}
-    const nu={id:uid('u'),name:form.name,email:form.email,password:form.password,admin_id:session.id};
-    await DB.saveUser(nu);showToast('Usuario creado');setModal(false);setForm({name:'',email:'',password:''});load();
-  };
-
-  if(loading)return<Loader/>;
-
-  return<div>
-    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:24}}>
-      <Hdr title="EQUIPO DEL PROYECTO" sub="" noMb/>
-      <button className="btn btn-p" onClick={()=>setModal(true)}>+ Nuevo Usuario</button>
-    </div>
-    <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))',gap:16}}>
-      {users.map((u,i)=>{
-        const myT=allTasks.filter(t=>t.responsible_id===u.id);
-        const pct=myT.length?Math.round(myT.reduce((a,t)=>a+s2p(t.stars),0)/myT.length):0;
-        return<div key={u.id} className="card" style={{border:'1px solid var(--border2)'}}>
-          <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:14}}>
-            <Av name={u.name} size={44}/>
-            <div><div style={{fontWeight:700,fontSize:14}}>{u.name}</div>
-            <div style={{fontSize:11,color:'var(--text3)',marginTop:2}}>{u.email}</div></div>
+    </div>`;
+    stage.activities.forEach(a=>a.tasks.forEach(task=>{
+      const st=calcSt(task);
+      const bc=st.cls==='b-green'?'#22c55e':st.cls==='b-red'?'#ef4444':st.cls==='b-blue'?'#3b82f6':st.cls==='b-amber'?'#f59e0b':'#4a5568';
+      const pct=s2p(task.stars);
+      rows+=`<div style="display:flex;align-items:center;margin-bottom:4px">
+        <div style="width:260px;flex-shrink:0;font-size:11px;color:var(--tx2);padding-right:12px;padding-left:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${esc(task.name)}">· ${esc(task.name)}</div>
+        <div style="flex:1;position:relative;height:22px">
+          <div style="position:absolute;left:${(todayOff/span)*100}%;top:0;bottom:0;width:1px;background:var(--rd);opacity:.2"></div>
+          <div style="position:absolute;left:${L(task)}%;width:${W(task)}%;height:22px;background:${bc}16;border:1px solid ${bc}40;border-radius:4px;overflow:hidden;top:0;display:flex;align-items:center;padding:0 7px" title="${esc(task.name)} · ${pct}%">
+            ${pct>0?`<div style="position:absolute;left:0;top:0;bottom:0;width:${pct}%;background:${bc}30;border-radius:3px"></div>`:''}
+            <span style="position:relative;z-index:1;font-size:10px;font-weight:700;color:${bc};white-space:nowrap">${pct}%</span>
           </div>
-          <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'var(--text2)',marginBottom:7}}>
-            <span>{myT.length} tareas</span>
-            <span style={{fontFamily:"'JetBrains Mono',monospace",color:'var(--accent)',fontWeight:700}}>{pct}%</span>
-          </div>
-          <div className="pb" style={{marginBottom:14}}><div className="pf" style={{width:`${pct}%`,background:COLS[i%COLS.length]}}/></div>
-          <div style={{display:'flex',gap:8,justifyContent:'space-between'}}>
-            <span className="badge bb">👤 Usuario</span>
-            <button className="btn btn-d btn-s" onClick={async()=>{await DB.delUser(u.id);showToast('Usuario eliminado');load();}}>✕</button>
-          </div>
-        </div>;
-      })}
-    </div>
-    {modal&&<div className="mo" onClick={e=>e.target===e.currentTarget&&setModal(false)}>
-      <div className="md" style={{maxWidth:420}}>
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:18}}>
-          <div style={{fontWeight:700,fontSize:16}}>Nuevo Usuario</div>
-          <button className="btn btn-g btn-s" onClick={()=>setModal(false)}>✕</button>
         </div>
-        <div className="fg"><label className="lbl">Nombre completo</label><input className="input" value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))}/></div>
-        <div className="fg"><label className="lbl">Correo electrónico</label><input className="input" type="email" value={form.email} onChange={e=>setForm(p=>({...p,email:e.target.value}))}/></div>
-        <div className="fg"><label className="lbl">Contraseña inicial</label><input className="input" type="password" value={form.password} onChange={e=>setForm(p=>({...p,password:e.target.value}))}/></div>
-        <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}>
-          <button className="btn btn-g" onClick={()=>setModal(false)}>Cancelar</button>
-          <button className="btn btn-p" onClick={createUser}>Crear usuario</button>
-        </div>
-      </div>
-    </div>}
-  </div>;
-}
-
-// ─── STAGES ──────────────────────────────────────────────────────
-function StagesView({session,selProj,showToast,canAdmin}){
-  const [struct,setStruct]=useState([]);
-  const [allUsers,setAllUsers]=useState([]);
-  const [proj,setProj]=useState(null);
-  const [modal,setModal]=useState(null);
-  const [form,setForm]=useState({name:'',stageId:'',actId:'',responsible:'',startDate:'',endDate:''});
-  const [loading,setLoading]=useState(true);
-
-  const load=async()=>{
-    if(!selProj){setLoading(false);return;}
-    setLoading(true);
-    const [allProj,u]=await Promise.all([DB.getAllProjects(),DB.getAllUsers()]);
-    const p=allProj.find(x=>x.id===selProj);setProj(p);setAllUsers(u);
-    if(!p){setLoading(false);return;}
-    const stages=await DB.getStages(p.id);
-    const full=await Promise.all(stages.map(async s=>{
-      const acts=await DB.getActivities(s.id);
-      const withTasks=await Promise.all(acts.map(async a=>({...a,tasks:await DB.getTasks(a.id)})));
-      return{...s,activities:withTasks};
+      </div>`;
     }));
-    setStruct(full);setLoading(false);
-  };
-  useEffect(()=>{load();},[selProj]);
+  });
 
-  if(loading)return<Loader/>;
-  if(!proj)return<NoProj/>;
-
-  const projUsers=allUsers.filter(u=>u.admin_id===session.id||(session.role==='superadmin'));
-
-  const addStage=async()=>{
-    if(!form.name){showToast('Ingresa el nombre','err');return;}
-    await DB.saveStage({id:uid('s'),project_id:selProj,name:form.name,order_num:struct.length+1});
-    showToast('Etapa creada');setModal(null);load();
-  };
-  const addAct=async()=>{
-    if(!form.name||!form.stageId){showToast('Completa los campos','err');return;}
-    await DB.saveActivity({id:uid('a'),stage_id:form.stageId,name:form.name});
-    showToast('Actividad creada');setModal(null);load();
-  };
-  const addTask=async()=>{
-    if(!form.name||!form.actId||!form.responsible||!form.startDate||!form.endDate){showToast('Completa todos los campos','err');return;}
-    await DB.saveTask({id:uid('t'),activity_id:form.actId,name:form.name,responsible_id:form.responsible,start_date:form.startDate,end_date:form.endDate,stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false});
-    showToast('Tarea creada');setModal(null);load();
-  };
-
-  return<div>
-    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:24,flexWrap:'wrap',gap:10}}>
-      <Hdr title="ESTRUCTURA DEL PROYECTO" sub={proj.name} noMb/>
-      <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
-        <button className="btn btn-g btn-s" onClick={()=>{setForm(p=>({...p,name:''}));setModal('stage');}}>+ Etapa</button>
-        <button className="btn btn-g btn-s" onClick={()=>{setForm(p=>({...p,name:'',stageId:''}));setModal('act');}}>+ Actividad</button>
-        <button className="btn btn-p btn-s" onClick={()=>{setForm({name:'',stageId:'',actId:'',responsible:'',startDate:'',endDate:''});setModal('task');}}>+ Tarea</button>
+  return hdr('DIAGRAMA GANTT',proj.name)+`
+  <div class="card" style="overflow-x:auto;padding:0">
+    <div style="min-width:1000px;padding:20px">
+      <div style="position:relative;height:28px;margin-bottom:6px;margin-left:260px;border-bottom:1px solid var(--bd)">
+        <div style="position:absolute;left:${(todayOff/span)*100}%;top:0;bottom:0;width:2px;background:var(--rd);opacity:.8"></div>
+        <div style="position:absolute;left:${(todayOff/span)*100}%;top:2px;background:var(--rd);color:#fff;font-size:10px;padding:2px 8px;border-radius:4px;transform:translateX(-50%);white-space:nowrap;font-weight:700">HOY</div>
+      </div>
+      ${rows}
+      <div style="display:flex;gap:14px;margin-top:18px;padding-top:14px;border-top:1px solid var(--bd);flex-wrap:wrap">
+        ${[['#22c55e','Ejecutado en plazo'],['#f59e0b','Ejecutado fuera de plazo'],['#3b82f6','En proceso – en plazo'],['#ef4444','Fuera de plazo'],['#4a5568','No iniciado']].map(([c,l])=>`<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--tx2)"><div style="width:12px;height:12px;background:${c};border-radius:3px;opacity:.7"></div>${l}</div>`).join('')}
       </div>
     </div>
+  </div>`;
+},
 
-    {struct.map((stage,si)=><div key={stage.id} className="card" style={{marginBottom:14,padding:0,overflow:'hidden',border:'1px solid var(--border2)'}}>
-      <div style={{padding:'12px 20px',background:'var(--surface2)',borderBottom:'1px solid var(--border)',display:'flex',alignItems:'center',gap:12}}>
-        <span style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:14,color:'var(--accent)',letterSpacing:1,flex:1}}>ETAPA {si+1}: {stage.name}</span>
-        <span style={{fontSize:11,color:'var(--text3)'}}>{stage.activities.length} actividades · {stage.activities.reduce((a,act)=>a+act.tasks.length,0)} tareas</span>
+// ── TEAM ─────────────────────────────────────────────
+async team(){
+  const users=await DB.getUsers(SESSION.id);
+  const allP=await DB.getAllProjects(); const proj=allP.find(p=>p.id===SEL_PROJ);
+  let allTasks=[];
+  if(proj){
+    const stages=await DB.getStages(proj.id);
+    for(const s of stages){const acts=await DB.getActivities(s.id);for(const a of acts){const tasks=await DB.getTasks(a.id);allTasks.push(...tasks);}}
+  }
+  let cards=users.map((u,i)=>{
+    const myT=allTasks.filter(t=>t.responsible_id===u.id);
+    const pct=myT.length?Math.round(myT.reduce((a,t)=>a+s2p(t.stars),0)/myT.length):0;
+    const done=myT.filter(t=>t.stars===5||getEv(t).length>0).length;
+    return`<div class="card" style="border:1px solid var(--bd2)">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        ${avHTML(u.name,44)}
+        <div><div style="font-weight:700;font-size:14px">${esc(u.name)}</div>
+        <div style="font-size:11px;color:var(--tx3);margin-top:2px">${esc(u.email)}</div></div>
       </div>
-      {stage.activities.map((act,ai)=><div key={act.id}>
-        <div style={{padding:'9px 20px 9px 32px',background:'rgba(255,255,255,.015)',borderBottom:'1px solid var(--border)',display:'flex',alignItems:'center'}}>
-          <span style={{fontWeight:600,fontSize:13,flex:1}}>Actividad {si+1}.{ai+1}: {act.name}</span>
-          <span style={{fontSize:11,color:'var(--text3)'}}>{act.tasks.length} tareas</span>
-        </div>
-        {act.tasks.map((task,ti)=>{
-          const u=allUsers.find(x=>x.id===task.responsible_id)||{name:'Sin asignar'};
-          return<div key={task.id} style={{display:'flex',alignItems:'center',gap:12,padding:'8px 20px 8px 52px',borderBottom:'1px solid var(--border)',fontSize:12,flexWrap:'wrap'}}>
-            <span style={{flex:1,minWidth:150}}>{si+1}.{ai+1}.{ti+1} {task.name}</span>
-            <span style={{color:'var(--text2)'}}>{u.name}</span>
-            <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:11,color:'var(--text3)'}}>{new Date(task.start_date).toLocaleDateString('es-PE')} → {new Date(task.end_date).toLocaleDateString('es-PE')} ({diffD(task.start_date,task.end_date)}d)</span>
-            <span style={{fontFamily:"'JetBrains Mono',monospace",color:'var(--accent)',fontWeight:700}}>{s2p(task.stars)}%</span>
-          </div>;
-        })}
-      </div>)}
-    </div>)}
-
-    {modal==='stage'&&<div className="mo" onClick={e=>e.target===e.currentTarget&&setModal(null)}>
-      <div className="md" style={{maxWidth:400}}>
-        <div style={{fontWeight:700,fontSize:16,marginBottom:18}}>Nueva Etapa</div>
-        <div className="fg"><label className="lbl">Nombre</label><input className="input" placeholder="Ej: ACABADOS" value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))}/></div>
-        <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}><button className="btn btn-g" onClick={()=>setModal(null)}>Cancelar</button><button className="btn btn-p" onClick={addStage}>Crear</button></div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--tx2);margin-bottom:7px">
+        <span>${myT.length} tareas · ${done} completadas</span>
+        <span style="font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${pct}%</span>
       </div>
-    </div>}
-
-    {modal==='act'&&<div className="mo" onClick={e=>e.target===e.currentTarget&&setModal(null)}>
-      <div className="md" style={{maxWidth:420}}>
-        <div style={{fontWeight:700,fontSize:16,marginBottom:18}}>Nueva Actividad</div>
-        <div className="fg"><label className="lbl">Etapa</label>
-          <select className="input" value={form.stageId} onChange={e=>setForm(p=>({...p,stageId:e.target.value}))}>
-            <option value="">Seleccionar etapa...</option>
-            {struct.map(s=><option key={s.id} value={s.id}>{s.name}</option>)}
-          </select>
-        </div>
-        <div className="fg"><label className="lbl">Nombre</label><input className="input" placeholder="Ej: Excavación masiva" value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))}/></div>
-        <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}><button className="btn btn-g" onClick={()=>setModal(null)}>Cancelar</button><button className="btn btn-p" onClick={addAct}>Crear</button></div>
+      ${pbHTML(pct,COLS[i%COLS.length])}
+      <div style="display:flex;gap:8px;justify-content:space-between;margin-top:14px">
+        <span class="badge b-blue">👤 Usuario</span>
+        <button class="btn btn-d btn-s" onclick="deleteUser('${u.id}')">✕ Eliminar</button>
       </div>
-    </div>}
+    </div>`;
+  }).join('');
 
-    {modal==='task'&&<div className="mo" onClick={e=>e.target===e.currentTarget&&setModal(null)}>
-      <div className="md" style={{maxWidth:500}}>
-        <div style={{fontWeight:700,fontSize:16,marginBottom:18}}>Nueva Tarea</div>
-        <div className="fg"><label className="lbl">Actividad</label>
-          <select className="input" value={form.actId} onChange={e=>setForm(p=>({...p,actId:e.target.value}))}>
-            <option value="">Seleccionar actividad...</option>
-            {struct.flatMap(s=>s.activities.map(a=><option key={a.id} value={a.id}>{s.name} → {a.name}</option>))}
-          </select>
+  return hdr('EQUIPO DEL PROYECTO','')+`
+  <div style="display:flex;justify-content:flex-end;margin-bottom:20px">
+    <button class="btn btn-p" onclick="openNewUser()">+ Nuevo Usuario</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">${cards||'<div style="color:var(--tx3);font-size:13px">Sin usuarios aún. Crea el primero.</div>'}</div>`;
+},
+
+// ── STAGES ───────────────────────────────────────────
+async stages(){
+  if(!SEL_PROJ)return '<div style="color:var(--tx3);padding:40px">Sin proyecto seleccionado</div>';
+  const allP=await DB.getAllProjects(); const proj=allP.find(p=>p.id===SEL_PROJ);
+  if(!proj)return '';
+  const allU=await DB.getAllUsers();
+  const stages=await DB.getStages(proj.id);
+  let stagesHTML='';
+  for(let si=0;si<stages.length;si++){
+    const s=stages[si];
+    const acts=await DB.getActivities(s.id);
+    let actsHTML='';
+    for(let ai=0;ai<acts.length;ai++){
+      const a=acts[ai];
+      const tasks=await DB.getTasks(a.id);
+      let taskRows=tasks.map((t,ti)=>{
+        const u=allU.find(x=>x.id===t.responsible_id)||{name:'Sin asignar'};
+        return`<div style="display:flex;align-items:center;gap:12px;padding:8px 20px 8px 52px;border-bottom:1px solid var(--bd);font-size:12px;flex-wrap:wrap">
+          <span style="flex:1;min-width:150px">${si+1}.${ai+1}.${ti+1} ${esc(t.name)}</span>
+          <span style="color:var(--tx2)">${esc(u.name)}</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3)">${fmtD(t.start_date)} → ${fmtD(t.end_date)} (${diffD(t.start_date,t.end_date)}d)</span>
+          <span style="font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${s2p(t.stars)}%</span>
+        </div>`;
+      }).join('');
+      actsHTML+=`<div>
+        <div style="padding:9px 20px 9px 32px;background:rgba(255,255,255,.015);border-bottom:1px solid var(--bd);display:flex;align-items:center">
+          <span style="font-weight:600;font-size:13px;flex:1">Actividad ${si+1}.${ai+1}: ${esc(a.name)}</span>
+          <span style="font-size:11px;color:var(--tx3)">${tasks.length} tareas</span>
         </div>
-        <div className="fg"><label className="lbl">Nombre de la tarea</label><input className="input" placeholder="Ej: Vaciado de concreto" value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))}/></div>
-        <div className="fg"><label className="lbl">Responsable</label>
-          <select className="input" value={form.responsible} onChange={e=>setForm(p=>({...p,responsible:e.target.value}))}>
-            <option value="">Seleccionar usuario...</option>
-            {projUsers.map(u=><option key={u.id} value={u.id}>{u.name}</option>)}
-          </select>
-        </div>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-          <div className="fg"><label className="lbl">Fecha inicio 📅</label><input className="input" type="date" value={form.startDate} onChange={e=>setForm(p=>({...p,startDate:e.target.value}))}/></div>
-          <div className="fg"><label className="lbl">Fecha fin 📅</label><input className="input" type="date" value={form.endDate} onChange={e=>setForm(p=>({...p,endDate:e.target.value}))}/></div>
-        </div>
-        {form.startDate&&form.endDate&&<div style={{background:'rgba(245,158,11,.08)',border:'1px solid rgba(245,158,11,.15)',borderRadius:8,padding:'8px 14px',fontSize:12,color:'var(--accent)',marginBottom:14}}>
-          ⏱ Duración: <strong>{diffD(form.startDate,form.endDate)} días calendarios</strong>
-        </div>}
-        <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}><button className="btn btn-g" onClick={()=>setModal(null)}>Cancelar</button><button className="btn btn-p" onClick={addTask}>Crear tarea</button></div>
+        ${taskRows}
+      </div>`;
+    }
+    stagesHTML+=`<div class="card" style="margin-bottom:14px;padding:0;overflow:hidden;border:1px solid var(--bd2)">
+      <div style="padding:12px 20px;background:var(--sf2);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:12px">
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--ac);letter-spacing:1px;flex:1">ETAPA ${si+1}: ${esc(s.name)}</span>
+        <span style="font-size:11px;color:var(--tx3)">${acts.length} actividades · ${acts.reduce((a,act)=>a,0)} tareas</span>
       </div>
-    </div>}
-  </div>;
-}
+      ${actsHTML}
+    </div>`;
+  }
 
-// ─── ADMINS ───────────────────────────────────────────────────────
-function AdminsView({session,showToast}){
-  const [admins,setAdmins]=useState([]);
-  const [modal,setModal]=useState(false);
-  const [form,setForm]=useState({name:'',email:'',password:'',company:''});
-  const load=async()=>{const a=await DB.getAdmins();setAdmins(a);};
-  useEffect(()=>{load();},[]);
-  const create=async()=>{
-    if(!form.name||!form.email||!form.password){showToast('Completa todos los campos','err');return;}
-    await DB.saveAdmin({id:uid('adm'),name:form.name,email:form.email,password:form.password,company:form.company});
-    showToast('Administrador creado');setModal(false);setForm({name:'',email:'',password:'',company:''});load();
-  };
-  return<div>
-    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:24}}>
-      <Hdr title="ADMINISTRADORES" sub="Gestión de cuentas de administrador" noMb/>
-      <button className="btn btn-p" onClick={()=>setModal(true)}>+ Nuevo Administrador</button>
+  return hdr('ESTRUCTURA DEL PROYECTO',proj.name)+`
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;justify-content:flex-end">
+    <button class="btn btn-g btn-s" onclick="openNewStage()">+ Etapa</button>
+    <button class="btn btn-g btn-s" onclick="openNewActivity()">+ Actividad</button>
+    <button class="btn btn-p btn-s" onclick="openNewTask()">+ Tarea</button>
+  </div>
+  ${stagesHTML||'<div style="color:var(--tx3);text-align:center;padding:40px">Sin etapas aún. Comienza creando la primera etapa.</div>'}`;
+},
+
+// ── ADMINS ───────────────────────────────────────────
+async admins(){
+  const admins=await DB.getAdmins();
+  let cards=admins.map(a=>`<div class="card" style="border:1px solid var(--bd2)">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#1e3a5f,#0f2340);border:1px solid rgba(59,130,246,.3);display:flex;align-items:center;justify-content:center;font-size:22px">🏢</div>
+      <div>
+        <div style="font-weight:700;font-size:15px">${esc(a.name)}</div>
+        <div style="font-size:11px;color:var(--tx3)">${esc(a.company||'Sin empresa')}</div>
+        <div style="font-size:11px;color:var(--tx3)">${esc(a.email)}</div>
+      </div>
     </div>
-    <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))',gap:16}}>
-      {admins.map(adm=><div key={adm.id} className="card" style={{border:'1px solid var(--border2)'}}>
-        <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:16}}>
-          <div style={{width:48,height:48,borderRadius:12,background:'linear-gradient(135deg,#1e3a5f,#0f2340)',border:'1px solid rgba(59,130,246,.3)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:22}}>🏢</div>
-          <div>
-            <div style={{fontWeight:700,fontSize:15}}>{adm.name}</div>
-            <div style={{fontSize:11,color:'var(--text3)'}}>{adm.company||'Sin empresa'}</div>
-            <div style={{fontSize:11,color:'var(--text3)'}}>{adm.email}</div>
-          </div>
-        </div>
-        <div style={{display:'flex',gap:8,justifyContent:'space-between',alignItems:'center'}}>
-          <span className="badge ba">⭐ Plan Activo</span>
-          <button className="btn btn-d btn-s" onClick={async()=>{await DB.delAdmin(adm.id);showToast('Admin eliminado');load();}}>✕</button>
-        </div>
-      </div>)}
+    <div style="display:flex;gap:8px;justify-content:space-between;align-items:center">
+      <span class="badge b-amber">⭐ Plan Activo</span>
+      <button class="btn btn-d btn-s" onclick="deleteAdmin('${a.id}')">✕</button>
     </div>
-    {modal&&<div className="mo" onClick={e=>e.target===e.currentTarget&&setModal(false)}>
-      <div className="md" style={{maxWidth:440}}>
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:18}}>
-          <div style={{fontWeight:700,fontSize:16}}>Nuevo Administrador</div>
-          <button className="btn btn-g btn-s" onClick={()=>setModal(false)}>✕</button>
-        </div>
-        <div className="fg"><label className="lbl">Nombre</label><input className="input" value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))}/></div>
-        <div className="fg"><label className="lbl">Empresa</label><input className="input" placeholder="Ej: Constructora ABC SAC" value={form.company} onChange={e=>setForm(p=>({...p,company:e.target.value}))}/></div>
-        <div className="fg"><label className="lbl">Email</label><input className="input" type="email" value={form.email} onChange={e=>setForm(p=>({...p,email:e.target.value}))}/></div>
-        <div className="fg"><label className="lbl">Contraseña</label><input className="input" type="password" value={form.password} onChange={e=>setForm(p=>({...p,password:e.target.value}))}/></div>
-        <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}><button className="btn btn-g" onClick={()=>setModal(false)}>Cancelar</button><button className="btn btn-p" onClick={create}>Crear</button></div>
-      </div>
-    </div>}
-  </div>;
-}
+  </div>`).join('');
+  return hdr('ADMINISTRADORES','Gestión de cuentas de administrador')+`
+  <div style="display:flex;justify-content:flex-end;margin-bottom:20px">
+    <button class="btn btn-p" onclick="openNewAdmin()">+ Nuevo Administrador</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">${cards||'<div style="color:var(--tx3)">Sin administradores aún</div>'}</div>`;
+},
 
-// ─── NEW PROJECT ──────────────────────────────────────────────────
-function NewProjView({session,showToast,onCreated}){
-  const [form,setForm]=useState({name:'',description:'',startDate:fmtToday,endDate:fmt(addD(TODAY,180))});
-  const create=async()=>{
-    if(!form.name||!form.startDate||!form.endDate){showToast('Completa los campos requeridos','err');return;}
-    const id=uid('p');
-    await DB.saveProject({id,name:form.name,description:form.description,admin_id:session.id,start_date:form.startDate,end_date:form.endDate});
-    showToast('Proyecto creado 🎉');onCreated(id);
-  };
-  return<div style={{maxWidth:580}}>
-    <Hdr title="NUEVO PROYECTO" sub=""/>
-    <div className="card" style={{border:'1px solid var(--border2)'}}>
-      <div className="fg"><label className="lbl">Nombre del proyecto *</label><input className="input" placeholder="Ej: Edificio Residencial Los Álamos" value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))}/></div>
-      <div className="fg"><label className="lbl">Descripción</label><textarea className="input" rows={3} placeholder="Descripción general..." value={form.description} onChange={e=>setForm(p=>({...p,description:e.target.value}))} style={{resize:'none'}}/></div>
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:14}}>
-        <div className="fg"><label className="lbl">Fecha de inicio 📅 *</label><input className="input" type="date" value={form.startDate} onChange={e=>setForm(p=>({...p,startDate:e.target.value}))}/></div>
-        <div className="fg"><label className="lbl">Fecha de fin 📅 *</label><input className="input" type="date" value={form.endDate} onChange={e=>setForm(p=>({...p,endDate:e.target.value}))}/></div>
-      </div>
-      {form.startDate&&form.endDate&&<div style={{background:'rgba(245,158,11,.08)',border:'1px solid rgba(245,158,11,.15)',borderRadius:8,padding:'10px 14px',fontSize:13,color:'var(--accent)',marginBottom:16}}>
-        📅 Duración: <strong>{diffD(form.startDate,form.endDate)} días calendarios</strong>
-      </div>}
-      <button className="btn btn-p" style={{width:'100%',justifyContent:'center'}} onClick={create}>Crear Proyecto →</button>
+// ── NEW PROJECT ──────────────────────────────────────
+async newproject(){
+  return hdr('NUEVO PROYECTO','')+`
+  <div class="card" style="max-width:580px;border:1px solid var(--bd2)">
+    <div class="fg"><label class="lbl">Nombre del proyecto *</label><input class="inp" id="np-name" placeholder="Ej: Edificio Residencial Los Álamos"></div>
+    <div class="fg"><label class="lbl">Descripción</label><textarea class="inp" id="np-desc" rows="3" placeholder="Descripción general del proyecto..." style="resize:none"></textarea></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="fg"><label class="lbl">Fecha de inicio 📅 *</label><input class="inp" type="date" id="np-start" value="${fmtISO(TODAY)}"></div>
+      <div class="fg"><label class="lbl">Fecha de fin 📅 *</label><input class="inp" type="date" id="np-end" value="${addD(TODAY,180)}"></div>
     </div>
-  </div>;
-}
-
-// ─── PROFILE ──────────────────────────────────────────────────────
-function ProfileView({session,showToast,setSession}){
-  const [form,setForm]=useState({name:session.name,email:session.email,currP:'',newP:'',confP:''});
-  const save=async()=>{
-    if(form.newP&&form.newP!==form.confP){showToast('Las contraseñas no coinciden','err');return;}
-    if(form.newP&&form.currP!==session.password){showToast('Contraseña actual incorrecta','err');return;}
-    const patch={name:form.name,email:form.email,...(form.newP?{password:form.newP}:{})};
-    if(session.role==='admin') await DB.saveAdmin({...session,...patch});
-    else if(session.role==='user') await DB.saveUser({...session,...patch});
-    setSession(p=>({...p,...patch}));
-    showToast('Perfil actualizado ✓');
-    setForm(p=>({...p,currP:'',newP:'',confP:''}));
-  };
-  return<div style={{maxWidth:520}}>
-    <Hdr title="MI PERFIL" sub=""/>
-    <div className="card" style={{border:'1px solid var(--border2)'}}>
-      <div style={{display:'flex',alignItems:'center',gap:16,marginBottom:22,paddingBottom:20,borderBottom:'1px solid var(--border)'}}>
-        <div style={{width:62,height:62,borderRadius:16,background:'linear-gradient(135deg,var(--accent),var(--accent2))',display:'flex',alignItems:'center',justifyContent:'center',fontSize:24,fontWeight:700,color:'#000'}}>{ini(session.name)}</div>
-        <div>
-          <div style={{fontWeight:700,fontSize:18}}>{session.name}</div>
-          <div style={{fontSize:12,color:'var(--text3)',marginTop:2}}>{session.email}</div>
-          <span className="badge ba" style={{marginTop:6,display:'inline-flex'}}>{session.role==='superadmin'?'🛡 Super Admin':session.role==='admin'?'⚙ Administrador':'👤 Usuario'}</span>
-        </div>
-      </div>
-      <div className="fg"><label className="lbl">Nombre completo</label><input className="input" value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))}/></div>
-      <div className="fg"><label className="lbl">Correo electrónico</label><input className="input" type="email" value={form.email} onChange={e=>setForm(p=>({...p,email:e.target.value}))}/></div>
-      <div style={{fontWeight:600,fontSize:13,marginBottom:14,marginTop:18,color:'var(--text2)',paddingTop:18,borderTop:'1px solid var(--border)'}}>Cambiar contraseña</div>
-      <div className="fg"><label className="lbl">Contraseña actual</label><input className="input" type="password" placeholder="Tu contraseña actual" value={form.currP} onChange={e=>setForm(p=>({...p,currP:e.target.value}))}/></div>
-      <div className="fg"><label className="lbl">Nueva contraseña</label><input className="input" type="password" placeholder="Nueva contraseña" value={form.newP} onChange={e=>setForm(p=>({...p,newP:e.target.value}))}/></div>
-      <div className="fg"><label className="lbl">Confirmar contraseña</label><input className="input" type="password" placeholder="Repite la nueva contraseña" value={form.confP} onChange={e=>setForm(p=>({...p,confP:e.target.value}))}/></div>
-      <button className="btn btn-p" style={{width:'100%',justifyContent:'center',marginTop:6}} onClick={save}>💾 Guardar cambios</button>
+    <div id="np-dur" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--ac);margin-bottom:16px">
+      📅 Duración: <strong>${diffD(fmtISO(TODAY),addD(TODAY,180))} días calendarios</strong>
     </div>
-  </div>;
-}
+    <button class="btn btn-p" style="width:100%;justify-content:center" onclick="createProject()">Crear Proyecto →</button>
+  </div>`;
+},
+newproject_init(){
+  document.getElementById('np-start')?.addEventListener('change',updateDur);
+  document.getElementById('np-end')?.addEventListener('change',updateDur);
+},
 
-// ─── PLATFORM ─────────────────────────────────────────────────────
-function PlatformView(){
+// ── PROFILE ──────────────────────────────────────────
+async profile(){
+  return hdr('MI PERFIL','')+`
+  <div class="card" style="max-width:520px;border:1px solid var(--bd2)">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--bd)">
+      <div class="av" style="width:62px;height:62px;border-radius:16px;font-size:24px">${ini(SESSION.name)}</div>
+      <div>
+        <div style="font-weight:700;font-size:18px">${esc(SESSION.name)}</div>
+        <div style="font-size:12px;color:var(--tx3);margin-top:2px">${esc(SESSION.email)}</div>
+        <span class="badge b-amber" style="margin-top:6px;display:inline-flex">${SESSION.role==='superadmin'?'🛡 Super Admin':SESSION.role==='admin'?'⚙ Administrador':'👤 Usuario'}</span>
+      </div>
+    </div>
+    <div class="fg"><label class="lbl">Nombre completo</label><input class="inp" id="pf-name" value="${esc(SESSION.name)}"></div>
+    <div class="fg"><label class="lbl">Correo electrónico</label><input class="inp" type="email" id="pf-email" value="${esc(SESSION.email)}"></div>
+    <div style="font-weight:600;font-size:13px;margin-bottom:14px;margin-top:18px;color:var(--tx2);padding-top:18px;border-top:1px solid var(--bd)">Cambiar contraseña</div>
+    <div class="fg"><label class="lbl">Contraseña actual</label><input class="inp" type="password" id="pf-curr" placeholder="Tu contraseña actual"></div>
+    <div class="fg"><label class="lbl">Nueva contraseña</label><input class="inp" type="password" id="pf-new" placeholder="Nueva contraseña"></div>
+    <div class="fg"><label class="lbl">Confirmar contraseña</label><input class="inp" type="password" id="pf-conf" placeholder="Repite la nueva contraseña"></div>
+    <button class="btn btn-p" style="width:100%;justify-content:center;margin-top:6px" onclick="saveProfile()">💾 Guardar cambios</button>
+  </div>`;
+},
+
+// ── PLATFORM ─────────────────────────────────────────
+async platform(){
   const plans=[
-    {name:'STARTER',price:'S/ 149',period:'/mes',features:['1 proyecto activo','5 usuarios','Evidencias ilimitadas','Dashboard básico','Gantt','Soporte por email'],col:'var(--blue)'},
-    {name:'PROFESSIONAL',price:'S/ 349',period:'/mes',features:['10 proyectos activos','50 usuarios','Gantt avanzado','Analytics avanzado','Notificaciones real-time','Soporte prioritario'],col:'var(--accent)',featured:true},
-    {name:'ENTERPRISE',price:'A consultar',period:'',features:['Proyectos ilimitados','Usuarios ilimitados','Branding personalizado','SLA garantizado','Gestor dedicado','API + Integración ERP'],col:'var(--purple)'},
+    {name:'STARTER',price:'S/ 149',per:'/mes',features:['1 proyecto activo','5 usuarios','Dashboard básico','Gantt','Soporte email'],col:'var(--bl)'},
+    {name:'PROFESSIONAL',price:'S/ 349',per:'/mes',features:['10 proyectos','50 usuarios','Gantt avanzado','Analytics','Soporte prioritario'],col:'var(--ac)',featured:true},
+    {name:'ENTERPRISE',price:'A consultar',per:'',features:['Ilimitado','Branding propio','SLA','Gestor dedicado','API + ERP'],col:'var(--pu)'},
   ];
-  return<div>
-    <Hdr title="PLATAFORMA & COMERCIALIZACIÓN" sub="Gestiona planes de suscripción para clientes"/>
-    <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20,marginBottom:28}}>
-      {plans.map(plan=><div key={plan.name} className="card" style={{border:`1px solid ${plan.featured?plan.col:'var(--border2)'}`,position:'relative',...(plan.featured?{boxShadow:`0 0 40px ${plan.col}15`}:{})}}>
-        {plan.featured&&<div style={{position:'absolute',top:-11,left:'50%',transform:'translateX(-50%)',background:plan.col,color:'#000',padding:'3px 18px',borderRadius:99,fontSize:11,fontWeight:700,whiteSpace:'nowrap'}}>MÁS POPULAR</div>}
-        <div style={{marginBottom:16,paddingTop:plan.featured?10:0}}>
-          <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:20,color:plan.col,letterSpacing:1}}>{plan.name}</div>
-          <div style={{display:'flex',alignItems:'baseline',gap:4,marginTop:6}}>
-            <span style={{fontSize:26,fontWeight:700,fontFamily:"'JetBrains Mono',monospace",color:'var(--text)'}}>{plan.price}</span>
-            <span style={{fontSize:12,color:'var(--text3)'}}>{plan.period}</span>
-          </div>
+  return hdr('PLATAFORMA & COMERCIALIZACIÓN','Gestiona planes de suscripción')+`
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+    ${plans.map(p=>`<div class="card" style="border:1px solid ${p.featured?p.col:'var(--bd2)'};position:relative${p.featured?';box-shadow:0 0 40px '+p.col+'15':''}">
+      ${p.featured?`<div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:${p.col};color:#000;padding:3px 18px;border-radius:99px;font-size:11px;font-weight:700;white-space:nowrap">MÁS POPULAR</div>`:''}
+      <div style="margin-bottom:16px;padding-top:${p.featured?'10px':'0'}">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:${p.col};letter-spacing:1px">${p.name}</div>
+        <div style="display:flex;align-items:baseline;gap:4px;margin-top:6px">
+          <span style="font-size:26px;font-weight:700;font-family:'JetBrains Mono',monospace">${p.price}</span>
+          <span style="font-size:12px;color:var(--tx3)">${p.per}</span>
         </div>
-        <div style={{borderTop:'1px solid var(--border)',paddingTop:14,marginBottom:18}}>
-          {plan.features.map(f=><div key={f} style={{display:'flex',gap:8,marginBottom:8,fontSize:12}}>
-            <span style={{color:plan.col,flexShrink:0}}>✓</span>
-            <span style={{color:'var(--text2)'}}>{f}</span>
-          </div>)}
-        </div>
-        <button className="btn" style={{width:'100%',justifyContent:'center',background:plan.featured?plan.col:'transparent',color:plan.featured?'#000':plan.col,border:`1.5px solid ${plan.col}`}}>Asignar Plan</button>
-      </div>)}
+      </div>
+      <div style="border-top:1px solid var(--bd);padding-top:14px;margin-bottom:18px">
+        ${p.features.map(f=>`<div style="display:flex;gap:8px;margin-bottom:8px;font-size:12px"><span style="color:${p.col};flex-shrink:0">✓</span><span style="color:var(--tx2)">${f}</span></div>`).join('')}
+      </div>
+      <button class="btn" style="width:100%;justify-content:center;background:${p.featured?p.col:'transparent'};color:${p.featured?'#000':p.col};border:1.5px solid ${p.col}">Asignar Plan</button>
+    </div>`).join('')}
+  </div>`;
+}
+};
+
+// ═══════════════════════════════════════════════════
+//  TOGGLE HELPERS
+// ═══════════════════════════════════════════════════
+function toggleStage(bodyId,hdr){
+  const el=document.getElementById(bodyId);
+  const arrow=hdr.querySelector('span');
+  el.style.display=el.style.display==='none'?'block':'none';
+  if(arrow)arrow.textContent=el.style.display==='none'?'▶':'▼';
+}
+function toggleAct(bodyId,hdr){
+  const el=document.getElementById(bodyId);
+  const arrow=hdr.querySelector('span');
+  el.style.display=el.style.display==='none'?'block':'none';
+  if(arrow)arrow.textContent=el.style.display==='none'?'▶':'▼';
+}
+function updateDur(){
+  const s=document.getElementById('np-start')?.value;
+  const e=document.getElementById('np-end')?.value;
+  const d=document.getElementById('np-dur');
+  if(s&&e&&d)d.innerHTML=`📅 Duración: <strong>${diffD(s,e)} días calendarios</strong>`;
+}
+
+// ═══════════════════════════════════════════════════
+//  ACTIONS
+// ═══════════════════════════════════════════════════
+async function updateStar(taskId,stars){
+  // Get task
+  const allT=lsG('tasks',[]);
+  let task=allT.find(t=>t.id===taskId);
+  if(!task&&sb){const{data}=await sb.from('tasks').select('*').eq('id',taskId).single();task=data;}
+  if(!task)return;
+  if(getEv(task).length>0||task.stars===5){toast('Las 5★ se activan al subir evidencia','err');return;}
+  if(stars===5){toast('Sube evidencia para completar al 100%','err');return;}
+  const canAdmin=SESSION.role==='admin'||SESSION.role==='superadmin';
+  if(!canAdmin&&task.responsible_id!==SESSION.id){toast('Solo el responsable puede actualizar','err');return;}
+  await DB.updateTask(taskId,{stars});
+  await addNotif(`📊 "${task.name}" → ${s2p(stars)}% — ${SESSION.name}`);
+  toast(`Avance actualizado a ${s2p(stars)}%`);
+  showView('tasks');
+}
+
+async function uploadEvidence(taskId){
+  openModal(`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <div style="font-weight:700;font-size:16px">📎 Subir Evidencia</div>
+      <button class="btn btn-g btn-s" onclick="closeModal()">✕</button>
     </div>
-  </div>;
+    <div style="border:2px dashed var(--bd2);border-radius:10px;padding:30px 20px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:14px"
+      onmouseenter="this.style.borderColor='var(--ac)';this.style.background='rgba(245,158,11,.03)'"
+      onmouseleave="this.style.borderColor='var(--bd2)';this.style.background='transparent'"
+      onclick="document.getElementById('ev-file').click()">
+      <div style="font-size:34px;margin-bottom:8px">↑</div>
+      <div style="font-weight:600;font-size:13px">Haz clic para seleccionar archivos</div>
+      <div style="font-size:11px;color:var(--tx3);margin-top:4px">Fotos (JPG, PNG), PDF, Word, Videos (MP4)</div>
+      <div style="font-size:11px;color:var(--ac);margin-top:8px;font-weight:600">⭐ Al cargar evidencia → Tarea se marca automáticamente al 100%</div>
+    </div>
+    <input type="file" id="ev-file" multiple accept="image/*,.pdf,.doc,.docx,video/*" style="display:none" onchange="processEvidence('${taskId}',this.files)">
+    <button class="btn btn-g" style="width:100%;justify-content:center" onclick="closeModal()">Cancelar</button>
+  `);
 }
 
-// ─── MICRO COMPONENTS ─────────────────────────────────────────────
-function Hdr({title,sub,noMb=false}){
-  return<div style={{marginBottom:noMb?0:24}}>
-    <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:26,color:'var(--accent)',letterSpacing:1}}>{title}</div>
-    {sub&&<div style={{color:'var(--text2)',fontSize:13,marginTop:1}}>{sub}</div>}
-  </div>;
-}
-function Loader(){
-  return<div style={{display:'flex',alignItems:'center',justifyContent:'center',padding:'80px 0',gap:12,color:'var(--text3)'}}>
-    <div className="spin" style={{width:20,height:20,border:'2px solid var(--border2)',borderTop:'2px solid var(--accent)',borderRadius:'50%'}}/>
-    <span style={{fontSize:13}}>Cargando...</span>
-  </div>;
-}
-function NoProj(){
-  return<div style={{textAlign:'center',padding:'80px 0',color:'var(--text3)'}}>
-    <div style={{fontSize:52,marginBottom:16}}>🏗</div>
-    <div style={{fontSize:16,fontWeight:600,color:'var(--text2)'}}>Selecciona o crea un proyecto</div>
-    <div style={{fontSize:13,marginTop:6}}>Usa el menú lateral para navegar</div>
-  </div>;
+async function processEvidence(taskId,files){
+  if(!files||!files.length)return;
+  let task=null;
+  if(sb){const{data}=await sb.from('tasks').select('*').eq('id',taskId).single();task=data;}
+  else task=lsG('tasks',[]).find(t=>t.id===taskId);
+  if(!task)return;
+  const cur=getEv(task);
+  const newEvs=Array.from(files).map(f=>({name:f.name,type:f.type.startsWith('image')?'image':f.type==='application/pdf'?'pdf':f.type.startsWith('video')?'video':'doc'}));
+  await DB.updateTask(taskId,{evidence:JSON.stringify([...cur,...newEvs]),stars:5});
+  await addNotif(`📎 Evidencia cargada en "${task.name}" por ${SESSION.name} — ¡100%! ⭐⭐⭐⭐⭐`);
+  toast('Evidencia cargada — Tarea al 100% ⭐⭐⭐⭐⭐');
+  closeModal();
+  showView('tasks');
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+async function viewEvidence(taskId){
+  let task=null;
+  if(sb){const{data}=await sb.from('tasks').select('*').eq('id',taskId).single();task=data;}
+  else task=lsG('tasks',[]).find(t=>t.id===taskId);
+  if(!task)return;
+  const ev=getEv(task);
+  const icons={image:'🖼',pdf:'📄',video:'🎬',doc:'📝'};
+  const list=ev.map(e=>`<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--sf2);border-radius:8px;margin-bottom:6px">
+    <span style="font-size:22px">${icons[e.type]||'📄'}</span>
+    <span style="font-size:12px;flex:1;word-break:break-all">${esc(e.name)}</span>
+    <span class="badge b-green">✓</span>
+  </div>`).join('');
+  openModal(`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <div><div style="font-weight:700;font-size:16px">📎 Evidencias</div><div style="font-size:12px;color:var(--tx2);margin-top:3px">${esc(task.name)}</div></div>
+      <button class="btn btn-g btn-s" onclick="closeModal()">✕</button>
+    </div>
+    ${list}
+    <button class="btn btn-g" style="width:100%;justify-content:center;margin-top:8px" onclick="closeModal()">Cerrar</button>
+  `);
+}
+
+async function openReschedule(taskId){
+  let task=null;
+  if(sb){const{data}=await sb.from('tasks').select('*').eq('id',taskId).single();task=data;}
+  else task=lsG('tasks',[]).find(t=>t.id===taskId);
+  if(!task)return;
+  const left=3-(task.rescheduled||0);
+  const canAdmin=SESSION.role==='admin'||SESSION.role==='superadmin';
+  openModal(`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <div><div style="font-weight:700;font-size:16px">🔄 Reprogramar Tarea</div><div style="font-size:12px;color:var(--tx2);margin-top:3px">${esc(task.name)}</div></div>
+      <button class="btn btn-g btn-s" onclick="closeModal()">✕</button>
+    </div>
+    <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:var(--ac)">
+      ⚡ Reprogramaciones disponibles: <strong>${left} de 3</strong>${!canAdmin?' · Requiere aprobación del administrador':''}
+    </div>
+    <div class="fg"><label class="lbl">Nueva fecha de inicio 📅</label><input class="inp" type="date" id="rs-start" value="${task.start_date}" onchange="updateRsDur()"></div>
+    <div class="fg"><label class="lbl">Nueva fecha de fin 📅</label><input class="inp" type="date" id="rs-end" value="${task.end_date}" onchange="updateRsDur()"></div>
+    <div id="rs-dur" style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--bl);margin-bottom:14px">
+      📅 Duración: <strong>${diffD(task.start_date,task.end_date)} días</strong>
+    </div>
+    <div class="fg"><label class="lbl">Motivo</label><textarea class="inp" id="rs-reason" rows="3" placeholder="Explica el motivo..." style="resize:none"></textarea></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-p" onclick="confirmReschedule('${taskId}',${canAdmin})">${canAdmin?'Reprogramar':'Solicitar aprobación'}</button>
+    </div>
+  `);
+}
+
+function updateRsDur(){
+  const s=document.getElementById('rs-start')?.value;
+  const e=document.getElementById('rs-end')?.value;
+  const d=document.getElementById('rs-dur');
+  if(s&&e&&d)d.innerHTML=`📅 Nueva duración: <strong>${diffD(s,e)} días</strong>`;
+}
+
+async function confirmReschedule(taskId,canAdmin){
+  const ns=document.getElementById('rs-start').value;
+  const ne=document.getElementById('rs-end').value;
+  const reason=document.getElementById('rs-reason').value;
+  let task=null;
+  if(sb){const{data}=await sb.from('tasks').select('*').eq('id',taskId).single();task=data;}
+  else task=lsG('tasks',[]).find(t=>t.id===taskId);
+  if(!task)return;
+  if((task.rescheduled||0)>=3){toast('Máximo 3 reprogramaciones','err');return;}
+  if(canAdmin){
+    await DB.updateTask(taskId,{start_date:ns,end_date:ne,rescheduled:(task.rescheduled||0)+1,reschedule_pending:false});
+    await addNotif(`🔄 "${task.name}" reprogramada por ${SESSION.name}`);
+    toast('Reprogramación aplicada');
+  } else {
+    await DB.updateTask(taskId,{pending_start:ns,pending_end:ne,pending_reason:reason,reschedule_pending:true});
+    await addNotif(`🔄 Solicitud de reprogramación: "${task.name}" por ${SESSION.name}`);
+    toast('Solicitud enviada al administrador');
+  }
+  closeModal();
+  showView('tasks');
+}
+
+async function approveReschedule(taskId){
+  let task=null;
+  if(sb){const{data}=await sb.from('tasks').select('*').eq('id',taskId).single();task=data;}
+  else task=lsG('tasks',[]).find(t=>t.id===taskId);
+  if(!task)return;
+  await DB.updateTask(taskId,{start_date:task.pending_start,end_date:task.pending_end,rescheduled:(task.rescheduled||0)+1,reschedule_pending:false,pending_start:null,pending_end:null,pending_reason:null});
+  await addNotif(`✅ Reprogramación aprobada: "${task.name}"`);
+  toast('Reprogramación aprobada');
+  showView('tasks');
+}
+
+async function createProject(){
+  const name=document.getElementById('np-name').value.trim();
+  const desc=document.getElementById('np-desc').value.trim();
+  const start=document.getElementById('np-start').value;
+  const end=document.getElementById('np-end').value;
+  if(!name||!start||!end){toast('Completa los campos requeridos','err');return;}
+  const id=uid('p');
+  await DB.saveProject({id,name,description:desc,admin_id:SESSION.id,start_date:start,end_date:end});
+  SEL_PROJ=id;
+  await buildSidebar();
+  toast('Proyecto creado 🎉');
+  showView('stages');
+}
+
+async function saveProfile(){
+  const name=document.getElementById('pf-name').value.trim();
+  const email=document.getElementById('pf-email').value.trim();
+  const currP=document.getElementById('pf-curr').value;
+  const newP=document.getElementById('pf-new').value;
+  const confP=document.getElementById('pf-conf').value;
+  if(newP&&newP!==confP){toast('Las contraseñas no coinciden','err');return;}
+  if(newP&&currP!==SESSION.password){toast('Contraseña actual incorrecta','err');return;}
+  const patch={name,email,...(newP?{password:newP}:{})};
+  if(SESSION.role==='admin')await DB.saveAdmin({...SESSION,...patch});
+  else if(SESSION.role==='user')await DB.saveUser({...SESSION,...patch});
+  SESSION={...SESSION,...patch};
+  updateSidebarUser();
+  toast('Perfil actualizado ✓');
+}
+
+function openNewAdmin(){
+  openModal(`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <div style="font-weight:700;font-size:16px">Nuevo Administrador</div>
+      <button class="btn btn-g btn-s" onclick="closeModal()">✕</button>
+    </div>
+    <div class="fg"><label class="lbl">Nombre completo</label><input class="inp" id="na-name"></div>
+    <div class="fg"><label class="lbl">Empresa</label><input class="inp" id="na-co" placeholder="Ej: Constructora ABC SAC"></div>
+    <div class="fg"><label class="lbl">Email</label><input class="inp" type="email" id="na-email"></div>
+    <div class="fg"><label class="lbl">Contraseña</label><input class="inp" type="password" id="na-pass"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-p" onclick="createAdmin()">Crear</button>
+    </div>
+  `);
+}
+async function createAdmin(){
+  const name=document.getElementById('na-name').value.trim();
+  const company=document.getElementById('na-co').value.trim();
+  const email=document.getElementById('na-email').value.trim();
+  const password=document.getElementById('na-pass').value;
+  if(!name||!email||!password){toast('Completa todos los campos','err');return;}
+  await DB.saveAdmin({id:uid('adm'),name,email,password,company});
+  toast('Administrador creado');closeModal();showView('admins');
+}
+async function deleteAdmin(id){
+  if(!confirm('¿Eliminar este administrador?'))return;
+  await DB.delAdmin(id);toast('Administrador eliminado');showView('admins');
+}
+
+function openNewUser(){
+  openModal(`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <div style="font-weight:700;font-size:16px">Nuevo Usuario</div>
+      <button class="btn btn-g btn-s" onclick="closeModal()">✕</button>
+    </div>
+    <div class="fg"><label class="lbl">Nombre completo</label><input class="inp" id="nu-name"></div>
+    <div class="fg"><label class="lbl">Email</label><input class="inp" type="email" id="nu-email"></div>
+    <div class="fg"><label class="lbl">Contraseña inicial</label><input class="inp" type="password" id="nu-pass"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-p" onclick="createUser()">Crear usuario</button>
+    </div>
+  `);
+}
+async function createUser(){
+  const name=document.getElementById('nu-name').value.trim();
+  const email=document.getElementById('nu-email').value.trim();
+  const password=document.getElementById('nu-pass').value;
+  if(!name||!email||!password){toast('Completa todos los campos','err');return;}
+  await DB.saveUser({id:uid('u'),name,email,password,admin_id:SESSION.id});
+  toast('Usuario creado');closeModal();showView('team');
+}
+async function deleteUser(id){
+  if(!confirm('¿Eliminar este usuario?'))return;
+  await DB.delUser(id);toast('Usuario eliminado');showView('team');
+}
+
+async function openNewStage(){
+  openModal(`
+    <div style="font-weight:700;font-size:16px;margin-bottom:18px">Nueva Etapa</div>
+    <div class="fg"><label class="lbl">Nombre</label><input class="inp" id="ns-name" placeholder="Ej: ACABADOS"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-p" onclick="createStage()">Crear</button>
+    </div>
+  `);
+}
+async function createStage(){
+  const name=document.getElementById('ns-name').value.trim();
+  if(!name){toast('Ingresa el nombre','err');return;}
+  const existing=await DB.getStages(SEL_PROJ);
+  await DB.saveStage({id:uid('s'),project_id:SEL_PROJ,name,order_num:existing.length+1});
+  toast('Etapa creada');closeModal();showView('stages');
+}
+
+async function openNewActivity(){
+  const stages=await DB.getStages(SEL_PROJ);
+  openModal(`
+    <div style="font-weight:700;font-size:16px;margin-bottom:18px">Nueva Actividad</div>
+    <div class="fg"><label class="lbl">Etapa</label>
+      <select class="inp" id="na2-stage">
+        <option value="">Seleccionar etapa...</option>
+        ${stages.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="fg"><label class="lbl">Nombre</label><input class="inp" id="na2-name" placeholder="Ej: Excavación masiva"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-p" onclick="createActivity()">Crear</button>
+    </div>
+  `);
+}
+async function createActivity(){
+  const stageId=document.getElementById('na2-stage').value;
+  const name=document.getElementById('na2-name').value.trim();
+  if(!stageId||!name){toast('Completa los campos','err');return;}
+  await DB.saveActivity({id:uid('a'),stage_id:stageId,name});
+  toast('Actividad creada');closeModal();showView('stages');
+}
+
+async function openNewTask(){
+  const stages=await DB.getStages(SEL_PROJ);
+  const users=await DB.getUsers(SESSION.id);
+  let actOpts='<option value="">Seleccionar actividad...</option>';
+  for(const s of stages){
+    const acts=await DB.getActivities(s.id);
+    acts.forEach(a=>{actOpts+=`<option value="${a.id}">${esc(s.name)} → ${esc(a.name)}</option>`;});
+  }
+  const userOpts=users.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('');
+  const td=fmtISO(TODAY);
+  openModal(`
+    <div style="font-weight:700;font-size:16px;margin-bottom:18px">Nueva Tarea</div>
+    <div class="fg"><label class="lbl">Actividad</label><select class="inp" id="nt-act">${actOpts}</select></div>
+    <div class="fg"><label class="lbl">Nombre de la tarea</label><input class="inp" id="nt-name" placeholder="Ej: Vaciado de concreto"></div>
+    <div class="fg"><label class="lbl">Responsable</label>
+      <select class="inp" id="nt-user"><option value="">Seleccionar usuario...</option>${userOpts}</select>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="fg"><label class="lbl">Fecha inicio 📅</label><input class="inp" type="date" id="nt-start" value="${td}" onchange="updateNtDur()"></div>
+      <div class="fg"><label class="lbl">Fecha fin 📅</label><input class="inp" type="date" id="nt-end" value="${addD(TODAY,15)}" onchange="updateNtDur()"></div>
+    </div>
+    <div id="nt-dur" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--ac);margin-bottom:14px">
+      ⏱ Duración: <strong>15 días</strong>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-p" onclick="createTask()">Crear tarea</button>
+    </div>
+  `);
+}
+function updateNtDur(){
+  const s=document.getElementById('nt-start')?.value;
+  const e=document.getElementById('nt-end')?.value;
+  const d=document.getElementById('nt-dur');
+  if(s&&e&&d)d.innerHTML=`⏱ Duración: <strong>${diffD(s,e)} días</strong>`;
+}
+async function createTask(){
+  const actId=document.getElementById('nt-act').value;
+  const name=document.getElementById('nt-name').value.trim();
+  const responsible=document.getElementById('nt-user').value;
+  const start=document.getElementById('nt-start').value;
+  const end=document.getElementById('nt-end').value;
+  if(!actId||!name||!responsible||!start||!end){toast('Completa todos los campos','err');return;}
+  await DB.saveTask({id:uid('t'),activity_id:actId,name,responsible_id:responsible,start_date:start,end_date:end,stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false});
+  toast('Tarea creada');closeModal();showView('tasks');
+}
 </script>
 </body>
 </html>
