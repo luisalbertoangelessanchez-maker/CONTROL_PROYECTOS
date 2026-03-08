@@ -95,8 +95,8 @@ const {useState,useEffect,useRef,useCallback,useMemo}=React;
 //  2. Copia "Project URL" y "anon public key"
 //  3. Pégalos aquí abajo
 // ═══════════════════════════════════════════════════════════════
-const SUPABASE_URL = "REEMPLAZA_CON_TU_URL";          // ej: https://xyzabc.supabase.co
-const SUPABASE_KEY = "REEMPLAZA_CON_TU_ANON_KEY";     // ej: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+const SUPABASE_URL = "https://kmjercxkgypegtaxugdf.supabase.co";          // ej: https://xyzabc.supabase.co
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttamVyY3hrZ3lwZWd0YXh1Z2RmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MjQ2MTEsImV4cCI6MjA4ODUwMDYxMX0.ii-zRmr19HACkZc6SbwVDZJjpO7ixEXAXjCGEQ2UrkA";     // ej: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 // Detectar si está configurado
 const IS_CONFIGURED = !SUPABASE_URL.includes("REEMPLAZA") && !SUPABASE_KEY.includes("REEMPLAZA");
