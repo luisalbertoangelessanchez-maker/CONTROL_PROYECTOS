@@ -8,131 +8,128 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#08090d;--sf:#0f1117;--sf2:#161b26;--sf3:#1c2133;
-  --bd:#1e2538;--bd2:#283048;
-  --ac:#f59e0b;--ac2:#fb923c;
-  --gn:#22c55e;--rd:#ef4444;--bl:#3b82f6;--pu:#a855f7;
-  --tx:#dde3f0;--tx2:#7d8ba0;--tx3:#3d4a5c;
-  --r:10px;
-}
+:root{--bg:#08090d;--sf:#0f1117;--sf2:#161b26;--sf3:#1c2133;--bd:#1e2538;--bd2:#283048;--ac:#f59e0b;--ac2:#fb923c;--gn:#22c55e;--rd:#ef4444;--bl:#3b82f6;--pu:#a855f7;--cy:#06b6d4;--tx:#dde3f0;--tx2:#7d8ba0;--tx3:#3d4a5c;--r:10px;}
 body{background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5;overflow-x:hidden}
 button{font-family:'DM Sans',sans-serif;cursor:pointer;border:none;outline:none}
 input,select,textarea{font-family:'DM Sans',sans-serif;outline:none}
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:99px}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:99px}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 .fade{animation:fadeIn .3s ease both}
-
-/* inputs */
 .inp{width:100%;background:var(--sf2);border:1.5px solid var(--bd2);color:var(--tx);border-radius:var(--r);padding:9px 13px;font-size:13px;transition:border .2s,box-shadow .2s}
 .inp:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(245,158,11,.1)}
 .inp::placeholder{color:var(--tx3)}
 .lbl{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tx2);margin-bottom:5px;display:block}
 .fg{margin-bottom:14px}
-
-/* buttons */
 .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--r);font-size:13px;font-weight:600;transition:all .2s;white-space:nowrap;cursor:pointer;border:none}
-.btn-p{background:var(--ac);color:#000}
-.btn-p:hover{background:#fbbf24;transform:translateY(-1px);box-shadow:0 4px 20px rgba(245,158,11,.3)}
-.btn-g{background:transparent;color:var(--tx2);border:1.5px solid var(--bd2)}
-.btn-g:hover{color:var(--tx);background:var(--sf2)}
-.btn-d{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.18)}
+.btn-p{background:var(--ac);color:#000}.btn-p:hover{background:#fbbf24;transform:translateY(-1px);box-shadow:0 4px 20px rgba(245,158,11,.3)}
+.btn-g{background:transparent;color:var(--tx2);border:1.5px solid var(--bd2)}.btn-g:hover{color:var(--tx);background:var(--sf2)}
+.btn-d{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.18)}.btn-d:hover{background:rgba(239,68,68,.2)}
 .btn-s{padding:5px 11px!important;font-size:12px!important}
-
-/* layout */
 .card{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px}
 .pb{height:5px;background:var(--sf3);border-radius:99px;overflow:hidden}
 .pf{height:100%;border-radius:99px;transition:width .5s}
-
-/* modal */
-.mo{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
-.md{background:var(--sf);border:1px solid var(--bd2);border-radius:16px;padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 100px rgba(0,0,0,.7);animation:fadeIn .2s ease}
-
-/* sidebar */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(8px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
+.md{background:var(--sf);border:1px solid var(--bd2);border-radius:16px;padding:28px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 100px rgba(0,0,0,.7);animation:fadeIn .2s ease}
 .sb{position:fixed;left:0;top:0;bottom:0;width:228px;background:var(--sf);border-right:1px solid var(--bd);display:flex;flex-direction:column;z-index:100}
 .ni{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:8px;margin:2px 8px;color:var(--tx2);cursor:pointer;transition:all .2s;font-size:13px;font-weight:500;user-select:none}
-.ni:hover{background:var(--sf2);color:var(--tx)}
-.ni.act{background:rgba(245,158,11,.08);color:var(--ac);border:1px solid rgba(245,158,11,.12)}
+.ni:hover{background:var(--sf2);color:var(--tx)}.ni.act{background:rgba(245,158,11,.08);color:var(--ac);border:1px solid rgba(245,158,11,.12)}
 .ns{padding:14px 16px 5px;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tx3)}
 .main{margin-left:228px;min-height:100vh;padding:30px}
-
-/* table */
 .tbl{width:100%;border-collapse:collapse}
 .tbl th{padding:10px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--tx3);border-bottom:1px solid var(--bd)}
 .tbl td{padding:11px 14px;border-bottom:1px solid var(--bd);vertical-align:middle}
-.tbl tr:hover td{background:var(--sf2)}
-.tbl tr:last-child td{border-bottom:none}
-
-/* badges */
+.tbl tr:hover td{background:var(--sf2)}.tbl tr:last-child td{border-bottom:none}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap}
 .b-gray{background:rgba(74,85,104,.15);color:#8892a4;border:1px solid rgba(74,85,104,.2)}
 .b-blue{background:rgba(59,130,246,.1);color:#3b82f6;border:1px solid rgba(59,130,246,.18)}
 .b-green{background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.18)}
 .b-red{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.18)}
 .b-amber{background:rgba(245,158,11,.1);color:#f59e0b;border:1px solid rgba(245,158,11,.18)}
-
-/* avatar */
+.b-purple{background:rgba(168,85,247,.1);color:#a855f7;border:1px solid rgba(168,85,247,.18)}
+.b-cyan{background:rgba(6,182,212,.1);color:#06b6d4;border:1px solid rgba(6,182,212,.18)}
 .av{border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#000;flex-shrink:0}
-
-/* toast */
 #toast{position:fixed;top:20px;right:20px;z-index:9999;padding:12px 20px;border-radius:10px;font-weight:600;font-size:13px;box-shadow:0 8px 40px rgba(0,0,0,.5);display:none;max-width:360px;animation:fadeIn .3s ease}
-
-/* config banner */
-#cfg-banner{background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(251,146,60,.08));border:1px solid rgba(245,158,11,.25);border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:12px;color:var(--tx2);line-height:1.7;display:none}
-
-/* stars */
-.star{font-size:18px;cursor:pointer;transition:transform .1s;display:inline-block;line-height:1}
-.star:hover{transform:scale(1.3)}
+#demo-bar{position:fixed;top:0;left:228px;right:0;height:3px;background:var(--sf3);z-index:200;display:none}
+#demo-fill{height:100%;background:linear-gradient(90deg,var(--gn),var(--ac),var(--rd));transition:width 1s linear}
+#demo-banner{position:fixed;top:3px;left:228px;right:0;background:rgba(245,158,11,.12);border-bottom:1px solid rgba(245,158,11,.2);padding:6px 20px;font-size:12px;color:var(--ac);z-index:199;display:none;text-align:center;font-weight:600}
+#queue-box{position:fixed;bottom:20px;right:20px;background:var(--sf2);border:1px solid var(--bd2);border-radius:14px;padding:18px 22px;z-index:300;min-width:290px;box-shadow:0 8px 40px rgba(0,0,0,.5);display:none;animation:fadeIn .3s ease}
+.star-row{display:flex;gap:2px;align-items:center}
+.si{font-size:18px;cursor:pointer;transition:transform .1s;display:inline-block;line-height:1;user-select:none}
+.si:hover{transform:scale(1.3)}.si.lk{cursor:default}.si.lk:hover{transform:none}
+.tab{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:var(--tx2);background:transparent;border:none;transition:all .2s}
+.tab.act{background:rgba(245,158,11,.1);color:var(--ac)}.tab:hover:not(.act){background:var(--sf3);color:var(--tx)}
+.hchip{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:6px;font-size:10px;background:rgba(168,85,247,.1);color:#a855f7;border:1px solid rgba(168,85,247,.18);cursor:pointer;margin-top:3px}
+.hchip:hover{background:rgba(168,85,247,.2)}
 </style>
 </head>
 <body>
-
 <div id="toast"></div>
+<div id="demo-bar"><div id="demo-fill" style="width:100%"></div></div>
+<div id="demo-banner"></div>
 
 <!-- LOGIN -->
 <div id="page-login" class="fade" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);position:relative;overflow:hidden">
   <div style="position:absolute;top:8%;left:3%;width:600px;height:600px;background:radial-gradient(circle,rgba(245,158,11,.04) 0%,transparent 65%);border-radius:50%;pointer-events:none"></div>
   <div style="position:absolute;bottom:5%;right:3%;width:400px;height:400px;background:radial-gradient(circle,rgba(59,130,246,.04) 0%,transparent 65%);border-radius:50%;pointer-events:none"></div>
-  <div style="width:100%;max-width:440px;padding:0 20px;z-index:1">
-    <div style="text-align:center;margin-bottom:36px">
-      <!-- Logo Angeles Group -->
+  <div style="width:100%;max-width:460px;padding:0 20px;z-index:1">
+    <div style="text-align:center;margin-bottom:28px">
       <div style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1e3a5f,#0f2340);border:1px solid rgba(59,130,246,.3);border-radius:10px;padding:8px 16px;margin-bottom:10px">
-        <span style="font-size:22px">🦅</span>
+        <span style="font-size:22px">&#x1F985;</span>
         <span style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:#60a5fa;letter-spacing:2px">ANGELES GROUP</span>
       </div>
       <div style="font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--ac);letter-spacing:3px;line-height:1">TeamProjects</div>
-      <div style="font-size:13px;color:var(--tx3);margin-top:4px;letter-spacing:.5px">Sistema de control de Proyectos en equipo</div>
+      <div style="font-size:13px;color:var(--tx3);margin-top:4px">Sistema de control de Proyectos en equipo</div>
     </div>
-    <div class="card" style="border:1px solid var(--bd2)">
-      <div class="fg"><label class="lbl">Correo electrónico</label>
-        <input class="inp" type="email" id="login-email" placeholder="usuario@empresa.com" onkeydown="if(event.key==='Enter')doLogin()">
-      </div>
-      <div class="fg"><label class="lbl">Contraseña</label>
-        <input class="inp" type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
-      </div>
-      <div id="login-err" style="display:none;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#ef4444;padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:14px"></div>
-      <button class="btn btn-p" style="width:100%;justify-content:center;padding:11px" onclick="doLogin()">
-        <span id="login-btn-txt">Ingresar al sistema →</span>
-      </button>
-      <div style="margin-top:16px;padding:12px 14px;background:var(--sf2);border-radius:8px;font-size:11px;color:var(--tx3);line-height:1.85">
-        <strong style="color:var(--tx2)">Cuentas demo:</strong><br>
-        🛡 super@angelesgroup.io / Angeles2024!<br>
-        ⚙ carlos@obrafirme.pe / Admin123!<br>
-        👤 maria@obrafirme.pe / User123!
+    <div style="display:flex;gap:4px;background:var(--sf2);border-radius:10px;padding:4px;margin-bottom:14px">
+      <button id="tab-login" class="tab act" style="flex:1" onclick="switchTab('login')">Iniciar sesion</button>
+      <button id="tab-reg" class="tab" style="flex:1" onclick="switchTab('register')">Registrarse</button>
+    </div>
+    <!-- LOGIN -->
+    <div id="form-login" class="card" style="border:1px solid var(--bd2)">
+      <div class="fg"><label class="lbl">Correo electronico</label>
+        <input class="inp" type="email" id="li-email" placeholder="usuario@empresa.com" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div class="fg"><label class="lbl">Contrasena</label>
+        <input class="inp" type="password" id="li-pass" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div id="li-err" style="display:none;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#ef4444;padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:14px"></div>
+      <button class="btn btn-p" style="width:100%;justify-content:center;padding:11px;margin-bottom:8px" onclick="doLogin()"><span id="li-txt">Ingresar al sistema &rarr;</span></button>
+      <button class="btn btn-g" style="width:100%;justify-content:center" onclick="openRecoverPass()">Olvide mi contrasena</button>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--bd)">
+        <button class="btn" id="demo-btn" style="width:100%;justify-content:center;padding:11px;background:linear-gradient(135deg,rgba(6,182,212,.1),rgba(168,85,247,.1));color:var(--cy);border:1px solid rgba(6,182,212,.25);font-weight:700" onclick="openDemoEntry()">
+          &#x1F680; Probar Demo &mdash; 2 horas gratis
+        </button>
+        <div id="demo-slot-info" style="font-size:10px;color:var(--tx3);text-align:center;margin-top:5px">Cargando disponibilidad...</div>
       </div>
     </div>
+    <!-- REGISTER -->
+    <div id="form-register" class="card" style="border:1px solid var(--bd2);display:none">
+      <div style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.18);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--bl)">
+        Tu cuenta se activa cuando un administrador te incluya en un proyecto.
+      </div>
+      <div class="fg"><label class="lbl">Nombre completo</label><input class="inp" id="rg-name" placeholder="Ej: Maria Torres"></div>
+      <div class="fg"><label class="lbl">Correo electronico</label><input class="inp" type="email" id="rg-email" placeholder="tu@email.com"></div>
+      <div class="fg"><label class="lbl">Contrasena</label><input class="inp" type="password" id="rg-pass" placeholder="Minimo 6 caracteres"></div>
+      <div class="fg"><label class="lbl">Confirmar contrasena</label><input class="inp" type="password" id="rg-pass2" placeholder="Repite tu contrasena"></div>
+      <div id="rg-err" style="display:none;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#ef4444;padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:14px"></div>
+      <button class="btn btn-p" style="width:100%;justify-content:center;padding:11px" onclick="doRegister()">Crear cuenta &rarr;</button>
+    </div>
+  </div>
+  <!-- QUEUE BOX -->
+  <div id="queue-box">
+    <div style="font-weight:700;font-size:14px;margin-bottom:8px;color:var(--ac)">&#x1F550; Cola de espera</div>
+    <div id="queue-msg" style="font-size:13px;color:var(--tx2);margin-bottom:10px"></div>
+    <div style="background:var(--sf3);border-radius:8px;height:6px;overflow:hidden;margin-bottom:8px"><div id="queue-prog" style="height:100%;background:var(--ac);border-radius:8px;transition:width 2s linear;width:0%"></div></div>
+    <div id="queue-eta" style="font-size:12px;color:var(--tx3);margin-bottom:10px"></div>
+    <button class="btn btn-d btn-s" style="width:100%;justify-content:center" onclick="leaveQueue()">Salir de la cola</button>
   </div>
 </div>
 
 <!-- APP -->
 <div id="page-app" style="display:none">
-  <!-- Sidebar -->
   <nav class="sb">
     <div style="padding:18px 16px;border-bottom:1px solid var(--bd)">
       <div style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#1e3a5f,#0f2340);border:1px solid rgba(59,130,246,.25);border-radius:8px;padding:5px 10px;margin-bottom:6px">
-        <span style="font-size:13px">🦅</span>
+        <span style="font-size:13px">&#x1F985;</span>
         <span style="font-family:'Bebas Neue',sans-serif;font-size:11px;color:#60a5fa;letter-spacing:1.5px">ANGELES GROUP</span>
       </div>
       <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--ac);letter-spacing:1.5px;line-height:1">TeamProjects</div>
@@ -146,332 +143,487 @@ input,select,textarea{font-family:'DM Sans',sans-serif;outline:none}
           <div id="sb-name" style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
           <div id="sb-role" style="font-size:10px;color:var(--tx3)"></div>
         </div>
-        <button onclick="toggleNotifs()" style="background:transparent;border:1px solid var(--bd2);color:var(--tx2);border-radius:8px;padding:5px 7px;font-size:14px;cursor:pointer;position:relative" id="notif-btn">
-          🔔<span id="notif-badge" style="display:none;position:absolute;top:-4px;right:-4px;background:var(--rd);color:#fff;min-width:15px;height:15px;border-radius:50%;font-size:9px;display:none;align-items:center;justify-content:center;font-weight:700"></span>
+        <button onclick="toggleNotifs()" style="background:transparent;border:1px solid var(--bd2);color:var(--tx2);border-radius:8px;padding:5px 7px;font-size:14px;cursor:pointer;position:relative">
+          &#x1F514;<span id="nb" style="display:none;position:absolute;top:-4px;right:-4px;background:var(--rd);color:#fff;min-width:15px;height:15px;border-radius:50%;font-size:9px;align-items:center;justify-content:center;font-weight:700"></span>
         </button>
       </div>
-      <div class="ni" onclick="showView('profile')">👤 <span>Mi Perfil</span></div>
-      <div class="ni" onclick="doLogout()">→ <span>Cerrar sesión</span></div>
+      <div id="demo-sb-info" style="display:none;margin-bottom:6px;padding:8px 10px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.18);border-radius:8px;font-size:11px;color:var(--cy)">
+        &#x1F680; DEMO &bull; <span id="demo-timer-txt"></span>
+      </div>
+      <div class="ni" onclick="showView('profile')">&#x1F464; <span>Mi Perfil</span></div>
+      <div class="ni" onclick="doLogout()">&rarr; <span>Cerrar sesion</span></div>
     </div>
   </nav>
-
-  <!-- Notif panel -->
   <div id="notif-panel" style="display:none;position:fixed;bottom:80px;left:232px;width:320px;background:var(--sf2);border:1px solid var(--bd2);border-radius:14px;z-index:200;box-shadow:0 16px 60px rgba(0,0,0,.6)">
     <div style="padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center">
-      <span style="font-weight:700;font-size:13px">🔔 Notificaciones</span>
-      <button class="btn btn-g btn-s" onclick="markAllRead()">Leídas ✓</button>
+      <span style="font-weight:700;font-size:13px">&#x1F514; Notificaciones</span>
+      <button class="btn btn-g btn-s" onclick="markAllRead()">Leidas</button>
     </div>
     <div id="notif-list" style="max-height:280px;overflow-y:auto"></div>
   </div>
-
-  <!-- Main -->
   <main class="main">
-    <div id="cfg-banner">
-      ⚙ <strong style="color:var(--ac)">Modo Offline</strong> — Los datos se guardan solo en este navegador. Configura Supabase para acceso desde cualquier lugar.
-    </div>
     <div id="view-content" class="fade"></div>
   </main>
 </div>
-
-<!-- MODAL container -->
 <div id="modal-wrap" style="display:none" class="mo" onclick="if(event.target===this)closeModal()">
   <div class="md" id="modal-inner"></div>
 </div>
-
 <script>
-// ═══════════════════════════════════════════════════
-//  SUPABASE CONFIG
-// ═══════════════════════════════════════════════════
-const SUPABASE_URL = "https://kmjercxkgypegtaxugdf.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttamVyY3hrZ3lwZWd0YXh1Z2RmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MjQ2MTEsImV4cCI6MjA4ODUwMDYxMX0.ii-zRmr19HACkZc6SbwVDZJjpO7ixEXAXjCGEQ2UrkA";
+// ═══ CONFIG ════════════════════════════════════════════════════════
+const SUPABASE_URL="https://kmjercxkgypegtaxugdf.supabase.co";
+const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttamVyY3hrZ3lwZWd0YXh1Z2RmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MjQ2MTEsImV4cCI6MjA4ODUwMDYxMX0.ii-zRmr19HACkZc6SbwVDZJjpO7ixEXAXjCGEQ2UrkA";
+const IS_CFG=!SUPABASE_URL.includes("REEMPLAZA");
+const sb=IS_CFG?window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY):null;
+const SUPER={id:'sa',name:'Super Admin',email:'super@angelesgroup.io',role:'superadmin',password:'Angeles2024!'};
+const DEMO_MS=2*60*60*1000, MAX_SLOTS=5;
+const COLS=['#f59e0b','#22c55e','#3b82f6','#a855f7','#06b6d4','#fb923c'];
 
-const IS_CFG = !SUPABASE_URL.includes("REEMPLAZA");
-const sb = IS_CFG ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+// ═══ STATE ═════════════════════════════════════════════════════════
+let SESSION=null,SEL_PROJ=null,NOTIFS=[],IS_DEMO=false,DEMO_START=null;
+let DEMO_IV=null,QUEUE_IV=null,MY_QID=null,currentView='';
+let OPEN_STAGES={},OPEN_ACTS={},TASK_FILTER='mine';
 
-// ═══════════════════════════════════════════════════
-//  SUPER ADMIN (local, no en DB)
-// ═══════════════════════════════════════════════════
-const SUPER = {id:'sa',name:'Super Admin',email:'super@angelesgroup.io',role:'superadmin',password:'Angeles2024!'};
-
-// ═══════════════════════════════════════════════════
-//  HELPERS
-// ═══════════════════════════════════════════════════
-let SESSION = null;
-let SEL_PROJ = null;
-let NOTIFS = [];
-const COLS = ['#f59e0b','#22c55e','#3b82f6','#a855f7','#06b6d4','#fb923c'];
-
-const TODAY = new Date(); TODAY.setHours(0,0,0,0);
-const fmtD = d => { const x = new Date(d); return x.toLocaleDateString('es-PE'); };
-const fmtISO = d => d instanceof Date ? d.toISOString().split('T')[0] : d;
-const addD = (d,n) => { const x=new Date(d); x.setDate(x.getDate()+n); return fmtISO(x); };
-const diffD = (a,b) => Math.max(0,Math.round((new Date(b)-new Date(a))/86400000));
-const ini = n => n.trim().split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-const s2p = s => [0,20,40,60,80,100][s]||0;
-const uid = p => p+Date.now()+Math.random().toString(36).slice(2,5);
-const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const getEv = t => { try{const e=t.evidence; return Array.isArray(e)?e:(typeof e==='string'?JSON.parse(e||'[]'):[]);}catch{return[];} };
-
-function calcSt(task){
-  const now=TODAY, s=new Date(task.start_date), e=new Date(task.end_date);
-  const done=getEv(task).length>0||task.stars===5;
-  if(done) return now<=e?{label:'Ejecutado en plazo',cls:'b-green',icon:'✓'}:{label:'Ejecutado fuera de plazo',cls:'b-amber',icon:'✓'};
-  if(task.stars>0) return now<=e?{label:'En proceso – en plazo',cls:'b-blue',icon:'▶'}:{label:'En proceso – fuera de plazo',cls:'b-red',icon:'⚠'};
-  if(now<s) return {label:'No iniciado',cls:'b-gray',icon:'○'};
-  return {label:'No iniciado – fuera de plazo',cls:'b-red',icon:'✕'};
+// ═══ HELPERS ═══════════════════════════════════════════════════════
+const TODAY=new Date();TODAY.setHours(0,0,0,0);
+const fmtISO=d=>d instanceof Date?d.toISOString().split('T')[0]:(d||'');
+const fmtD=d=>{try{return new Date(d).toLocaleDateString('es-PE');}catch{return d||'';}};
+const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return fmtISO(x);};
+const diffD=(a,b)=>Math.max(0,Math.round((new Date(b)-new Date(a))/86400000));
+const ini=n=>(n||'?').trim().split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+const s2p=s=>[0,20,40,60,80,100][s]||0;
+const uid=p=>p+Date.now()+Math.random().toString(36).slice(2,5);
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const getEv=t=>{try{const e=t.evidence;return Array.isArray(e)?e:(typeof e==='string'?JSON.parse(e||'[]'):[]);}catch{return[];}};
+const getHist=t=>{try{const h=t.history||'[]';return Array.isArray(h)?h:(typeof h==='string'?JSON.parse(h):[]);}catch{return[];}};
+function calcSt(t){
+  const now=TODAY,s=new Date(t.start_date),e=new Date(t.end_date);
+  const done=getEv(t).length>0||t.stars===5;
+  if(done)return now<=e?{label:'Ejecutado en plazo',cls:'b-green',icon:'&#10003;'}:{label:'Ejecutado fuera de plazo',cls:'b-amber',icon:'&#10003;'};
+  if(t.stars>0)return now<=e?{label:'En proceso - en plazo',cls:'b-blue',icon:'&#9658;'}:{label:'En proceso - fuera de plazo',cls:'b-red',icon:'&#9888;'};
+  if(now<s)return{label:'No iniciado',cls:'b-gray',icon:'&#9675;'};
+  return{label:'No iniciado - fuera de plazo',cls:'b-red',icon:'&#10005;'};
 }
 
-// ═══════════════════════════════════════════════════
-//  TOAST
-// ═══════════════════════════════════════════════════
-function toast(msg, type='ok'){
-  const el=document.getElementById('toast');
-  el.textContent=(type==='err'?'✕ ':'✓ ')+msg;
-  el.style.background=type==='err'?'#ef4444':'#22c55e';
-  el.style.color='#fff';
-  el.style.display='block';
-  setTimeout(()=>el.style.display='none',3500);
-}
-
-// ═══════════════════════════════════════════════════
-//  DB LAYER
-// ═══════════════════════════════════════════════════
+// ═══ LOCALSTORAGE ══════════════════════════════════════════════════
 const lsG=(k,d)=>{try{const v=localStorage.getItem('tp_'+k);return v?JSON.parse(v):d;}catch{return d;}};
 const lsS=(k,v)=>{try{localStorage.setItem('tp_'+k,JSON.stringify(v));}catch{}};
 const lsUp=(k,item)=>{const a=lsG(k,[]);const i=a.findIndex(x=>x.id===item.id);if(i>=0)a[i]={...a[i],...item};else a.push(item);lsS(k,a);};
 const lsDel=(k,id)=>lsS(k,lsG(k,[]).filter(x=>x.id!==id));
 const lsPatch=(k,id,p)=>{const a=lsG(k,[]);const i=a.findIndex(x=>x.id===id);if(i>=0)a[i]={...a[i],...p};lsS(k,a);};
 
-// Seed demo data into localStorage if empty
-function seedLS(){
-  if(lsG('seeded',false))return;
-  const td=fmtISO(TODAY);
-  lsUp('admins',{id:'adm1',name:'Carlos Vega',email:'carlos@obrafirme.pe',password:'Admin123!',company:'Obra Firme SAC'});
-  ['u1','u2','u3'].forEach((id,i)=>{
-    const names=['María Torres','José Ramírez','Ana Quispe'];
-    const emails=['maria@obrafirme.pe','jose@obrafirme.pe','ana@obrafirme.pe'];
-    lsUp('users',{id,name:names[i],email:emails[i],password:'User123!',admin_id:'adm1'});
-  });
-  lsUp('projects',{id:'p1',name:'Edificio Residencial Los Álamos',description:'Construcción de edificio de 8 pisos en Miraflores',admin_id:'adm1',start_date:addD(TODAY,-30),end_date:addD(TODAY,180)});
-  lsUp('stages',{id:'s1',project_id:'p1',name:'OBRAS PRELIMINARES',order_num:1});
-  lsUp('stages',{id:'s2',project_id:'p1',name:'CIMENTACIÓN',order_num:2});
-  lsUp('stages',{id:'s3',project_id:'p1',name:'ESTRUCTURA',order_num:3});
-  lsUp('activities',{id:'a1',stage_id:'s1',name:'Limpieza y nivelación de terreno'});
-  lsUp('activities',{id:'a2',stage_id:'s1',name:'Instalación de cerco perimétrico'});
-  lsUp('activities',{id:'a3',stage_id:'s2',name:'Excavación masiva'});
-  lsUp('activities',{id:'a4',stage_id:'s2',name:'Zapatas y vigas de cimentación'});
-  lsUp('activities',{id:'a5',stage_id:'s3',name:'Columnas y placas'});
-  const tasks=[
-    {id:'t1',activity_id:'a1',name:'Retiro de desmonte',responsible_id:'u1',start_date:addD(TODAY,-28),end_date:addD(TODAY,-20),stars:5,evidence:'[{"name":"foto.jpg","type":"image"}]',rescheduled:0,reschedule_pending:false},
-    {id:'t2',activity_id:'a1',name:'Nivelación con equipo topográfico',responsible_id:'u2',start_date:addD(TODAY,-20),end_date:addD(TODAY,-12),stars:4,evidence:'[]',rescheduled:0,reschedule_pending:false},
-    {id:'t3',activity_id:'a2',name:'Hincado de postes metálicos',responsible_id:'u3',start_date:addD(TODAY,-15),end_date:addD(TODAY,-8),stars:3,evidence:'[]',rescheduled:1,reschedule_pending:false},
-    {id:'t4',activity_id:'a2',name:'Colocación de malla metálica',responsible_id:'u1',start_date:addD(TODAY,-8),end_date:fmtISO(TODAY),stars:2,evidence:'[]',rescheduled:0,reschedule_pending:false},
-    {id:'t5',activity_id:'a3',name:'Excavación con maquinaria pesada',responsible_id:'u2',start_date:addD(TODAY,2),end_date:addD(TODAY,15),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false},
-    {id:'t6',activity_id:'a3',name:'Entibado y sostenimiento',responsible_id:'u1',start_date:addD(TODAY,10),end_date:addD(TODAY,20),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false},
-    {id:'t7',activity_id:'a4',name:'Encofrado de zapatas',responsible_id:'u3',start_date:addD(TODAY,20),end_date:addD(TODAY,28),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false},
-    {id:'t8',activity_id:'a4',name:"Vaciado de concreto f'c=280",responsible_id:'u2',start_date:addD(TODAY,28),end_date:addD(TODAY,35),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false},
-    {id:'t9',activity_id:'a5',name:'Habilitación de acero columnas',responsible_id:'u1',start_date:addD(TODAY,35),end_date:addD(TODAY,45),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false},
-    {id:'t10',activity_id:'a5',name:'Vaciado de columnas piso 1-4',responsible_id:'u2',start_date:addD(TODAY,45),end_date:addD(TODAY,70),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false},
-  ];
-  tasks.forEach(t=>lsUp('tasks',t));
-  lsS('seeded',true);
-}
+// ═══ DEMO SLOTS ════════════════════════════════════════════════════
+function getSlots(){return lsG('demo_slots',[]);}
+function cleanSlots(){lsS('demo_slots',getSlots().filter(s=>s.exp>Date.now()));}
+function countSlots(){cleanSlots();return getSlots().length;}
+function claimSlot(id,name){cleanSlots();const sl=getSlots();if(sl.length>=MAX_SLOTS)return false;sl.push({id,name,started:Date.now(),exp:Date.now()+DEMO_MS});lsS('demo_slots',sl);return true;}
+function releaseSlot(id){lsS('demo_slots',getSlots().filter(s=>s.id!==id));}
+function refreshSlot(id){const sl=getSlots();const s=sl.find(x=>x.id===id);if(s){s.exp=s.started+DEMO_MS;lsS('demo_slots',sl);}}
+function getSlotExp(id){const s=getSlots().find(x=>x.id===id);return s?s.exp:null;}
+function getQueue(){return lsG('demo_queue',[]);}
+function joinQueue(id,name){const q=getQueue().filter(x=>x.id!==id);q.push({id,name,joined:Date.now()});lsS('demo_queue',q);}
+function leaveQueueById(id){lsS('demo_queue',getQueue().filter(x=>x.id!==id));}
+function queuePos(id){return getQueue().findIndex(x=>x.id===id)+1;}
 
-const DB = {
+// ═══ DEMO DATA ═════════════════════════════════════════════════════
+function buildDemoData(did){
+  const p='d'+did+'_';
+  const data={
+    project:{id:p+'proj',name:'Edificio Residencial Los Alamos (Demo)',description:'Proyecto demo — 8 pisos en Miraflores',admin_id:'demo_'+did,start_date:addD(TODAY,-30),end_date:addD(TODAY,180)},
+    stages:[
+      {id:p+'s1',project_id:p+'proj',name:'OBRAS PRELIMINARES',order_num:1},
+      {id:p+'s2',project_id:p+'proj',name:'CIMENTACION',order_num:2},
+      {id:p+'s3',project_id:p+'proj',name:'ESTRUCTURA',order_num:3},
+    ],
+    activities:[
+      {id:p+'a1',stage_id:p+'s1',name:'Limpieza y nivelacion de terreno'},
+      {id:p+'a2',stage_id:p+'s1',name:'Instalacion de cerco perimetrico'},
+      {id:p+'a3',stage_id:p+'s2',name:'Excavacion masiva'},
+      {id:p+'a4',stage_id:p+'s2',name:'Zapatas y vigas de cimentacion'},
+      {id:p+'a5',stage_id:p+'s3',name:'Columnas y placas'},
+    ],
+    users:[
+      {id:p+'u1',name:'Maria Torres',email:'maria_demo@ejemplo.pe',admin_id:'demo_'+did},
+      {id:p+'u2',name:'Jose Ramirez',email:'jose_demo@ejemplo.pe',admin_id:'demo_'+did},
+      {id:p+'u3',name:'Ana Quispe',email:'ana_demo@ejemplo.pe',admin_id:'demo_'+did},
+    ],
+    tasks:[
+      {id:p+'t1',activity_id:p+'a1',name:'Retiro de desmonte',responsible_id:p+'u1',start_date:addD(TODAY,-28),end_date:addD(TODAY,-20),stars:5,evidence:'[{"name":"foto_desmonte.jpg","type":"image"}]',rescheduled:0,reschedule_pending:false,history:'[]'},
+      {id:p+'t2',activity_id:p+'a1',name:'Nivelacion topografica',responsible_id:p+'u2',start_date:addD(TODAY,-20),end_date:addD(TODAY,-12),stars:4,evidence:'[]',rescheduled:0,reschedule_pending:false,history:'[]'},
+      {id:p+'t3',activity_id:p+'a2',name:'Hincado de postes metalicos',responsible_id:p+'u3',start_date:addD(TODAY,-15),end_date:addD(TODAY,-8),stars:3,evidence:'[]',rescheduled:1,reschedule_pending:false,history:'[]'},
+      {id:p+'t4',activity_id:p+'a2',name:'Colocacion de malla metalica',responsible_id:p+'u1',start_date:addD(TODAY,-8),end_date:fmtISO(TODAY),stars:2,evidence:'[]',rescheduled:0,reschedule_pending:false,history:'[]'},
+      {id:p+'t5',activity_id:p+'a3',name:'Excavacion con maquinaria pesada',responsible_id:p+'u2',start_date:addD(TODAY,2),end_date:addD(TODAY,15),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false,history:'[]'},
+      {id:p+'t6',activity_id:p+'a3',name:'Entibado y sostenimiento',responsible_id:p+'u1',start_date:addD(TODAY,10),end_date:addD(TODAY,20),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false,history:'[]'},
+      {id:p+'t7',activity_id:p+'a4',name:'Encofrado de zapatas',responsible_id:p+'u3',start_date:addD(TODAY,20),end_date:addD(TODAY,28),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false,history:'[]'},
+      {id:p+'t8',activity_id:p+'a4',name:"Vaciado de concreto f'c=280",responsible_id:p+'u2',start_date:addD(TODAY,28),end_date:addD(TODAY,35),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false,history:'[]'},
+      {id:p+'t9',activity_id:p+'a5',name:'Habilitacion de acero columnas',responsible_id:p+'u1',start_date:addD(TODAY,35),end_date:addD(TODAY,45),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false,history:'[]'},
+      {id:p+'t10',activity_id:p+'a5',name:'Vaciado de columnas piso 1-4',responsible_id:p+'u2',start_date:addD(TODAY,45),end_date:addD(TODAY,70),stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false,history:'[]'},
+    ]
+  };
+  lsS('ddata_'+did,data);
+  return data;
+}
+function getDemoData(){return lsG('ddata_'+SESSION.demoId,null);}
+function setDemoData(data){lsS('ddata_'+SESSION.demoId,data);}
+
+// ═══ DB LAYER ══════════════════════════════════════════════════════
+const DB={
   async login(email,pass){
     if(email===SUPER.email&&pass===SUPER.password)return SUPER;
     if(sb){
       const{data:a}=await sb.from('admins').select('*').eq('email',email).eq('password',pass);
       if(a&&a.length)return{...a[0],role:'admin'};
       const{data:u}=await sb.from('users').select('*').eq('email',email).eq('password',pass);
-      if(u&&u.length)return{...u[0],role:'user'};
-      return null;
+      if(u&&u.length)return{...u[0],role:'user'};return null;
     }
-    seedLS();
-    const a=lsG('admins',[]).find(x=>x.email===email&&x.password===pass);
-    if(a)return{...a,role:'admin'};
-    const u=lsG('users',[]).find(x=>x.email===email&&x.password===pass);
-    if(u)return{...u,role:'user'};
+    const a=lsG('admins',[]).find(x=>x.email===email&&x.password===pass);if(a)return{...a,role:'admin'};
+    const u=lsG('users',[]).find(x=>x.email===email&&x.password===pass);if(u)return{...u,role:'user'};
     return null;
   },
-  async getAdmins(){ if(sb){const{data}=await sb.from('admins').select('*');return data||[];}return lsG('admins',[]); },
-  async saveAdmin(r){ if(sb){await sb.from('admins').upsert(r);}else lsUp('admins',r); },
-  async delAdmin(id){ if(sb){await sb.from('admins').delete().eq('id',id);}else lsDel('admins',id); },
-  async getUsers(aid){ if(sb){const{data}=await sb.from('users').select('*').eq('admin_id',aid);return data||[];}return lsG('users',[]).filter(u=>u.admin_id===aid); },
-  async getAllUsers(){ if(sb){const{data}=await sb.from('users').select('*');return data||[];}return lsG('users',[]); },
-  async saveUser(r){ if(sb){await sb.from('users').upsert(r);}else lsUp('users',r); },
-  async delUser(id){ if(sb){await sb.from('users').delete().eq('id',id);}else lsDel('users',id); },
-  async getProjects(aid){ if(sb){const{data}=await sb.from('projects').select('*').eq('admin_id',aid);return data||[];}return lsG('projects',[]).filter(p=>p.admin_id===aid); },
-  async getAllProjects(){ if(sb){const{data}=await sb.from('projects').select('*');return data||[];}return lsG('projects',[]); },
-  async saveProject(r){ if(sb){await sb.from('projects').upsert(r);}else lsUp('projects',r); },
-  async getStages(pid){ if(sb){const{data}=await sb.from('stages').select('*').eq('project_id',pid).order('order_num');return data||[];}return lsG('stages',[]).filter(s=>s.project_id===pid).sort((a,b)=>a.order_num-b.order_num); },
-  async saveStage(r){ if(sb){await sb.from('stages').upsert(r);}else lsUp('stages',r); },
-  async delStage(id){ if(sb){await sb.from('stages').delete().eq('id',id);}else lsDel('stages',id); },
-  async getActivities(sid){ if(sb){const{data}=await sb.from('activities').select('*').eq('stage_id',sid);return data||[];}return lsG('activities',[]).filter(a=>a.stage_id===sid); },
-  async saveActivity(r){ if(sb){await sb.from('activities').upsert(r);}else lsUp('activities',r); },
-  async getTasks(aid){ if(sb){const{data}=await sb.from('tasks').select('*').eq('activity_id',aid);return data||[];}return lsG('tasks',[]).filter(t=>t.activity_id===aid); },
-  async updateTask(id,p){ if(sb){await sb.from('tasks').update(p).eq('id',id);}else lsPatch('tasks',id,p); },
-  async saveTask(r){ if(sb){await sb.from('tasks').upsert(r);}else lsUp('tasks',r); },
-  async getNotifs(){ if(sb){const{data}=await sb.from('notifications').select('*').order('created_at',{ascending:false}).limit(40);return data||[];}return lsG('notifs',[]).slice(0,40); },
-  async addNotif(msg,toU=[]){ if(sb){await sb.from('notifications').insert({message:msg,to_users:toU,read_by:[]});}else{ lsUp('notifs',{id:Date.now(),message:msg,to_users:toU,read_by:[],created_at:new Date().toISOString()});}},
-  async markRead(id){ if(sb){const{data}=await sb.from('notifications').select('read_by').eq('id',id).single();const rb=data?.read_by||[];if(!rb.includes(SESSION.id))await sb.from('notifications').update({read_by:[...rb,SESSION.id]}).eq('id',id);}else{lsPatch('notifs',id,{read_by:[SESSION.id]});} },
+  async registerUser(name,email,pass){
+    const nu={id:uid('u'),name,email,password:pass,role:'user',admin_id:null,status:'pending'};
+    if(sb){const{data:ex}=await sb.from('users').select('id').eq('email',email);if(ex&&ex.length)return{error:'Email ya registrado'};await sb.from('users').insert(nu);}
+    else{if(lsG('users',[]).find(x=>x.email===email))return{error:'Email ya registrado'};lsUp('users',nu);}
+    return{ok:true};
+  },
+  async getAdmins(){if(sb){const{data}=await sb.from('admins').select('*');return data||[];}return lsG('admins',[]);},
+  async saveAdmin(r){if(sb)await sb.from('admins').upsert(r);else lsUp('admins',r);},
+  async delAdmin(id){if(sb)await sb.from('admins').delete().eq('id',id);else lsDel('admins',id);},
+  async getUsers(aid){if(sb){const{data}=await sb.from('users').select('*').eq('admin_id',aid);return data||[];}return lsG('users',[]).filter(u=>u.admin_id===aid);},
+  async getAllUsers(){if(sb){const{data}=await sb.from('users').select('*');return data||[];}return lsG('users',[]);},
+  async saveUser(r){if(sb)await sb.from('users').upsert(r);else lsUp('users',r);},
+  async delUser(id){if(sb)await sb.from('users').delete().eq('id',id);else lsDel('users',id);},
+  async getProjects(aid){if(sb){const{data}=await sb.from('projects').select('*').eq('admin_id',aid);return data||[];}return lsG('projects',[]).filter(p=>p.admin_id===aid);},
+  async getAllProjects(){if(sb){const{data}=await sb.from('projects').select('*');return data||[];}return lsG('projects',[]);},
+  async saveProject(r){if(sb)await sb.from('projects').upsert(r);else lsUp('projects',r);},
+  async getStages(pid){if(sb){const{data}=await sb.from('stages').select('*').eq('project_id',pid).order('order_num');return data||[];}return lsG('stages',[]).filter(s=>s.project_id===pid).sort((a,b)=>a.order_num-b.order_num);},
+  async saveStage(r){if(sb)await sb.from('stages').upsert(r);else lsUp('stages',r);},
+  async getActivities(sid){if(sb){const{data}=await sb.from('activities').select('*').eq('stage_id',sid);return data||[];}return lsG('activities',[]).filter(a=>a.stage_id===sid);},
+  async saveActivity(r){if(sb)await sb.from('activities').upsert(r);else lsUp('activities',r);},
+  async getTasks(aid){if(sb){const{data}=await sb.from('tasks').select('*').eq('activity_id',aid);return data||[];}return lsG('tasks',[]).filter(t=>t.activity_id===aid);},
+  async getTask(id){if(sb){const{data}=await sb.from('tasks').select('*').eq('id',id).single();return data;}return lsG('tasks',[]).find(t=>t.id===id);},
+  async updateTask(id,p){if(sb)await sb.from('tasks').update(p).eq('id',id);else lsPatch('tasks',id,p);},
+  async saveTask(r){if(sb)await sb.from('tasks').upsert(r);else lsUp('tasks',r);},
+  async getNotifs(){if(sb){const{data}=await sb.from('notifications').select('*').order('created_at',{ascending:false}).limit(40);return data||[];}return lsG('notifs',[]).slice(0,40);},
+  async addNotif(msg,toU=[]){if(sb)await sb.from('notifications').insert({message:msg,to_users:toU,read_by:[]});else lsUp('notifs',{id:Date.now(),message:msg,to_users:toU,read_by:[],created_at:new Date().toISOString()});},
+  async markRead(id){if(sb){const{data}=await sb.from('notifications').select('read_by').eq('id',id).single();const rb=data?.read_by||[];if(!rb.includes(SESSION.id))await sb.from('notifications').update({read_by:[...rb,SESSION.id]}).eq('id',id);}else lsPatch('notifs',id,{read_by:[SESSION.id]});},
 };
 
-// ═══════════════════════════════════════════════════
-//  AUTH
-// ═══════════════════════════════════════════════════
+// Demo-aware DB (DDB)
+const DDB={
+  _dget:()=>getDemoData(),
+  async getProjects(){if(IS_DEMO){const d=this._dget();return d?[d.project]:[]}return DB.getProjects(SESSION.admin_id||SESSION.id);},
+  async getAllProjects(){if(IS_DEMO){const d=this._dget();return d?[d.project]:[]}return DB.getAllProjects();},
+  async getStages(pid){if(IS_DEMO){const d=this._dget();return d?d.stages.filter(s=>s.project_id===pid):[]}return DB.getStages(pid);},
+  async saveStage(r){if(IS_DEMO){const d=this._dget();if(!d)return;const i=d.stages.findIndex(x=>x.id===r.id);if(i>=0)d.stages[i]=r;else d.stages.push(r);setDemoData(d);}else await DB.saveStage(r);},
+  async getActivities(sid){if(IS_DEMO){const d=this._dget();return d?d.activities.filter(a=>a.stage_id===sid):[]}return DB.getActivities(sid);},
+  async saveActivity(r){if(IS_DEMO){const d=this._dget();if(!d)return;const i=d.activities.findIndex(x=>x.id===r.id);if(i>=0)d.activities[i]=r;else d.activities.push(r);setDemoData(d);}else await DB.saveActivity(r);},
+  async getTasks(aid){if(IS_DEMO){const d=this._dget();return d?d.tasks.filter(t=>t.activity_id===aid):[]}return DB.getTasks(aid);},
+  async getTask(id){if(IS_DEMO){const d=this._dget();return d?d.tasks.find(t=>t.id===id):null;}return DB.getTask(id);},
+  async updateTask(id,patch){if(IS_DEMO){const d=this._dget();if(!d)return;const i=d.tasks.findIndex(t=>t.id===id);if(i>=0){d.tasks[i]={...d.tasks[i],...patch};setDemoData(d);}return;}await DB.updateTask(id,patch);},
+  async saveTask(r){if(IS_DEMO){const d=this._dget();if(!d)return;const i=d.tasks.findIndex(t=>t.id===r.id);if(i>=0)d.tasks[i]=r;else d.tasks.push(r);setDemoData(d);return;}await DB.saveTask(r);},
+  async getUsers(aid){if(IS_DEMO){const d=this._dget();return d?d.users:[]}return DB.getUsers(SESSION.admin_id||SESSION.id);},
+  async getAllUsers(){if(IS_DEMO){const d=this._dget();return d?d.users:[]}return DB.getAllUsers();},
+  async saveUser(r){if(IS_DEMO){const d=this._dget();if(!d)return;const i=d.users.findIndex(u=>u.id===r.id);if(i>=0)d.users[i]=r;else d.users.push(r);setDemoData(d);}else await DB.saveUser(r);},
+  async delUser(id){if(IS_DEMO){const d=this._dget();if(!d)return;d.users=d.users.filter(u=>u.id!==id);setDemoData(d);}else await DB.delUser(id);},
+};
+
+// ═══ TOAST ══════════════════════════════════════════════════════════
+function toast(msg,type='ok'){
+  const el=document.getElementById('toast');
+  el.textContent=(type==='err'?'\u2715 ':'\u2713 ')+msg;
+  el.style.background=type==='err'?'#ef4444':'#22c55e';
+  el.style.color='#fff';el.style.display='block';
+  clearTimeout(el._t);el._t=setTimeout(()=>el.style.display='none',3800);
+}
+
+// ═══ MODAL ══════════════════════════════════════════════════════════
+function openModal(html,mw=500){
+  const inner=document.getElementById('modal-inner');
+  inner.innerHTML=html;inner.style.maxWidth=mw+'px';
+  document.getElementById('modal-wrap').style.display='flex';
+}
+function closeModal(){document.getElementById('modal-wrap').style.display='none';}
+</script>
+<script>
+// ═══ AUTH ═══════════════════════════════════════════════════════════
+function switchTab(t){
+  document.getElementById('form-login').style.display=t==='login'?'block':'none';
+  document.getElementById('form-register').style.display=t==='register'?'block':'none';
+  document.getElementById('tab-login').classList.toggle('act',t==='login');
+  document.getElementById('tab-reg').classList.toggle('act',t==='register');
+}
+
 async function doLogin(){
-  const email=document.getElementById('login-email').value.trim();
-  const pass=document.getElementById('login-pass').value;
-  const btn=document.getElementById('login-btn-txt');
-  const err=document.getElementById('login-err');
-  btn.textContent='Verificando...';
-  err.style.display='none';
+  const email=document.getElementById('li-email').value.trim();
+  const pass=document.getElementById('li-pass').value;
+  const txt=document.getElementById('li-txt');
+  const err=document.getElementById('li-err');
+  txt.textContent='Verificando...';err.style.display='none';
   const u=await DB.login(email,pass);
-  btn.textContent='Ingresar al sistema →';
-  if(!u){err.textContent='Credenciales incorrectas';err.style.display='block';return;}
-  SESSION=u;
-  document.getElementById('page-login').style.display='none';
-  document.getElementById('page-app').style.display='block';
-  if(!IS_CFG)document.getElementById('cfg-banner').style.display='block';
-  initApp();
+  txt.textContent='Ingresar al sistema \u2192';
+  if(!u){err.textContent='Credenciales incorrectas. Verifica tu email y contrasena.';err.style.display='block';return;}
+  SESSION=u;IS_DEMO=false;startApp();
+}
+
+async function doRegister(){
+  const name=document.getElementById('rg-name').value.trim();
+  const email=document.getElementById('rg-email').value.trim();
+  const pass=document.getElementById('rg-pass').value;
+  const pass2=document.getElementById('rg-pass2').value;
+  const err=document.getElementById('rg-err');err.style.display='none';
+  if(!name||!email||!pass){err.textContent='Completa todos los campos';err.style.display='block';return;}
+  if(pass.length<6){err.textContent='La contrasena debe tener al menos 6 caracteres';err.style.display='block';return;}
+  if(pass!==pass2){err.textContent='Las contrasenas no coinciden';err.style.display='block';return;}
+  const res=await DB.registerUser(name,email,pass);
+  if(res.error){err.textContent=res.error;err.style.display='block';return;}
+  openModal(`<div style="text-align:center;padding:10px 0">
+    <div style="font-size:48px;margin-bottom:16px">\u2705</div>
+    <div style="font-weight:700;font-size:18px;margin-bottom:10px">Cuenta creada!</div>
+    <div style="font-size:13px;color:var(--tx2);line-height:1.7;margin-bottom:20px">Tu cuenta ha sido registrada.<br>Un administrador te asignara a un proyecto y podras acceder con tu correo y contrasena.</div>
+    <button class="btn btn-p" style="width:100%;justify-content:center" onclick="closeModal();switchTab('login')">Ir a iniciar sesion</button>
+  </div>`);
 }
 
 function doLogout(){
-  SESSION=null;SEL_PROJ=null;
+  if(IS_DEMO&&SESSION?.demoId){releaseSlot(SESSION.demoId);clearInterval(DEMO_IV);}
+  SESSION=null;SEL_PROJ=null;IS_DEMO=false;OPEN_STAGES={};OPEN_ACTS={};TASK_FILTER='mine';
   document.getElementById('page-app').style.display='none';
   document.getElementById('page-login').style.display='flex';
-  document.getElementById('login-email').value='';
-  document.getElementById('login-pass').value='';
+  document.getElementById('demo-bar').style.display='none';
+  document.getElementById('demo-banner').style.display='none';
 }
 
-// ═══════════════════════════════════════════════════
-//  APP INIT
-// ═══════════════════════════════════════════════════
-async function initApp(){
-  updateSidebarUser();
+function openRecoverPass(){
+  openModal(`<div>
+    <div style="font-weight:700;font-size:16px;margin-bottom:6px">Recuperar contrasena</div>
+    <div style="font-size:13px;color:var(--tx2);margin-bottom:16px;line-height:1.6">Ingresa tu correo y te enviaremos instrucciones para restablecer tu contrasena.<br><span style="color:var(--tx3);font-size:11px">(Funcion de email disponible en proxima version)</span></div>
+    <div class="fg"><label class="lbl">Correo electronico</label><input class="inp" id="rec-email" type="email" placeholder="tu@email.com"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-p" onclick="toast('Instrucciones enviadas (funcion en desarrollo)');closeModal()">Enviar instrucciones</button>
+    </div>
+  </div>`);
+}
+
+// ═══ DEMO FLOW ══════════════════════════════════════════════════════
+// Update slot availability on login page
+function updateDemoSlotInfo(){
+  const n=countSlots();const free=MAX_SLOTS-n;
+  const el=document.getElementById('demo-slot-info');
+  if(!el)return;
+  if(free>0)el.innerHTML=`<span style="color:var(--gn)">\u2705 ${free} de ${MAX_SLOTS} slots disponibles</span>`;
+  else el.innerHTML=`<span style="color:var(--rd)">\u26A0 Todos los slots ocupados &mdash; entrar a la cola</span>`;
+}
+setInterval(updateDemoSlotInfo,5000);
+setTimeout(updateDemoSlotInfo,500);
+
+function openDemoEntry(){
+  const n=countSlots();const free=MAX_SLOTS-n;
+  openModal(`<div style="text-align:center;margin-bottom:20px">
+    <div style="font-size:40px;margin-bottom:10px">\u1F680</div>
+    <div style="font-weight:700;font-size:18px;margin-bottom:8px">Modo Demo &mdash; 2 horas</div>
+    <div style="font-size:13px;color:var(--tx2);line-height:1.6;margin-bottom:14px">Explora como administrador: crea proyectos, etapas, tareas y visualiza dashboards en tiempo real.</div>
+    <div style="background:${free>0?'rgba(34,197,94,.08)':'rgba(239,68,68,.08)'};border:1px solid ${free>0?'rgba(34,197,94,.2)':'rgba(239,68,68,.2)'};border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:${free>0?'var(--gn)':'var(--rd)'}">
+      ${free>0?`\u2705 ${free} slot${free!==1?'s':''} disponible${free!==1?'s':''}`:'\u26A0 Todos los slots ocupados &mdash; entrar\u00e1s a la cola de espera'}
+    </div>
+  </div>
+  <div class="fg"><label class="lbl">Tu nombre (para identificarte)</label>
+    <input class="inp" id="demo-name-inp" placeholder="Ej: Juan Perez" onkeydown="if(event.key==='Enter')startDemo()">
+  </div>
+  <button class="btn btn-p" style="width:100%;justify-content:center;padding:11px;margin-bottom:8px" onclick="startDemo()">\u1F680 ${free>0?'Iniciar sesion demo':'Unirse a la cola de espera'}</button>
+  <button class="btn btn-g" style="width:100%;justify-content:center" onclick="closeModal()">Cancelar</button>`);
+}
+
+function startDemo(){
+  const name=(document.getElementById('demo-name-inp')?.value||'').trim()||'Invitado';
+  const did=uid('d');
+  const claimed=claimSlot(did,name);
+  closeModal();
+  if(!claimed){
+    joinQueue(did,name);MY_QID=did;
+    showQueueBox(did,name);return;
+  }
+  launchDemoSession(did,name);
+}
+
+function launchDemoSession(did,name){
+  SESSION={id:'demo_'+did,name:name+' (Demo)',email:'demo@teamprojects.io',role:'admin',admin_id:'demo_'+did,demoId:did};
+  IS_DEMO=true;DEMO_START=Date.now();
+  const data=buildDemoData(did);
+  SEL_PROJ=data.project.id;
+  startApp();startDemoTimer();
+}
+
+function startDemoTimer(){
+  const bar=document.getElementById('demo-bar');
+  const fill=document.getElementById('demo-fill');
+  const banner=document.getElementById('demo-banner');
+  const sbInfo=document.getElementById('demo-sb-info');
+  const sbTxt=document.getElementById('demo-timer-txt');
+  bar.style.display='block';sbInfo.style.display='block';
+  clearInterval(DEMO_IV);
+  DEMO_IV=setInterval(()=>{
+    const elapsed=Date.now()-DEMO_START;
+    const rem=DEMO_MS-elapsed;
+    const pct=Math.max(0,(rem/DEMO_MS)*100);
+    fill.style.width=pct+'%';
+    const m=Math.floor(rem/60000),s=Math.floor((rem%60000)/1000);
+    const ts=m>0?`${m}m ${s}s`:`${s}s`;
+    if(sbTxt)sbTxt.textContent=ts+' restantes';
+    if(rem<=0){
+      clearInterval(DEMO_IV);
+      openModal(`<div style="text-align:center;padding:10px 0">
+        <div style="font-size:48px;margin-bottom:16px">\u23F0</div>
+        <div style="font-weight:700;font-size:18px;margin-bottom:10px">Sesion demo finalizada</div>
+        <div style="font-size:13px;color:var(--tx2);line-height:1.7;margin-bottom:20px">Tus 2 horas de prueba terminaron.<br><strong style="color:var(--rd)">Los datos de esta sesion se eliminaran.</strong><br><br>Te gusto? Crea una cuenta o contacta a Angeles Group.</div>
+        <button class="btn btn-p" style="width:100%;justify-content:center" onclick="closeModal();doLogout()">Volver al inicio</button>
+      </div>`);
+      releaseSlot(SESSION.demoId);return;
+    }
+    if(rem<=15*60*1000&&rem>14.9*60*1000){banner.style.display='block';banner.textContent='\u26A0 Tu sesion demo expira en '+m+' minutos. Los datos se eliminaran al cerrar.';setTimeout(()=>banner.style.display='none',12000);}
+    if(rem<=5*60*1000&&rem>4.9*60*1000){banner.style.display='block';banner.textContent='\u{1F6A8} Solo quedan '+m+' minutos! Haz capturas si deseas conservar algo.';}
+    refreshSlot(SESSION.demoId);
+  },1000);
+}
+
+function showQueueBox(did,name){
+  const box=document.getElementById('queue-box');box.style.display='block';
+  renderQueueBox(did);
+  QUEUE_IV=setInterval(()=>{
+    cleanSlots();
+    if(countSlots()<MAX_SLOTS){
+      const pos=queuePos(did);
+      if(pos===1){
+        clearInterval(QUEUE_IV);leaveQueueById(did);
+        box.style.display='none';MY_QID=null;
+        if(claimSlot(did,name)){launchDemoSession(did,name);toast('\u1F680 Tu turno llego! Sesion demo iniciada');}
+        return;
+      }
+    }
+    renderQueueBox(did);
+  },3000);
+}
+
+function renderQueueBox(did){
+  const pos=queuePos(did);
+  const msg=document.getElementById('queue-msg');
+  const eta=document.getElementById('queue-eta');
+  if(!msg)return;
+  if(pos===0){leaveQueue();return;}
+  msg.textContent='Estas en la posicion #'+pos+' de la cola';
+  const slots=getSlots();
+  const now=Date.now();
+  const minExp=slots.length?Math.min(...slots.map(s=>s.exp-now)):0;
+  const etaM=Math.max(0,Math.ceil(minExp/60000));
+  eta.textContent='Tiempo estimado de espera: ~'+etaM+' minuto'+(etaM!==1?'s':'');
+  const q=getQueue().find(x=>x.id===did);
+  const waited=q?now-q.joined:0;
+  const prog=document.getElementById('queue-prog');
+  if(prog)prog.style.width=Math.min(100,(waited/(DEMO_MS))*100)+'%';
+}
+
+function leaveQueue(){
+  if(MY_QID){leaveQueueById(MY_QID);MY_QID=null;}
+  clearInterval(QUEUE_IV);
+  document.getElementById('queue-box').style.display='none';
+}
+
+// ═══ APP INIT ════════════════════════════════════════════════════════
+async function startApp(){
+  document.getElementById('page-login').style.display='none';
+  document.getElementById('page-app').style.display='block';
+  updateSBUser();
   await buildSidebar();
   await loadNotifs();
-  // Realtime
-  if(sb){
-    sb.channel('live').on('postgres_changes',{event:'*',schema:'public',table:'tasks'},()=>{ if(currentView==='tasks')showView('tasks'); if(currentView==='dashboard')showView('dashboard'); })
-    .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},loadNotifs)
-    .subscribe();
+  if(sb&&!IS_DEMO){
+    sb.channel('live')
+      .on('postgres_changes',{event:'*',schema:'public',table:'tasks'},()=>{if(currentView==='tasks')refreshTaskRows();else if(currentView==='dashboard')showView('dashboard');})
+      .on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications'},loadNotifs)
+      .subscribe();
   }
-  // Poll notifs every 20s
-  setInterval(loadNotifs,20000);
-  // Default view
-  if(SESSION.role==='user') showView('tasks');
-  else if(SESSION.role==='superadmin') showView('dashboard');
-  else {
-    const projs=await DB.getProjects(SESSION.id);
+  if(!IS_DEMO)setInterval(loadNotifs,20000);
+  if(SESSION.role==='user')showView('tasks');
+  else if(SESSION.role==='superadmin')showView('dashboard');
+  else{
+    const projs=await DDB.getProjects();
     if(projs.length){SEL_PROJ=projs[0].id;showView('dashboard');}
     else showView('newproject');
   }
 }
 
-function updateSidebarUser(){
+function updateSBUser(){
   document.getElementById('sb-av').textContent=ini(SESSION.name);
   document.getElementById('sb-name').textContent=SESSION.name;
-  document.getElementById('sb-role').textContent=SESSION.role==='superadmin'?'Super Admin':SESSION.role==='admin'?'Administrador':'Usuario';
+  const rm={superadmin:'Super Admin',admin:IS_DEMO?'Admin (Demo)':'Administrador',user:'Usuario'};
+  document.getElementById('sb-role').textContent=rm[SESSION.role]||SESSION.role;
 }
 
 async function buildSidebar(){
   const nav=document.getElementById('sb-nav');
+  const isAdmin=SESSION.role==='admin'||SESSION.role==='superadmin';
   let html='';
-  const canAdmin=SESSION.role==='admin'||SESSION.role==='superadmin';
-
   if(SESSION.role==='superadmin'){
     html+=`<div class="ns">SUPER ADMIN</div>
-    <div class="ni" onclick="showView('dashboard')">📊 <span>Dashboard</span></div>
-    <div class="ni" onclick="showView('admins')">🏢 <span>Administradores</span></div>
-    <div class="ni" onclick="showView('platform')">💼 <span>Plataforma</span></div>`;
+    <div class="ni" data-v="dashboard" onclick="showView('dashboard')">&#x1F4CA; <span>Dashboard</span></div>
+    <div class="ni" data-v="admins" onclick="showView('admins')">&#x1F3E2; <span>Administradores</span></div>
+    <div class="ni" data-v="platform" onclick="showView('platform')">&#x1F4BC; <span>Plataforma</span></div>`;
   }
-
-  if(canAdmin){
+  if(isAdmin){
     html+=`<div class="ns">PROYECTOS</div>`;
-    const projs=SESSION.role==='superadmin'?await DB.getAllProjects():await DB.getProjects(SESSION.id);
+    const projs=await DDB.getProjects();
     projs.forEach(p=>{
-      const nm=p.name.length>21?p.name.slice(0,21)+'…':p.name;
-      html+=`<div class="ni" onclick="selectProj('${p.id}')" id="ni-proj-${p.id}">🏗 <span title="${esc(p.name)}">${esc(nm)}</span></div>`;
+      const nm=p.name.length>21?p.name.slice(0,21)+'\u2026':p.name;
+      html+=`<div class="ni" data-proj="${p.id}" onclick="selectProj('${p.id}')">&#x1F3D7; <span title="${esc(p.name)}">${esc(nm)}</span></div>`;
     });
-    html+=`<div class="ni" onclick="showView('newproject')">＋ <span>Nuevo Proyecto</span></div>`;
+    if(!IS_DEMO)html+=`<div class="ni" data-v="newproject" onclick="showView('newproject')">&#xFF0B; <span>Nuevo Proyecto</span></div>`;
   }
-
   if(SESSION.role==='user'){
     html+=`<div class="ns">MI TRABAJO</div>
-    <div class="ni" onclick="showView('tasks')">✅ <span>Mis Tareas</span></div>`;
+    <div class="ni" data-v="tasks" onclick="showView('tasks')">&#x2705; <span>Mis Tareas</span></div>`;
   }
-
-  if(SEL_PROJ&&canAdmin){
-    html+=`<div class="ns">GESTIÓN</div>
-    <div class="ni" onclick="showView('dashboard')">📊 <span>Dashboard</span></div>
-    <div class="ni" onclick="showView('gantt')">📐 <span>Gantt</span></div>
-    <div class="ni" onclick="showView('tasks')">✅ <span>Tareas</span></div>
-    <div class="ni" onclick="showView('team')">👥 <span>Equipo</span></div>
-    <div class="ni" onclick="showView('stages')">📋 <span>Estructura</span></div>`;
+  if(SEL_PROJ&&isAdmin){
+    html+=`<div class="ns">GESTION</div>
+    <div class="ni" data-v="dashboard" onclick="showView('dashboard')">&#x1F4CA; <span>Dashboard</span></div>
+    <div class="ni" data-v="gantt" onclick="showView('gantt')">&#x1F4D0; <span>Gantt</span></div>
+    <div class="ni" data-v="tasks" onclick="showView('tasks')">&#x2705; <span>Tareas</span></div>
+    <div class="ni" data-v="team" onclick="showView('team')">&#x1F465; <span>Equipo</span></div>
+    <div class="ni" data-v="stages" onclick="showView('stages')">&#x1F4CB; <span>Estructura</span></div>`;
   }
-
-  nav.innerHTML=html;
-  markActiveNav();
+  nav.innerHTML=html;markActiveNav();
 }
 
 function markActiveNav(){
-  document.querySelectorAll('.ni').forEach(el=>el.classList.remove('act'));
-  const map={dashboard:'📊',tasks:'✅',gantt:'📐',team:'👥',stages:'📋',admins:'🏢',platform:'💼',newproject:'＋',profile:'👤'};
   document.querySelectorAll('.ni').forEach(el=>{
-    if(el.textContent.trim().startsWith(map[currentView]||'__'))el.classList.add('act');
+    el.classList.remove('act');
+    const v=el.dataset.v,p=el.dataset.proj;
+    if(v&&v===currentView)el.classList.add('act');
+    if(p&&p===SEL_PROJ&&['dashboard','tasks','gantt','team','stages'].includes(currentView))el.classList.add('act');
   });
-  if(SEL_PROJ){
-    const el=document.getElementById('ni-proj-'+SEL_PROJ);
-    if(el)el.classList.add('act');
-  }
 }
 
-async function selectProj(id){
-  SEL_PROJ=id;
-  await buildSidebar();
-  showView('dashboard');
-}
+async function selectProj(id){SEL_PROJ=id;OPEN_STAGES={};OPEN_ACTS={};TASK_FILTER='mine';await buildSidebar();showView('dashboard');}
 
-// ═══════════════════════════════════════════════════
-//  VIEWS ROUTER
-// ═══════════════════════════════════════════════════
-let currentView='';
+// ═══ VIEW ROUTER ════════════════════════════════════════════════════
 async function showView(v){
-  currentView=v;
-  markActiveNav();
+  currentView=v;markActiveNav();
   const el=document.getElementById('view-content');
-  el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;padding:80px 0;gap:12px;color:var(--tx3)"><div style="width:20px;height:20px;border:2px solid var(--bd2);border-top:2px solid var(--ac);border-radius:50%;animation:spin .8s linear infinite"></div><span>Cargando...</span></div>';
+  el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;padding:80px 0;gap:12px;color:var(--tx3)"><div style="width:20px;height:20px;border:2px solid var(--bd2);border-top:2px solid var(--ac);border-radius:50%;animation:spin .8s linear infinite"></div><span>Cargando...</span></div>`;
   el.className='';
-  try{
-    const html=await views[v]();
-    el.innerHTML=html;
-    el.className='fade';
-    if(views[v+'_init'])views[v+'_init']();
-  }catch(e){
-    el.innerHTML=`<div style="color:var(--rd);padding:20px">Error al cargar la vista: ${e.message}</div>`;
-    console.error(e);
-  }
+  try{const html=await views[v]();el.innerHTML=html;el.className='fade';if(views[v+'_init'])views[v+'_init']();}
+  catch(e){el.innerHTML=`<div style="color:var(--rd);padding:20px">Error: ${esc(e.message)}</div>`;console.error(e);}
 }
 
-// ═══════════════════════════════════════════════════
-//  NOTIFICATIONS
-// ═══════════════════════════════════════════════════
+// ═══ NOTIFICATIONS ══════════════════════════════════════════════════
 async function loadNotifs(){
+  if(IS_DEMO)return;
   NOTIFS=await DB.getNotifs();
   const mine=NOTIFS.filter(n=>{const t=n.to_users||[];return t.length===0||t.includes(SESSION.id);});
   const unread=mine.filter(n=>!(n.read_by||[]).includes(SESSION.id)).length;
-  const badge=document.getElementById('notif-badge');
-  if(unread>0){badge.textContent=unread;badge.style.display='flex';}else badge.style.display='none';
-  renderNotifList(mine);
-}
-
-function renderNotifList(notifs){
-  const el=document.getElementById('notif-list');
-  if(!el)return;
-  if(!notifs.length){el.innerHTML='<div style="padding:24px;text-align:center;color:var(--tx3);font-size:12px">Sin notificaciones</div>';return;}
-  el.innerHTML=notifs.slice(0,20).map(n=>{
+  const badge=document.getElementById('nb');
+  if(badge){if(unread>0){badge.textContent=unread;badge.style.display='flex';}else badge.style.display='none';}
+  const el=document.getElementById('notif-list');if(!el)return;
+  if(!mine.length){el.innerHTML='<div style="padding:24px;text-align:center;color:var(--tx3);font-size:12px">Sin notificaciones</div>';return;}
+  el.innerHTML=mine.slice(0,20).map(n=>{
     const read=(n.read_by||[]).includes(SESSION.id);
     return`<div onclick="readNotif(${n.id})" style="padding:10px 16px;border-bottom:1px solid var(--bd);background:${read?'transparent':'rgba(245,158,11,.04)'};cursor:pointer">
       <div style="font-size:12px;line-height:1.4">${esc(n.message)}</div>
@@ -479,294 +631,254 @@ function renderNotifList(notifs){
     </div>`;
   }).join('');
 }
-
 async function readNotif(id){await DB.markRead(id);await loadNotifs();}
 async function markAllRead(){for(const n of NOTIFS)await DB.markRead(n.id);await loadNotifs();}
-function toggleNotifs(){
-  const p=document.getElementById('notif-panel');
-  p.style.display=p.style.display==='none'?'block':'none';
+function toggleNotifs(){const p=document.getElementById('notif-panel');p.style.display=p.style.display==='none'?'block':'none';}
+async function addNotif(msg,toU=[]){if(IS_DEMO)return;await DB.addNotif(msg,toU);await loadNotifs();}
+
+// ═══ HELPERS ════════════════════════════════════════════════════════
+function hdr(t,s=''){return`<div style="margin-bottom:22px"><div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--ac);letter-spacing:1px">${t}</div>${s?`<div style="color:var(--tx2);font-size:13px;margin-top:1px">${esc(s)}</div>`:''}</div>`;}
+function avH(n,sz=32){return`<div class="av" style="width:${sz}px;height:${sz}px;font-size:${Math.round(sz*.37)}px">${ini(n)}</div>`;}
+function pbH(pct,col='var(--ac)'){return`<div class="pb"><div class="pf" style="width:${pct}%;background:${col}"></div></div>`;}
+function kpiCard(ic,lb,val,sub,col){return`<div class="card" style="position:relative;overflow:hidden;border:1px solid var(--bd2)"><div style="position:absolute;top:-10px;right:-10px;font-size:56px;opacity:.05">${ic}</div><div style="font-size:22px;margin-bottom:4px">${ic}</div><div style="font-size:28px;font-weight:700;color:${col};font-family:'JetBrains Mono',monospace">${val}</div><div style="font-size:12px;font-weight:600;margin-top:2px">${lb}</div><div style="font-size:11px;color:var(--tx3);margin-top:1px">${sub}</div></div>`;}
+
+// ═══ STARS — INLINE UPDATE (FIX #4) ════════════════════════════════
+async function updateStar(taskId,stars){
+  const task=await DDB.getTask(taskId);if(!task){toast('Tarea no encontrada','err');return;}
+  if(getEv(task).length>0||task.stars===5){toast('Las 5 estrellas se activan al subir evidencia','err');return;}
+  if(stars===5){toast('Sube evidencia para completar al 100%','err');return;}
+  const canAdmin=SESSION.role==='admin'||SESSION.role==='superadmin';
+  if(!canAdmin&&task.responsible_id!==SESSION.id){toast('Solo el responsable puede actualizar','err');return;}
+  await DDB.updateTask(taskId,{stars});
+  // Update only the DOM row — no full reload
+  updateTaskRowDOM(taskId,{...task,stars});
+  if(!IS_DEMO)await addNotif(`&#x1F4CA; "${task.name}" \u2192 ${s2p(stars)}% \u2014 ${SESSION.name}`);
+  toast(`Avance: ${s2p(stars)}%`);
 }
 
-async function addNotif(msg,toU=[]){
-  await DB.addNotif(msg,toU);
-  await loadNotifs();
+function updateTaskRowDOM(taskId,task){
+  const row=document.getElementById('tr-'+taskId);if(!row)return;
+  const canAdmin=SESSION.role==='admin'||SESSION.role==='superadmin';
+  const canAct=canAdmin||task.responsible_id===SESSION.id;
+  // Stars
+  const starRow=row.querySelector('.star-row');
+  if(starRow)starRow.innerHTML=[1,2,3,4,5].map(n=>{
+    const filled=n<=task.stars,locked=n===5||!canAct;
+    return`<span class="si${locked?' lk':''}" style="color:${filled?'var(--ac)':'var(--bd2)'}"${!locked?` onclick="updateStar('${taskId}',${n})" onmouseenter="this.style.transform='scale(1.3)'" onmouseleave="this.style.transform='scale(1)'"`:''}>&#9733;</span>`;
+  }).join('');
+  const pctEl=row.querySelector('.star-pct');
+  if(pctEl)pctEl.textContent=s2p(task.stars)+'%';
+  const st=calcSt(task);
+  const stEl=row.querySelector('.st-badge');
+  if(stEl){stEl.className='badge st-badge '+st.cls;stEl.innerHTML=st.icon+' '+st.label;}
+  updateStagePctDOM(task.activity_id);
 }
 
-// ═══════════════════════════════════════════════════
-//  MODAL HELPERS
-// ═══════════════════════════════════════════════════
-function openModal(html){
-  document.getElementById('modal-inner').innerHTML=html;
-  document.getElementById('modal-wrap').style.display='flex';
-}
-function closeModal(){document.getElementById('modal-wrap').style.display='none';}
-
-// ═══════════════════════════════════════════════════
-//  VIEW HELPERS
-// ═══════════════════════════════════════════════════
-function hdr(title,sub=''){
-  return`<div style="margin-bottom:22px">
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--ac);letter-spacing:1px">${title}</div>
-    ${sub?`<div style="color:var(--tx2);font-size:13px;margin-top:1px">${esc(sub)}</div>`:''}
-  </div>`;
-}
-function avHTML(name,size=32){
-  return`<div class="av" style="width:${size}px;height:${size}px;font-size:${Math.round(size*.37)}px">${ini(name)}</div>`;
-}
-function pbHTML(pct,col='var(--ac)'){
-  return`<div class="pb"><div class="pf" style="width:${pct}%;background:${col}"></div></div>`;
-}
-function kpiCard(icon,label,val,sub,col){
-  return`<div class="card" style="position:relative;overflow:hidden;border:1px solid var(--bd2)">
-    <div style="position:absolute;top:-10px;right:-10px;font-size:56px;opacity:.05">${icon}</div>
-    <div style="font-size:22px;margin-bottom:4px">${icon}</div>
-    <div style="font-size:28px;font-weight:700;color:${col};font-family:'JetBrains Mono',monospace">${val}</div>
-    <div style="font-size:12px;font-weight:600;margin-top:2px">${label}</div>
-    <div style="font-size:11px;color:var(--tx3);margin-top:1px">${sub}</div>
-  </div>`;
+async function updateStagePctDOM(actId){
+  if(!SEL_PROJ)return;
+  const stages=await DDB.getStages(SEL_PROJ);
+  for(const s of stages){
+    const acts=await DDB.getActivities(s.id);
+    if(!acts.some(a=>a.id===actId))continue;
+    let tot=0,sum=0;
+    for(const a of acts){const t=await DDB.getTasks(a.id);t.forEach(x=>{tot++;sum+=s2p(x.stars);});}
+    const pct=tot?Math.round(sum/tot):0;
+    const pe=document.getElementById('spct-'+s.id);const be=document.getElementById('sbar-'+s.id);
+    if(pe)pe.textContent=pct+'%';if(be)be.style.width=pct+'%';break;
+  }
 }
 
-// ═══════════════════════════════════════════════════
-//  VIEWS
-// ═══════════════════════════════════════════════════
-const views = {
+async function refreshTaskRows(){
+  // Reload all task rows in place without closing accordions
+  if(!SEL_PROJ)return;
+  const stages=await DDB.getStages(SEL_PROJ);
+  for(const s of stages){
+    const acts=await DDB.getActivities(s.id);
+    for(const a of acts){
+      const tasks=await DDB.getTasks(a.id);
+      for(const task of tasks){updateTaskRowDOM(task.id,task);}
+    }
+  }
+}
+</script>
+<script>
+const views={
 
-// ── DASHBOARD ───────────────────────────────────────
+// ── DASHBOARD ─────────────────────────────────────────────────────
 async dashboard(){
-  if(!SEL_PROJ) return `<div style="text-align:center;padding:80px 0;color:var(--tx3)"><div style="font-size:52px;margin-bottom:16px">🏗</div><div style="font-size:16px;font-weight:600;color:var(--tx2)">Selecciona o crea un proyecto</div></div>`;
-  const allProj=await DB.getAllProjects(); const proj=allProj.find(p=>p.id===SEL_PROJ);
-  if(!proj) return '<div style="color:var(--tx3);padding:40px">Proyecto no encontrado</div>';
-  const stages=await DB.getStages(proj.id);
-  const acts=[]; for(const s of stages){const a=await DB.getActivities(s.id);acts.push(...a);}
-  const allT=[]; for(const a of acts){const t=await DB.getTasks(a.id);allT.push(...t);}
-  const allU=await DB.getAllUsers();
-  const total=allT.length;
-  const done=allT.filter(t=>t.stars===5||getEv(t).length>0).length;
+  if(!SEL_PROJ)return`<div style="text-align:center;padding:80px 0;color:var(--tx3)"><div style="font-size:52px;margin-bottom:16px">&#x1F3D7;</div><div style="font-size:16px;font-weight:600;color:var(--tx2)">Selecciona o crea un proyecto</div></div>`;
+  const allP=await DDB.getAllProjects();const proj=allP.find(p=>p.id===SEL_PROJ);
+  if(!proj)return'';
+  const stages=await DDB.getStages(proj.id);
+  const allActs=[];for(const s of stages){const a=await DDB.getActivities(s.id);allActs.push(...a);}
+  const allT=[];for(const a of allActs){const t=await DDB.getTasks(a.id);allT.push(...t);}
+  const allU=await DDB.getAllUsers();
+  const total=allT.length,done=allT.filter(t=>t.stars===5||getEv(t).length>0).length;
   const inProg=allT.filter(t=>t.stars>0&&t.stars<5&&!getEv(t).length).length;
   const overPct=total?Math.round(allT.reduce((a,t)=>a+s2p(t.stars),0)/total):0;
-  const totalD=diffD(proj.start_date,proj.end_date);
-  const elapsed=diffD(proj.start_date,fmtISO(TODAY));
-  const timePct=Math.min(100,Math.round((elapsed/Math.max(1,totalD))*100));
+  const totalD=diffD(proj.start_date,proj.end_date),elapsed=diffD(proj.start_date,fmtISO(TODAY));
+  const timePct=Math.min(100,Math.round(elapsed/Math.max(1,totalD)*100));
   const overdue=allT.filter(t=>calcSt(t).label.includes('fuera')).length;
-
-  let stageRows='';
+  let stRows='';
   for(let i=0;i<stages.length;i++){
-    const s=stages[i];
-    const sActs=acts.filter(a=>a.stage_id===s.id);
-    const sT=allT.filter(t=>sActs.some(a=>a.id===t.activity_id));
+    const sA=allActs.filter(a=>a.stage_id===stages[i].id);
+    const sT=allT.filter(t=>sA.some(a=>a.id===t.activity_id));
     const pct=sT.length?Math.round(sT.reduce((a,t)=>a+s2p(t.stars),0)/sT.length):0;
-    stageRows+=`<div style="margin-bottom:14px">
-      <div style="display:flex;justify-content:space-between;margin-bottom:5px">
-        <span style="font-size:12px;font-weight:600">${esc(s.name)}</span>
-        <span style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${pct}%</span>
-      </div>
-      ${pbHTML(pct,COLS[i%COLS.length])}
-      <div style="font-size:10px;color:var(--tx3);margin-top:2px">${sT.length} tareas · ${sT.filter(t=>t.stars===5).length} ejecutadas</div>
-    </div>`;
+    stRows+=`<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;font-weight:600">${esc(stages[i].name)}</span><span style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${pct}%</span></div>${pbH(pct,COLS[i%COLS.length])}<div style="font-size:10px;color:var(--tx3);margin-top:2px">${sT.length} tareas &bull; ${sT.filter(t=>t.stars===5).length} ejecutadas</div></div>`;
   }
-
-  let userRows='';
-  const projUsers=allU.filter(u=>{return allT.some(t=>t.responsible_id===u.id);});
-  projUsers.forEach((u,i)=>{
-    const myT=allT.filter(t=>t.responsible_id===u.id);
-    const pct=Math.round(myT.reduce((a,t)=>a+s2p(t.stars),0)/myT.length);
-    userRows+=`<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
-      ${avHTML(u.name,32)}
-      <div style="flex:1">
-        <div style="display:flex;justify-content:space-between;margin-bottom:5px">
-          <span style="font-size:12px;font-weight:600">${esc(u.name)}</span>
-          <span style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${pct}%</span>
-        </div>
-        ${pbHTML(pct,COLS[i%COLS.length])}
-        <div style="font-size:10px;color:var(--tx3);margin-top:2px">${myT.filter(t=>t.stars===5).length}/${myT.length} completadas</div>
-      </div>
-    </div>`;
-  });
-
-  const statuses=[
-    {l:'No iniciado',c:'var(--tx3)',v:allT.filter(t=>calcSt(t).label.startsWith('No iniciado')&&!calcSt(t).label.includes('fuera')).length},
-    {l:'Fuera de plazo',c:'var(--rd)',v:allT.filter(t=>calcSt(t).label.includes('fuera')).length},
-    {l:'En proceso',c:'var(--bl)',v:allT.filter(t=>calcSt(t).label.startsWith('En proceso')).length},
-    {l:'Ejecutado',c:'var(--gn)',v:allT.filter(t=>calcSt(t).label.startsWith('Ejecutado')).length},
-  ];
-
+  const projU=allU.filter(u=>allT.some(t=>t.responsible_id===u.id));
+  let uRows=projU.map((u,i)=>{const myT=allT.filter(t=>t.responsible_id===u.id);const pct=Math.round(myT.reduce((a,t)=>a+s2p(t.stars),0)/myT.length);return`<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">${avH(u.name,32)}<div style="flex:1"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;font-weight:600">${esc(u.name)}</span><span style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${pct}%</span></div>${pbH(pct,COLS[i%COLS.length])}<div style="font-size:10px;color:var(--tx3);margin-top:2px">${myT.filter(t=>t.stars===5).length}/${myT.length} completadas</div></div></div>`;}).join('');
+  const sts=[{l:'No iniciado',c:'var(--tx3)',v:allT.filter(t=>calcSt(t).label.startsWith('No iniciado')&&!calcSt(t).label.includes('fuera')).length},{l:'Fuera de plazo',c:'var(--rd)',v:allT.filter(t=>calcSt(t).label.includes('fuera')).length},{l:'En proceso',c:'var(--bl)',v:allT.filter(t=>calcSt(t).label.startsWith('En proceso')).length},{l:'Ejecutado',c:'var(--gn)',v:allT.filter(t=>calcSt(t).label.startsWith('Ejecutado')).length}];
   return hdr('DASHBOARD DEL PROYECTO',proj.name)+`
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px">
-    ${kpiCard('📈','Avance General',overPct+'%',done+'/'+total+' tareas completadas','var(--ac)')}
-    ${kpiCard('⏱','Tiempo Transcurrido',timePct+'%',elapsed+' / '+totalD+' días','var(--bl)')}
-    ${kpiCard('✅','Ejecutadas',done,inProg+' en proceso','var(--gn)')}
-    ${kpiCard('⚠','Fuera de Plazo',overdue,'tareas vencidas','var(--rd)')}
+    ${kpiCard('&#x1F4C8;','Avance General',overPct+'%',done+'/'+total+' completadas','var(--ac)')}
+    ${kpiCard('&#x23F1;','Tiempo',timePct+'%',elapsed+'/'+totalD+' dias','var(--bl)')}
+    ${kpiCard('&#x2705;','Ejecutadas',done,inProg+' en proceso','var(--gn)')}
+    ${kpiCard('&#x26A0;','Fuera de Plazo',overdue,'tareas vencidas','var(--rd)')}
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-    <div class="card"><div style="font-weight:700;margin-bottom:16px;font-size:13px">📊 Avance por Etapa</div>${stageRows}</div>
-    <div class="card"><div style="font-weight:700;margin-bottom:16px;font-size:13px">👥 Avance por Responsable</div>${userRows||'<div style="color:var(--tx3);font-size:12px">Sin responsables asignados</div>'}</div>
+    <div class="card"><div style="font-weight:700;margin-bottom:16px;font-size:13px">&#x1F4CA; Avance por Etapa</div>${stRows}</div>
+    <div class="card"><div style="font-weight:700;margin-bottom:16px;font-size:13px">&#x1F465; Por Responsable</div>${uRows||'<div style="color:var(--tx3);font-size:12px">Sin responsables asignados</div>'}</div>
   </div>
-  <div class="card">
-    <div style="font-weight:700;margin-bottom:14px;font-size:13px">📋 Estados</div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
-      ${statuses.map(s=>`<div style="text-align:center;padding:16px 10px;background:var(--sf2);border-radius:10px">
-        <div style="font-size:30px;font-weight:700;color:${s.c};font-family:'JetBrains Mono',monospace">${s.v}</div>
-        <div style="font-size:11px;color:var(--tx2);margin-top:4px">${s.l}</div>
-      </div>`).join('')}
-    </div>
-  </div>`;
+  <div class="card"><div style="font-weight:700;margin-bottom:14px;font-size:13px">&#x1F4CB; Estados</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">${sts.map(s=>`<div style="text-align:center;padding:16px 10px;background:var(--sf2);border-radius:10px"><div style="font-size:30px;font-weight:700;color:${s.c};font-family:'JetBrains Mono',monospace">${s.v}</div><div style="font-size:11px;color:var(--tx2);margin-top:4px">${s.l}</div></div>`).join('')}</div></div>`;
 },
 
-// ── TASKS ───────────────────────────────────────────
+// ── TASKS ─────────────────────────────────────────────────────────
 async tasks(){
   const canAdmin=SESSION.role==='admin'||SESSION.role==='superadmin';
   let proj=null;
-  if(SEL_PROJ){const all=await DB.getAllProjects();proj=all.find(p=>p.id===SEL_PROJ);}
+  if(SEL_PROJ){const all=await DDB.getAllProjects();proj=all.find(p=>p.id===SEL_PROJ);}
   if(!proj&&SESSION.role==='user'){
-    const allP=await DB.getAllProjects();
-    for(const p of allP){
-      const stages=await DB.getStages(p.id);
-      for(const s of stages){const acts=await DB.getActivities(s.id);for(const a of acts){const tasks=await DB.getTasks(a.id);if(tasks.some(t=>t.responsible_id===SESSION.id)){proj=p;SEL_PROJ=p.id;break;}}if(proj)break;}
-      if(proj)break;
-    }
+    const allP=await DDB.getAllProjects();
+    for(const p of allP){const ss=await DDB.getStages(p.id);for(const s of ss){const aa=await DDB.getActivities(s.id);for(const a of aa){const tt=await DDB.getTasks(a.id);if(tt.some(t=>t.responsible_id===SESSION.id)){proj=p;SEL_PROJ=p.id;break;}}if(proj)break;}if(proj)break;}
   }
-  if(!proj)return `<div style="text-align:center;padding:80px 0;color:var(--tx3)"><div style="font-size:52px">🏗</div><div style="font-size:16px;font-weight:600;color:var(--tx2);margin-top:16px">Sin proyecto seleccionado</div></div>`;
+  if(!proj)return`<div style="text-align:center;padding:80px 0;color:var(--tx3)"><div style="font-size:52px">&#x1F3D7;</div><div style="font-size:16px;font-weight:600;color:var(--tx2);margin-top:16px">Sin proyecto seleccionado</div></div>`;
+  const stages=await DDB.getStages(proj.id);
+  const allU=await DDB.getAllUsers();const getU=id=>allU.find(u=>u.id===id)||{name:'Sin asignar'};
 
-  const stages=await DB.getStages(proj.id);
-  const allU=await DB.getAllUsers();
-  const getU=id=>allU.find(u=>u.id===id)||{name:'Sin asignar'};
+  // Gather all users that have tasks
+  let tuIds=new Set();
+  for(const s of stages){const aa=await DDB.getActivities(s.id);for(const a of aa){const tt=await DDB.getTasks(a.id);tt.forEach(t=>tuIds.add(t.responsible_id));}}
+  const taskUsers=allU.filter(u=>tuIds.has(u.id));
 
-  let html=hdr('CONTROL DE TAREAS',proj.name+' · '+fmtD(proj.start_date)+' → '+fmtD(proj.end_date));
+  // Filter bar
+  const fBar=`<div style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--sf2);border:1px solid var(--bd2);border-radius:10px;margin-bottom:16px;flex-wrap:wrap">
+    <span style="font-size:12px;font-weight:600;color:var(--tx2)">&#x1F50D; Filtrar:</span>
+    ${SESSION.role==='user'?`
+      <button class="tab ${TASK_FILTER==='mine'?'act':''}" onclick="setFilter('mine')">Mis tareas</button>
+      <button class="tab ${TASK_FILTER==='all'?'act':''}" onclick="setFilter('all')">Ver todas (solo lectura)</button>
+    `:`
+      <button class="tab ${TASK_FILTER==='all'?'act':''}" onclick="setFilter('all')">Todas</button>
+      ${taskUsers.map(u=>`<button class="tab ${TASK_FILTER===u.id?'act':''}" onclick="setFilter('${u.id}')">${esc(u.name.split(' ')[0])}</button>`).join('')}
+    `}
+  </div>`;
+
+  let html=hdr('CONTROL DE TAREAS',proj.name+' &bull; '+fmtD(proj.start_date)+' &rarr; '+fmtD(proj.end_date))+fBar;
 
   for(let si=0;si<stages.length;si++){
     const s=stages[si];
-    const acts=await DB.getActivities(s.id);
-    let taskCount=0; let stagePct=0; let stageTasks=0;
-    let actsHTML='';
+    const acts=await DDB.getActivities(s.id);
+    let stageTot=0,stageSum=0;let actsHTML='';
 
     for(let ai=0;ai<acts.length;ai++){
       const a=acts[ai];
-      let tasks=await DB.getTasks(a.id);
-      if(!canAdmin)tasks=tasks.filter(t=>t.responsible_id===SESSION.id);
-      if(!tasks.length&&!canAdmin)continue;
-      taskCount+=tasks.length;
-      stageTasks+=tasks.length;
-      stagePct+=tasks.reduce((acc,t)=>acc+s2p(t.stars),0);
+      let tasks=await DDB.getTasks(a.id);
+      // Apply filter
+      let isReadOnly=false;
+      if(TASK_FILTER==='mine')tasks=tasks.filter(t=>t.responsible_id===SESSION.id);
+      else if(TASK_FILTER!=='all'){tasks=tasks.filter(t=>t.responsible_id===TASK_FILTER);isReadOnly=(SESSION.role==='user');}
+      else if(SESSION.role==='user')isReadOnly=true; // user sees all but can't edit others
+      if(!tasks.length)continue;
 
+      stageTot+=tasks.length;stageSum+=tasks.reduce((acc,t)=>acc+s2p(t.stars),0);
       let rows='';
       tasks.forEach(task=>{
         const u=getU(task.responsible_id);
         const days=diffD(task.start_date,task.end_date);
-        const st=calcSt(task);
-        const ev=getEv(task);
-        const canAct=canAdmin||task.responsible_id===SESSION.id;
+        const st=calcSt(task);const ev=getEv(task);
+        const hist=getHist(task);
+        const canAct=(canAdmin||task.responsible_id===SESSION.id)&&!isReadOnly;
         const stars=[1,2,3,4,5].map(n=>{
-          const filled=n<=task.stars;
-          const clickable=canAct&&n<5;
-          return`<span class="star" style="color:${filled?'var(--ac)':'var(--bd2)'};cursor:${clickable?'pointer':'default'}"
-            onclick="${clickable?`updateStar('${task.id}',${n})`:'void 0'}"
-            title="${n<5?'Marcar '+s2p(n)+'%':'Se activa con evidencia'}">★</span>`;
+          const filled=n<=task.stars,locked=n===5||!canAct;
+          return`<span class="si${locked?' lk':''}" style="color:${filled?'var(--ac)':'var(--bd2)'}"${!locked?` onclick="updateStar('${task.id}',${n})" onmouseenter="this.style.transform='scale(1.3)'" onmouseleave="this.style.transform='scale(1)'"`:''}>&#9733;</span>`;
         }).join('');
-
-        rows+=`<tr>
-          <td>
-            <div style="font-weight:600;font-size:12px;max-width:180px">${esc(task.name)}</div>
-            ${task.rescheduled>0?`<div style="font-size:10px;color:var(--ac)">🔄 Reprog. ${task.rescheduled}×</div>`:''}
-            ${task.reschedule_pending?`<div style="font-size:10px;color:var(--rd)">⏳ Pendiente aprobación</div>`:''}
+        const histChip=hist.length?`<span class="hchip" onclick="viewHistory('${task.id}')">&#x1F4CB; Historial (${hist.length})</span>`:'';
+        rows+=`<tr id="tr-${task.id}">
+          <td><div style="font-weight:600;font-size:12px">${esc(task.name)}</div>
+            ${task.rescheduled>0?`<div style="font-size:10px;color:var(--ac)">&#x1F504; Reprog. ${task.rescheduled}&times;</div>`:''}
+            ${task.reschedule_pending?`<div style="font-size:10px;color:var(--rd)">&#x23F3; Pendiente aprobacion</div>`:''}
+            ${histChip}
           </td>
-          <td><div style="display:flex;align-items:center;gap:7px">${avHTML(u.name,26)}<span style="font-size:12px">${esc(u.name)}</span></div></td>
+          <td><div style="display:flex;align-items:center;gap:7px">${avH(u.name,26)}<span style="font-size:12px">${esc(u.name)}</span>${isReadOnly&&TASK_FILTER==='all'?'<span class="badge b-gray" style="font-size:9px">solo lectura</span>':''}</div></td>
           <td><span style="font-size:11px;font-family:'JetBrains Mono',monospace">${fmtD(task.start_date)}</span></td>
           <td><span style="font-size:11px;font-family:'JetBrains Mono',monospace">${fmtD(task.end_date)}</span></td>
           <td><span style="font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace">${days}d</span></td>
           <td>
-            <div>${stars}</div>
-            <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${s2p(task.stars)}%</div>
+            <div class="star-row">${stars}</div>
+            <div class="star-pct" style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${s2p(task.stars)}%</div>
           </td>
-          <td><span class="badge ${st.cls}">${st.icon} ${st.label}</span></td>
-          <td>${ev.length>0
-            ?`<button class="badge b-green" style="cursor:pointer;border:1px solid rgba(34,197,94,.18)" onclick="viewEvidence('${task.id}')">📎 ${ev.length} archivo${ev.length>1?'s':''}</button>`
-            :canAct?`<button class="btn btn-g btn-s" onclick="uploadEvidence('${task.id}')">↑ Subir</button>`:'<span style="color:var(--tx3);font-size:11px">—</span>'}
-          </td>
+          <td><span class="badge st-badge ${st.cls}">${st.icon} ${st.label}</span></td>
+          <td>${ev.length?`<button class="badge b-green" style="cursor:pointer" onclick="viewEvidence('${task.id}')">&#x1F4CE; ${ev.length}</button>`:canAct?`<button class="btn btn-g btn-s" onclick="uploadEvidence('${task.id}')">&#x2191; Subir</button>`:'&mdash;'}</td>
           <td>
-            ${canAct&&(task.rescheduled||0)<3&&!task.reschedule_pending?`<button class="btn btn-g btn-s" onclick="openReschedule('${task.id}')" title="Reprogramar">🔄</button>`:''}
-            ${canAdmin&&task.reschedule_pending?`<button class="btn btn-p btn-s" onclick="approveReschedule('${task.id}')">✓ Aprobar</button>`:''}
+            ${canAct&&(task.rescheduled||0)<3&&!task.reschedule_pending?`<button class="btn btn-g btn-s" onclick="openReschedule('${task.id}')">&#x1F504;</button>`:''}
+            ${canAdmin&&task.reschedule_pending?`<button class="btn btn-p btn-s" onclick="approveReschedule('${task.id}')">&#x2713; OK</button>`:''}
           </td>
         </tr>`;
       });
 
-      actsHTML+=`
-      <div style="margin-bottom:6px">
-        <div style="display:flex;align-items:center;gap:10px;padding:9px 16px;background:var(--sf);border:1px solid var(--bd);border-radius:8px;cursor:pointer;margin-bottom:4px" onclick="toggleAct('act-body-${a.id}',this)">
-          <span style="font-size:11px;color:var(--tx3)">▶</span>
-          <span style="font-weight:600;font-size:13px;flex:1">Actividad ${si+1}.${ai+1}: ${esc(a.name)}</span>
+      const isOpenAct=OPEN_ACTS[a.id]!==false;
+      actsHTML+=`<div style="margin-bottom:6px">
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 16px;background:var(--sf);border:1px solid var(--bd);border-radius:8px;cursor:pointer;margin-bottom:4px" onclick="toggleAct('ab-${a.id}',this)">
+          <span style="font-size:11px;color:var(--tx3)">${isOpenAct?'&#9660;':'&#9654;'}</span>
+          <span style="font-weight:600;font-size:13px;flex:1">Act. ${si+1}.${ai+1}: ${esc(a.name)}</span>
           <span style="font-size:11px;color:var(--tx3)">${tasks.length} tareas</span>
         </div>
-        <div id="act-body-${a.id}" style="display:none;background:var(--sf);border:1px solid var(--bd);border-radius:8px;overflow:hidden;margin-bottom:2px">
-          <div style="overflow-x:auto">
-          <table class="tbl" style="min-width:900px">
-            <thead><tr>
-              <th>Tarea</th><th>Responsable</th><th>Inicio</th><th>Fin</th><th>Días</th>
-              <th>Progreso</th><th>Estado</th><th>Evidencia</th><th>Acciones</th>
-            </tr></thead>
+        <div id="ab-${a.id}" style="display:${isOpenAct?'block':'none'};background:var(--sf);border:1px solid var(--bd);border-radius:8px;overflow:hidden;margin-bottom:2px">
+          <div style="overflow-x:auto"><table class="tbl" style="min-width:900px">
+            <thead><tr><th>Tarea</th><th>Responsable</th><th>Inicio</th><th>Fin</th><th>Dias</th><th>Progreso</th><th>Estado</th><th>Evidencia</th><th>Acc.</th></tr></thead>
             <tbody>${rows}</tbody>
-          </table>
-          </div>
+          </table></div>
         </div>
       </div>`;
     }
 
-    const sPct=stageTasks?Math.round(stagePct/stageTasks):0;
-    html+=`
-    <div style="margin-bottom:10px">
-      <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;background:var(--sf2);border:1px solid var(--bd2);border-radius:10px;cursor:pointer;margin-bottom:${actsHTML?'6px':'0'}" onclick="toggleStage('stage-body-${s.id}',this)">
-        <span style="color:var(--ac);font-weight:700;font-size:13px;flex-shrink:0">▶</span>
+    const sPct=stageTot?Math.round(stageSum/stageTot):0;
+    const isOpenStage=OPEN_STAGES[s.id]!==false;
+    html+=`<div style="margin-bottom:10px">
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;background:var(--sf2);border:1px solid var(--bd2);border-radius:10px;cursor:pointer;margin-bottom:${isOpenStage&&actsHTML?'6px':'0'}" onclick="toggleStage('sb-${s.id}',this)">
+        <span style="color:var(--ac);font-weight:700;font-size:13px;flex-shrink:0">${isOpenStage?'&#9660;':'&#9654;'}</span>
         <span style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;color:var(--ac);flex:1">ETAPA ${si+1}: ${esc(s.name)}</span>
         <div style="display:flex;align-items:center;gap:8px">
-          <div style="width:70px;height:4px;background:var(--sf3);border-radius:99px;overflow:hidden"><div style="height:100%;width:${sPct}%;background:${sPct===100?'var(--gn)':'var(--ac)'};border-radius:99px"></div></div>
-          <span style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${sPct}%</span>
+          <div style="width:70px;height:4px;background:var(--sf3);border-radius:99px;overflow:hidden"><div id="sbar-${s.id}" style="height:100%;width:${sPct}%;background:${sPct===100?'var(--gn)':'var(--ac)'};border-radius:99px"></div></div>
+          <span id="spct-${s.id}" style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${sPct}%</span>
         </div>
       </div>
-      <div id="stage-body-${s.id}" style="display:none;padding-left:12px">${actsHTML}</div>
+      <div id="sb-${s.id}" style="display:${isOpenStage?'block':'none'};padding-left:12px">${actsHTML}</div>
     </div>`;
   }
   return html;
 },
 
-// ── GANTT ────────────────────────────────────────────
+// ── GANTT ─────────────────────────────────────────────────────────
 async gantt(){
-  if(!SEL_PROJ)return '<div style="color:var(--tx3);padding:40px">Sin proyecto seleccionado</div>';
-  const allP=await DB.getAllProjects(); const proj=allP.find(p=>p.id===SEL_PROJ);
-  if(!proj)return '';
-  const stages=await DB.getStages(proj.id);
-  const allTasks=[];
-  const stagesData=[];
-  for(const s of stages){
-    const acts=await DB.getActivities(s.id);
-    const actsData=[];
-    for(const a of acts){const tasks=await DB.getTasks(a.id);actsData.push({...a,tasks});allTasks.push(...tasks);}
-    stagesData.push({...s,activities:actsData});
-  }
-  if(!allTasks.length)return hdr('DIAGRAMA GANTT',proj.name)+'<div style="padding:40px;text-align:center;color:var(--tx3)">Sin tareas aún</div>';
-
-  const dates=allTasks.flatMap(t=>[new Date(t.start_date),new Date(t.end_date)]);
-  const minD=new Date(Math.min(...dates));
-  const span=diffD(fmtISO(minD),fmtISO(new Date(Math.max(...dates))))+14;
-  const todayOff=diffD(fmtISO(minD),fmtISO(TODAY));
+  if(!SEL_PROJ)return'<div style="color:var(--tx3);padding:40px">Sin proyecto seleccionado</div>';
+  const allP=await DDB.getAllProjects();const proj=allP.find(p=>p.id===SEL_PROJ);if(!proj)return'';
+  const stages=await DDB.getStages(proj.id);const allT=[];const stData=[];
+  for(const s of stages){const aa=await DDB.getActivities(s.id);const aD=[];for(const a of aa){const tt=await DDB.getTasks(a.id);aD.push({...a,tasks:tt});allT.push(...tt);}stData.push({...s,activities:aD});}
+  if(!allT.length)return hdr('DIAGRAMA GANTT',proj.name)+'<div style="padding:40px;text-align:center;color:var(--tx3)">Sin tareas aun</div>';
+  const dates=allT.flatMap(t=>[new Date(t.start_date),new Date(t.end_date)]);
+  const minD=new Date(Math.min(...dates));const span=diffD(fmtISO(minD),fmtISO(new Date(Math.max(...dates))))+14;
+  const tOff=diffD(fmtISO(minD),fmtISO(TODAY));
   const L=t=>(diffD(fmtISO(minD),t.start_date)/span)*100;
   const W=t=>Math.max(.8,(diffD(t.start_date,t.end_date)/span)*100);
-
   let rows='';
-  stagesData.forEach(stage=>{
-    rows+=`<div style="display:flex;align-items:center;margin-bottom:4px">
-      <div style="width:260px;flex-shrink:0;font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:1px;color:var(--ac);padding-right:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(stage.name)}</div>
-      <div style="flex:1;height:6px;background:var(--sf2);border-radius:4px;position:relative">
-        <div style="position:absolute;left:${(todayOff/span)*100}%;top:-4px;bottom:-4px;width:1px;background:var(--rd);opacity:.3"></div>
-      </div>
-    </div>`;
+  stData.forEach(stage=>{
+    rows+=`<div style="display:flex;align-items:center;margin-bottom:4px"><div style="width:260px;flex-shrink:0;font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:1px;color:var(--ac);padding-right:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(stage.name)}</div><div style="flex:1;height:6px;background:var(--sf2);border-radius:4px;position:relative"><div style="position:absolute;left:${(tOff/span)*100}%;top:-4px;bottom:-4px;width:1px;background:var(--rd);opacity:.3"></div></div></div>`;
     stage.activities.forEach(a=>a.tasks.forEach(task=>{
-      const st=calcSt(task);
-      const bc=st.cls==='b-green'?'#22c55e':st.cls==='b-red'?'#ef4444':st.cls==='b-blue'?'#3b82f6':st.cls==='b-amber'?'#f59e0b':'#4a5568';
-      const pct=s2p(task.stars);
-      rows+=`<div style="display:flex;align-items:center;margin-bottom:4px">
-        <div style="width:260px;flex-shrink:0;font-size:11px;color:var(--tx2);padding-right:12px;padding-left:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${esc(task.name)}">· ${esc(task.name)}</div>
-        <div style="flex:1;position:relative;height:22px">
-          <div style="position:absolute;left:${(todayOff/span)*100}%;top:0;bottom:0;width:1px;background:var(--rd);opacity:.2"></div>
-          <div style="position:absolute;left:${L(task)}%;width:${W(task)}%;height:22px;background:${bc}16;border:1px solid ${bc}40;border-radius:4px;overflow:hidden;top:0;display:flex;align-items:center;padding:0 7px" title="${esc(task.name)} · ${pct}%">
+      const st=calcSt(task);const bc=st.cls==='b-green'?'#22c55e':st.cls==='b-red'?'#ef4444':st.cls==='b-blue'?'#3b82f6':st.cls==='b-amber'?'#f59e0b':'#4a5568';const pct=s2p(task.stars);
+      rows+=`<div style="display:flex;align-items:center;margin-bottom:4px"><div style="width:260px;flex-shrink:0;font-size:11px;color:var(--tx2);padding:0 12px 0 16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${esc(task.name)}">&bull; ${esc(task.name)}</div>
+        <div style="flex:1;position:relative;height:22px"><div style="position:absolute;left:${(tOff/span)*100}%;top:0;bottom:0;width:1px;background:var(--rd);opacity:.2"></div>
+          <div style="position:absolute;left:${L(task)}%;width:${W(task)}%;height:22px;background:${bc}16;border:1px solid ${bc}40;border-radius:4px;top:0;display:flex;align-items:center;padding:0 7px;overflow:hidden" title="${esc(task.name)} &bull; ${pct}%" onmouseenter="this.style.filter='brightness(1.4)'" onmouseleave="this.style.filter='none'">
             ${pct>0?`<div style="position:absolute;left:0;top:0;bottom:0;width:${pct}%;background:${bc}30;border-radius:3px"></div>`:''}
             <span style="position:relative;z-index:1;font-size:10px;font-weight:700;color:${bc};white-space:nowrap">${pct}%</span>
           </div>
@@ -774,546 +886,417 @@ async gantt(){
       </div>`;
     }));
   });
-
-  return hdr('DIAGRAMA GANTT',proj.name)+`
-  <div class="card" style="overflow-x:auto;padding:0">
-    <div style="min-width:1000px;padding:20px">
-      <div style="position:relative;height:28px;margin-bottom:6px;margin-left:260px;border-bottom:1px solid var(--bd)">
-        <div style="position:absolute;left:${(todayOff/span)*100}%;top:0;bottom:0;width:2px;background:var(--rd);opacity:.8"></div>
-        <div style="position:absolute;left:${(todayOff/span)*100}%;top:2px;background:var(--rd);color:#fff;font-size:10px;padding:2px 8px;border-radius:4px;transform:translateX(-50%);white-space:nowrap;font-weight:700">HOY</div>
-      </div>
-      ${rows}
-      <div style="display:flex;gap:14px;margin-top:18px;padding-top:14px;border-top:1px solid var(--bd);flex-wrap:wrap">
-        ${[['#22c55e','Ejecutado en plazo'],['#f59e0b','Ejecutado fuera de plazo'],['#3b82f6','En proceso – en plazo'],['#ef4444','Fuera de plazo'],['#4a5568','No iniciado']].map(([c,l])=>`<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--tx2)"><div style="width:12px;height:12px;background:${c};border-radius:3px;opacity:.7"></div>${l}</div>`).join('')}
-      </div>
+  return hdr('DIAGRAMA GANTT',proj.name)+`<div class="card" style="overflow-x:auto;padding:0"><div style="min-width:1000px;padding:20px">
+    <div style="position:relative;height:28px;margin-bottom:6px;margin-left:260px;border-bottom:1px solid var(--bd)">
+      <div style="position:absolute;left:${(tOff/span)*100}%;top:0;bottom:0;width:2px;background:var(--rd);opacity:.8"></div>
+      <div style="position:absolute;left:${(tOff/span)*100}%;top:2px;background:var(--rd);color:#fff;font-size:10px;padding:2px 8px;border-radius:4px;transform:translateX(-50%);white-space:nowrap;font-weight:700">HOY</div>
     </div>
-  </div>`;
+    ${rows}
+    <div style="display:flex;gap:14px;margin-top:18px;padding-top:14px;border-top:1px solid var(--bd);flex-wrap:wrap">
+      ${[['#22c55e','Ejecutado en plazo'],['#f59e0b','Fuera de plazo'],['#3b82f6','En proceso'],['#ef4444','Vencido'],['#4a5568','No iniciado']].map(([c,l])=>`<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--tx2)"><div style="width:12px;height:12px;background:${c};border-radius:3px;opacity:.7"></div>${l}</div>`).join('')}
+    </div>
+  </div></div>`;
 },
 
-// ── TEAM ─────────────────────────────────────────────
+// ── TEAM ──────────────────────────────────────────────────────────
 async team(){
-  const users=await DB.getUsers(SESSION.id);
-  const allP=await DB.getAllProjects(); const proj=allP.find(p=>p.id===SEL_PROJ);
-  let allTasks=[];
-  if(proj){
-    const stages=await DB.getStages(proj.id);
-    for(const s of stages){const acts=await DB.getActivities(s.id);for(const a of acts){const tasks=await DB.getTasks(a.id);allTasks.push(...tasks);}}
-  }
-  let cards=users.map((u,i)=>{
-    const myT=allTasks.filter(t=>t.responsible_id===u.id);
+  const users=await DDB.getUsers(SESSION.admin_id||SESSION.id);
+  const allP=await DDB.getAllProjects();const proj=allP.find(p=>p.id===SEL_PROJ);
+  let allT=[];
+  if(proj){const ss=await DDB.getStages(proj.id);for(const s of ss){const aa=await DDB.getActivities(s.id);for(const a of aa){const tt=await DDB.getTasks(a.id);allT.push(...tt);}}}
+  const cards=users.map((u,i)=>{
+    const myT=allT.filter(t=>t.responsible_id===u.id);
     const pct=myT.length?Math.round(myT.reduce((a,t)=>a+s2p(t.stars),0)/myT.length):0;
     const done=myT.filter(t=>t.stars===5||getEv(t).length>0).length;
     return`<div class="card" style="border:1px solid var(--bd2)">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
-        ${avHTML(u.name,44)}
-        <div><div style="font-weight:700;font-size:14px">${esc(u.name)}</div>
-        <div style="font-size:11px;color:var(--tx3);margin-top:2px">${esc(u.email)}</div></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--tx2);margin-bottom:7px">
-        <span>${myT.length} tareas · ${done} completadas</span>
-        <span style="font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${pct}%</span>
-      </div>
-      ${pbHTML(pct,COLS[i%COLS.length])}
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">${avH(u.name,44)}<div><div style="font-weight:700;font-size:14px">${esc(u.name)}</div><div style="font-size:11px;color:var(--tx3);margin-top:2px">${esc(u.email)}</div></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--tx2);margin-bottom:7px"><span>${myT.length} tareas &bull; ${done} completadas</span><span style="font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${pct}%</span></div>
+      ${pbH(pct,COLS[i%COLS.length])}
       <div style="display:flex;gap:8px;justify-content:space-between;margin-top:14px">
-        <span class="badge b-blue">👤 Usuario</span>
-        <button class="btn btn-d btn-s" onclick="deleteUser('${u.id}')">✕ Eliminar</button>
+        <span class="badge b-blue">&#x1F464; Usuario</span>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-g btn-s" onclick="openEditUser('${u.id}')">&#x270F; Editar</button>
+          <button class="btn btn-d btn-s" onclick="deleteUser('${u.id}')">&#x2715;</button>
+        </div>
       </div>
     </div>`;
   }).join('');
-
-  return hdr('EQUIPO DEL PROYECTO','')+`
-  <div style="display:flex;justify-content:flex-end;margin-bottom:20px">
-    <button class="btn btn-p" onclick="openNewUser()">+ Nuevo Usuario</button>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">${cards||'<div style="color:var(--tx3);font-size:13px">Sin usuarios aún. Crea el primero.</div>'}</div>`;
+  return hdr('EQUIPO DEL PROYECTO','')+`<div style="display:flex;justify-content:flex-end;margin-bottom:20px"><button class="btn btn-p" onclick="openNewUser()">+ Nuevo Usuario</button></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">${cards||'<div style="color:var(--tx3);font-size:13px">Sin usuarios aun. Crea el primero.</div>'}</div>`;
 },
 
-// ── STAGES ───────────────────────────────────────────
+// ── STAGES ────────────────────────────────────────────────────────
 async stages(){
-  if(!SEL_PROJ)return '<div style="color:var(--tx3);padding:40px">Sin proyecto seleccionado</div>';
-  const allP=await DB.getAllProjects(); const proj=allP.find(p=>p.id===SEL_PROJ);
-  if(!proj)return '';
-  const allU=await DB.getAllUsers();
-  const stages=await DB.getStages(proj.id);
-  let stagesHTML='';
+  if(!SEL_PROJ)return'<div style="color:var(--tx3);padding:40px">Sin proyecto seleccionado</div>';
+  const allP=await DDB.getAllProjects();const proj=allP.find(p=>p.id===SEL_PROJ);if(!proj)return'';
+  const allU=await DDB.getAllUsers();const stages=await DDB.getStages(proj.id);
+  let html='';
   for(let si=0;si<stages.length;si++){
-    const s=stages[si];
-    const acts=await DB.getActivities(s.id);
-    let actsHTML='';
+    const s=stages[si];const acts=await DDB.getActivities(s.id);let aHTML='';
     for(let ai=0;ai<acts.length;ai++){
-      const a=acts[ai];
-      const tasks=await DB.getTasks(a.id);
-      let taskRows=tasks.map((t,ti)=>{
-        const u=allU.find(x=>x.id===t.responsible_id)||{name:'Sin asignar'};
-        return`<div style="display:flex;align-items:center;gap:12px;padding:8px 20px 8px 52px;border-bottom:1px solid var(--bd);font-size:12px;flex-wrap:wrap">
-          <span style="flex:1;min-width:150px">${si+1}.${ai+1}.${ti+1} ${esc(t.name)}</span>
-          <span style="color:var(--tx2)">${esc(u.name)}</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3)">${fmtD(t.start_date)} → ${fmtD(t.end_date)} (${diffD(t.start_date,t.end_date)}d)</span>
-          <span style="font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${s2p(t.stars)}%</span>
-        </div>`;
-      }).join('');
-      actsHTML+=`<div>
-        <div style="padding:9px 20px 9px 32px;background:rgba(255,255,255,.015);border-bottom:1px solid var(--bd);display:flex;align-items:center">
-          <span style="font-weight:600;font-size:13px;flex:1">Actividad ${si+1}.${ai+1}: ${esc(a.name)}</span>
-          <span style="font-size:11px;color:var(--tx3)">${tasks.length} tareas</span>
-        </div>
-        ${taskRows}
-      </div>`;
+      const a=acts[ai];const tasks=await DDB.getTasks(a.id);
+      let tRows=tasks.map((t,ti)=>{const u=allU.find(x=>x.id===t.responsible_id)||{name:'Sin asignar'};return`<div style="display:flex;align-items:center;gap:12px;padding:8px 20px 8px 52px;border-bottom:1px solid var(--bd);font-size:12px;flex-wrap:wrap"><span style="flex:1;min-width:150px">${si+1}.${ai+1}.${ti+1} ${esc(t.name)}</span><span style="color:var(--tx2)">${esc(u.name)}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3)">${fmtD(t.start_date)} &rarr; ${fmtD(t.end_date)} (${diffD(t.start_date,t.end_date)}d)</span><span style="font-family:'JetBrains Mono',monospace;color:var(--ac);font-weight:700">${s2p(t.stars)}%</span></div>`;}).join('');
+      aHTML+=`<div><div style="padding:9px 20px 9px 32px;background:rgba(255,255,255,.015);border-bottom:1px solid var(--bd);display:flex;align-items:center"><span style="font-weight:600;font-size:13px;flex:1">Act. ${si+1}.${ai+1}: ${esc(a.name)}</span><span style="font-size:11px;color:var(--tx3)">${tasks.length} tareas</span></div>${tRows}</div>`;
     }
-    stagesHTML+=`<div class="card" style="margin-bottom:14px;padding:0;overflow:hidden;border:1px solid var(--bd2)">
-      <div style="padding:12px 20px;background:var(--sf2);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:12px">
-        <span style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--ac);letter-spacing:1px;flex:1">ETAPA ${si+1}: ${esc(s.name)}</span>
-        <span style="font-size:11px;color:var(--tx3)">${acts.length} actividades · ${acts.reduce((a,act)=>a,0)} tareas</span>
-      </div>
-      ${actsHTML}
-    </div>`;
+    html+=`<div class="card" style="margin-bottom:14px;padding:0;overflow:hidden;border:1px solid var(--bd2)"><div style="padding:12px 20px;background:var(--sf2);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:12px"><span style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--ac);letter-spacing:1px;flex:1">ETAPA ${si+1}: ${esc(s.name)}</span><span style="font-size:11px;color:var(--tx3)">${acts.length} actividades</span></div>${aHTML}</div>`;
   }
-
-  return hdr('ESTRUCTURA DEL PROYECTO',proj.name)+`
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;justify-content:flex-end">
-    <button class="btn btn-g btn-s" onclick="openNewStage()">+ Etapa</button>
-    <button class="btn btn-g btn-s" onclick="openNewActivity()">+ Actividad</button>
-    <button class="btn btn-p btn-s" onclick="openNewTask()">+ Tarea</button>
-  </div>
-  ${stagesHTML||'<div style="color:var(--tx3);text-align:center;padding:40px">Sin etapas aún. Comienza creando la primera etapa.</div>'}`;
+  return hdr('ESTRUCTURA DEL PROYECTO',proj.name)+`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;justify-content:flex-end"><button class="btn btn-g btn-s" onclick="openNewStage()">+ Etapa</button><button class="btn btn-g btn-s" onclick="openNewActivity()">+ Actividad</button><button class="btn btn-p btn-s" onclick="openNewTask()">+ Tarea</button></div>${html||'<div style="color:var(--tx3);text-align:center;padding:40px">Sin etapas. Crea la primera etapa.</div>'}`;
 },
 
-// ── ADMINS ───────────────────────────────────────────
+// ── ADMINS ────────────────────────────────────────────────────────
 async admins(){
   const admins=await DB.getAdmins();
-  let cards=admins.map(a=>`<div class="card" style="border:1px solid var(--bd2)">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-      <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#1e3a5f,#0f2340);border:1px solid rgba(59,130,246,.3);display:flex;align-items:center;justify-content:center;font-size:22px">🏢</div>
-      <div>
-        <div style="font-weight:700;font-size:15px">${esc(a.name)}</div>
-        <div style="font-size:11px;color:var(--tx3)">${esc(a.company||'Sin empresa')}</div>
-        <div style="font-size:11px;color:var(--tx3)">${esc(a.email)}</div>
+  const cards=admins.map(a=>`<div class="card" style="border:1px solid var(--bd2)">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px"><div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#1e3a5f,#0f2340);border:1px solid rgba(59,130,246,.3);display:flex;align-items:center;justify-content:center;font-size:22px">&#x1F3E2;</div>
+    <div><div style="font-weight:700;font-size:15px">${esc(a.name)}</div><div style="font-size:11px;color:var(--tx3)">${esc(a.company||'Sin empresa')}</div><div style="font-size:11px;color:var(--tx3)">${esc(a.email)}</div></div></div>
+    <div style="display:flex;gap:8px;justify-content:space-between;align-items:center">
+      <span class="badge b-amber">&#x2B50; Plan Activo</span>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-g btn-s" onclick="openEditAdmin('${a.id}')">&#x270F; Editar</button>
+        <button class="btn btn-d btn-s" onclick="deleteAdmin('${a.id}')">&#x2715;</button>
       </div>
     </div>
-    <div style="display:flex;gap:8px;justify-content:space-between;align-items:center">
-      <span class="badge b-amber">⭐ Plan Activo</span>
-      <button class="btn btn-d btn-s" onclick="deleteAdmin('${a.id}')">✕</button>
-    </div>
   </div>`).join('');
-  return hdr('ADMINISTRADORES','Gestión de cuentas de administrador')+`
-  <div style="display:flex;justify-content:flex-end;margin-bottom:20px">
-    <button class="btn btn-p" onclick="openNewAdmin()">+ Nuevo Administrador</button>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">${cards||'<div style="color:var(--tx3)">Sin administradores aún</div>'}</div>`;
+  return hdr('ADMINISTRADORES','Gestion de cuentas de administrador')+`<div style="display:flex;justify-content:flex-end;margin-bottom:20px"><button class="btn btn-p" onclick="openNewAdmin()">+ Nuevo Administrador</button></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">${cards||'<div style="color:var(--tx3)">Sin administradores aun</div>'}</div>`;
 },
 
-// ── NEW PROJECT ──────────────────────────────────────
+// ── NEW PROJECT ───────────────────────────────────────────────────
 async newproject(){
-  return hdr('NUEVO PROYECTO','')+`
-  <div class="card" style="max-width:580px;border:1px solid var(--bd2)">
-    <div class="fg"><label class="lbl">Nombre del proyecto *</label><input class="inp" id="np-name" placeholder="Ej: Edificio Residencial Los Álamos"></div>
-    <div class="fg"><label class="lbl">Descripción</label><textarea class="inp" id="np-desc" rows="3" placeholder="Descripción general del proyecto..." style="resize:none"></textarea></div>
+  return hdr('NUEVO PROYECTO','')+`<div class="card" style="max-width:580px;border:1px solid var(--bd2)">
+    <div class="fg"><label class="lbl">Nombre del proyecto *</label><input class="inp" id="np-name" placeholder="Ej: Edificio Residencial Los Alamos"></div>
+    <div class="fg"><label class="lbl">Descripcion</label><textarea class="inp" id="np-desc" rows="3" placeholder="Descripcion general..." style="resize:none"></textarea></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-      <div class="fg"><label class="lbl">Fecha de inicio 📅 *</label><input class="inp" type="date" id="np-start" value="${fmtISO(TODAY)}"></div>
-      <div class="fg"><label class="lbl">Fecha de fin 📅 *</label><input class="inp" type="date" id="np-end" value="${addD(TODAY,180)}"></div>
+      <div class="fg"><label class="lbl">Inicio &#x1F4C5; *</label><input class="inp" type="date" id="np-s" value="${fmtISO(TODAY)}" onchange="updNpDur()"></div>
+      <div class="fg"><label class="lbl">Fin &#x1F4C5; *</label><input class="inp" type="date" id="np-e" value="${addD(TODAY,180)}" onchange="updNpDur()"></div>
     </div>
-    <div id="np-dur" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--ac);margin-bottom:16px">
-      📅 Duración: <strong>${diffD(fmtISO(TODAY),addD(TODAY,180))} días calendarios</strong>
-    </div>
-    <button class="btn btn-p" style="width:100%;justify-content:center" onclick="createProject()">Crear Proyecto →</button>
+    <div id="np-dur" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--ac);margin-bottom:16px">&#x1F4C5; Duracion: <strong>${diffD(fmtISO(TODAY),addD(TODAY,180))} dias</strong></div>
+    <button class="btn btn-p" style="width:100%;justify-content:center" onclick="createProject()">Crear Proyecto &rarr;</button>
   </div>`;
 },
 newproject_init(){
-  document.getElementById('np-start')?.addEventListener('change',updateDur);
-  document.getElementById('np-end')?.addEventListener('change',updateDur);
+  document.getElementById('np-s')?.addEventListener('change',updNpDur);
+  document.getElementById('np-e')?.addEventListener('change',updNpDur);
 },
 
-// ── PROFILE ──────────────────────────────────────────
+// ── PROFILE ───────────────────────────────────────────────────────
 async profile(){
-  return hdr('MI PERFIL','')+`
-  <div class="card" style="max-width:520px;border:1px solid var(--bd2)">
+  return hdr('MI PERFIL','')+`<div class="card" style="max-width:520px;border:1px solid var(--bd2)">
     <div style="display:flex;align-items:center;gap:16px;margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--bd)">
       <div class="av" style="width:62px;height:62px;border-radius:16px;font-size:24px">${ini(SESSION.name)}</div>
-      <div>
-        <div style="font-weight:700;font-size:18px">${esc(SESSION.name)}</div>
-        <div style="font-size:12px;color:var(--tx3);margin-top:2px">${esc(SESSION.email)}</div>
-        <span class="badge b-amber" style="margin-top:6px;display:inline-flex">${SESSION.role==='superadmin'?'🛡 Super Admin':SESSION.role==='admin'?'⚙ Administrador':'👤 Usuario'}</span>
+      <div><div style="font-weight:700;font-size:18px">${esc(SESSION.name)}</div><div style="font-size:12px;color:var(--tx3);margin-top:2px">${esc(SESSION.email)}</div>
+        <span class="badge b-amber" style="margin-top:6px;display:inline-flex">${SESSION.role==='superadmin'?'&#x1F6E1; Super Admin':SESSION.role==='admin'?'&#x2699; Administrador':'&#x1F464; Usuario'}</span>
       </div>
     </div>
     <div class="fg"><label class="lbl">Nombre completo</label><input class="inp" id="pf-name" value="${esc(SESSION.name)}"></div>
-    <div class="fg"><label class="lbl">Correo electrónico</label><input class="inp" type="email" id="pf-email" value="${esc(SESSION.email)}"></div>
-    <div style="font-weight:600;font-size:13px;margin-bottom:14px;margin-top:18px;color:var(--tx2);padding-top:18px;border-top:1px solid var(--bd)">Cambiar contraseña</div>
-    <div class="fg"><label class="lbl">Contraseña actual</label><input class="inp" type="password" id="pf-curr" placeholder="Tu contraseña actual"></div>
-    <div class="fg"><label class="lbl">Nueva contraseña</label><input class="inp" type="password" id="pf-new" placeholder="Nueva contraseña"></div>
-    <div class="fg"><label class="lbl">Confirmar contraseña</label><input class="inp" type="password" id="pf-conf" placeholder="Repite la nueva contraseña"></div>
-    <button class="btn btn-p" style="width:100%;justify-content:center;margin-top:6px" onclick="saveProfile()">💾 Guardar cambios</button>
+    <div class="fg"><label class="lbl">Correo electronico</label><input class="inp" type="email" id="pf-email" value="${esc(SESSION.email)}"></div>
+    <div style="font-weight:600;font-size:13px;margin-bottom:14px;margin-top:18px;color:var(--tx2);padding-top:18px;border-top:1px solid var(--bd)">Cambiar contrasena</div>
+    <div class="fg"><label class="lbl">Contrasena actual</label><input class="inp" type="password" id="pf-curr" placeholder="Tu contrasena actual"></div>
+    <div class="fg"><label class="lbl">Nueva contrasena</label><input class="inp" type="password" id="pf-new" placeholder="Nueva contrasena"></div>
+    <div class="fg"><label class="lbl">Confirmar contrasena</label><input class="inp" type="password" id="pf-conf" placeholder="Repite la nueva contrasena"></div>
+    <button class="btn btn-p" style="width:100%;justify-content:center;margin-top:6px" onclick="saveProfile()">&#x1F4BE; Guardar cambios</button>
   </div>`;
 },
 
-// ── PLATFORM ─────────────────────────────────────────
+// ── PLATFORM ──────────────────────────────────────────────────────
 async platform(){
-  const plans=[
-    {name:'STARTER',price:'S/ 149',per:'/mes',features:['1 proyecto activo','5 usuarios','Dashboard básico','Gantt','Soporte email'],col:'var(--bl)'},
-    {name:'PROFESSIONAL',price:'S/ 349',per:'/mes',features:['10 proyectos','50 usuarios','Gantt avanzado','Analytics','Soporte prioritario'],col:'var(--ac)',featured:true},
-    {name:'ENTERPRISE',price:'A consultar',per:'',features:['Ilimitado','Branding propio','SLA','Gestor dedicado','API + ERP'],col:'var(--pu)'},
-  ];
-  return hdr('PLATAFORMA & COMERCIALIZACIÓN','Gestiona planes de suscripción')+`
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
-    ${plans.map(p=>`<div class="card" style="border:1px solid ${p.featured?p.col:'var(--bd2)'};position:relative${p.featured?';box-shadow:0 0 40px '+p.col+'15':''}">
-      ${p.featured?`<div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:${p.col};color:#000;padding:3px 18px;border-radius:99px;font-size:11px;font-weight:700;white-space:nowrap">MÁS POPULAR</div>`:''}
-      <div style="margin-bottom:16px;padding-top:${p.featured?'10px':'0'}">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:${p.col};letter-spacing:1px">${p.name}</div>
-        <div style="display:flex;align-items:baseline;gap:4px;margin-top:6px">
-          <span style="font-size:26px;font-weight:700;font-family:'JetBrains Mono',monospace">${p.price}</span>
-          <span style="font-size:12px;color:var(--tx3)">${p.per}</span>
-        </div>
-      </div>
-      <div style="border-top:1px solid var(--bd);padding-top:14px;margin-bottom:18px">
-        ${p.features.map(f=>`<div style="display:flex;gap:8px;margin-bottom:8px;font-size:12px"><span style="color:${p.col};flex-shrink:0">✓</span><span style="color:var(--tx2)">${f}</span></div>`).join('')}
-      </div>
-      <button class="btn" style="width:100%;justify-content:center;background:${p.featured?p.col:'transparent'};color:${p.featured?'#000':p.col};border:1.5px solid ${p.col}">Asignar Plan</button>
-    </div>`).join('')}
-  </div>`;
+  const plans=[{name:'STARTER',price:'S/ 149',per:'/mes',features:['1 proyecto activo','5 usuarios','Dashboard basico','Gantt','Soporte email'],col:'var(--bl)'},{name:'PROFESSIONAL',price:'S/ 349',per:'/mes',features:['10 proyectos','50 usuarios','Gantt avanzado','Analytics','Soporte prioritario'],col:'var(--ac)',featured:true},{name:'ENTERPRISE',price:'A consultar',per:'',features:['Ilimitado','Branding propio','SLA','Gestor dedicado','API + ERP'],col:'var(--pu)'}];
+  return hdr('PLATAFORMA & COMERCIALIZACION','Gestion de planes de suscripcion')+`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">${plans.map(p=>`<div class="card" style="border:1px solid ${p.featured?p.col:'var(--bd2)'};position:relative${p.featured?';box-shadow:0 0 40px '+p.col+'15':''}">
+    ${p.featured?`<div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:${p.col};color:#000;padding:3px 18px;border-radius:99px;font-size:11px;font-weight:700;white-space:nowrap">MAS POPULAR</div>`:''}
+    <div style="margin-bottom:16px;padding-top:${p.featured?'10px':'0'}"><div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:${p.col};letter-spacing:1px">${p.name}</div><div style="display:flex;align-items:baseline;gap:4px;margin-top:6px"><span style="font-size:26px;font-weight:700;font-family:'JetBrains Mono',monospace">${p.price}</span><span style="font-size:12px;color:var(--tx3)">${p.per}</span></div></div>
+    <div style="border-top:1px solid var(--bd);padding-top:14px;margin-bottom:18px">${p.features.map(f=>`<div style="display:flex;gap:8px;margin-bottom:8px;font-size:12px"><span style="color:${p.col};flex-shrink:0">&#x2713;</span><span style="color:var(--tx2)">${f}</span></div>`).join('')}</div>
+    <button class="btn" style="width:100%;justify-content:center;background:${p.featured?p.col:'transparent'};color:${p.featured?'#000':p.col};border:1.5px solid ${p.col}">Asignar Plan</button>
+  </div>`).join('')}</div>`;
 }
 };
+</script>
+<script>
+// ═══ FILTER ══════════════════════════════════════════════════════
+function setFilter(f){TASK_FILTER=f;showView('tasks');}
 
-// ═══════════════════════════════════════════════════
-//  TOGGLE HELPERS
-// ═══════════════════════════════════════════════════
-function toggleStage(bodyId,hdr){
-  const el=document.getElementById(bodyId);
-  const arrow=hdr.querySelector('span');
-  el.style.display=el.style.display==='none'?'block':'none';
-  if(arrow)arrow.textContent=el.style.display==='none'?'▶':'▼';
+// ═══ TOGGLE ACCORDIONS (keep open state) ════════════════════════
+function toggleStage(id,hdrEl){
+  const el=document.getElementById(id);if(!el)return;
+  const stageId=id.replace('sb-','');
+  const open=el.style.display!=='block';
+  el.style.display=open?'block':'none';
+  OPEN_STAGES[stageId]=open;
+  const arrow=hdrEl.querySelector('span:first-child');
+  if(arrow)arrow.innerHTML=open?'&#9660;':'&#9654;';
 }
-function toggleAct(bodyId,hdr){
-  const el=document.getElementById(bodyId);
-  const arrow=hdr.querySelector('span');
-  el.style.display=el.style.display==='none'?'block':'none';
-  if(arrow)arrow.textContent=el.style.display==='none'?'▶':'▼';
-}
-function updateDur(){
-  const s=document.getElementById('np-start')?.value;
-  const e=document.getElementById('np-end')?.value;
-  const d=document.getElementById('np-dur');
-  if(s&&e&&d)d.innerHTML=`📅 Duración: <strong>${diffD(s,e)} días calendarios</strong>`;
-}
-
-// ═══════════════════════════════════════════════════
-//  ACTIONS
-// ═══════════════════════════════════════════════════
-async function updateStar(taskId,stars){
-  // Get task
-  const allT=lsG('tasks',[]);
-  let task=allT.find(t=>t.id===taskId);
-  if(!task&&sb){const{data}=await sb.from('tasks').select('*').eq('id',taskId).single();task=data;}
-  if(!task)return;
-  if(getEv(task).length>0||task.stars===5){toast('Las 5★ se activan al subir evidencia','err');return;}
-  if(stars===5){toast('Sube evidencia para completar al 100%','err');return;}
-  const canAdmin=SESSION.role==='admin'||SESSION.role==='superadmin';
-  if(!canAdmin&&task.responsible_id!==SESSION.id){toast('Solo el responsable puede actualizar','err');return;}
-  await DB.updateTask(taskId,{stars});
-  await addNotif(`📊 "${task.name}" → ${s2p(stars)}% — ${SESSION.name}`);
-  toast(`Avance actualizado a ${s2p(stars)}%`);
-  showView('tasks');
+function toggleAct(id,hdrEl){
+  const el=document.getElementById(id);if(!el)return;
+  const actId=id.replace('ab-','');
+  const open=el.style.display!=='block';
+  el.style.display=open?'block':'none';
+  OPEN_ACTS[actId]=open;
+  const arrow=hdrEl.querySelector('span:first-child');
+  if(arrow)arrow.innerHTML=open?'&#9660;':'&#9654;';
 }
 
+// ═══ EVIDENCE ═══════════════════════════════════════════════════
 async function uploadEvidence(taskId){
-  openModal(`
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
-      <div style="font-weight:700;font-size:16px">📎 Subir Evidencia</div>
-      <button class="btn btn-g btn-s" onclick="closeModal()">✕</button>
-    </div>
-    <div style="border:2px dashed var(--bd2);border-radius:10px;padding:30px 20px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:14px"
-      onmouseenter="this.style.borderColor='var(--ac)';this.style.background='rgba(245,158,11,.03)'"
-      onmouseleave="this.style.borderColor='var(--bd2)';this.style.background='transparent'"
-      onclick="document.getElementById('ev-file').click()">
-      <div style="font-size:34px;margin-bottom:8px">↑</div>
+  openModal(`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><div style="font-weight:700;font-size:16px">&#x1F4CE; Subir Evidencia</div><button class="btn btn-g btn-s" onclick="closeModal()">&#x2715;</button></div>
+    <div style="border:2px dashed var(--bd2);border-radius:10px;padding:30px 20px;text-align:center;cursor:pointer;margin-bottom:14px" onmouseenter="this.style.borderColor='var(--ac)'" onmouseleave="this.style.borderColor='var(--bd2)'" onclick="document.getElementById('ev-f').click()">
+      <div style="font-size:34px;margin-bottom:8px">&#x2191;</div>
       <div style="font-weight:600;font-size:13px">Haz clic para seleccionar archivos</div>
-      <div style="font-size:11px;color:var(--tx3);margin-top:4px">Fotos (JPG, PNG), PDF, Word, Videos (MP4)</div>
-      <div style="font-size:11px;color:var(--ac);margin-top:8px;font-weight:600">⭐ Al cargar evidencia → Tarea se marca automáticamente al 100%</div>
+      <div style="font-size:11px;color:var(--tx3);margin-top:4px">Fotos, PDF, Word, Videos</div>
+      <div style="font-size:11px;color:var(--ac);margin-top:8px;font-weight:600">&#x2B50; Al cargar evidencia la tarea se marca automaticamente al 100%</div>
     </div>
-    <input type="file" id="ev-file" multiple accept="image/*,.pdf,.doc,.docx,video/*" style="display:none" onchange="processEvidence('${taskId}',this.files)">
-    <button class="btn btn-g" style="width:100%;justify-content:center" onclick="closeModal()">Cancelar</button>
-  `);
+    <input type="file" id="ev-f" multiple accept="image/*,.pdf,.doc,.docx,video/*" style="display:none" onchange="processEvidence('${taskId}',this.files)">
+    <button class="btn btn-g" style="width:100%;justify-content:center" onclick="closeModal()">Cancelar</button>`);
 }
 
 async function processEvidence(taskId,files){
   if(!files||!files.length)return;
-  let task=null;
-  if(sb){const{data}=await sb.from('tasks').select('*').eq('id',taskId).single();task=data;}
-  else task=lsG('tasks',[]).find(t=>t.id===taskId);
-  if(!task)return;
+  const task=await DDB.getTask(taskId);if(!task)return;
   const cur=getEv(task);
   const newEvs=Array.from(files).map(f=>({name:f.name,type:f.type.startsWith('image')?'image':f.type==='application/pdf'?'pdf':f.type.startsWith('video')?'video':'doc'}));
-  await DB.updateTask(taskId,{evidence:JSON.stringify([...cur,...newEvs]),stars:5});
-  await addNotif(`📎 Evidencia cargada en "${task.name}" por ${SESSION.name} — ¡100%! ⭐⭐⭐⭐⭐`);
-  toast('Evidencia cargada — Tarea al 100% ⭐⭐⭐⭐⭐');
-  closeModal();
-  showView('tasks');
+  await DDB.updateTask(taskId,{evidence:JSON.stringify([...cur,...newEvs]),stars:5});
+  updateTaskRowDOM(taskId,{...task,evidence:JSON.stringify([...cur,...newEvs]),stars:5});
+  if(!IS_DEMO)await addNotif(`&#x1F4CE; Evidencia en "${task.name}" por ${SESSION.name} &#x2014; 100%!`);
+  toast('Evidencia cargada &#x2014; Tarea al 100%');closeModal();
 }
 
 async function viewEvidence(taskId){
-  let task=null;
-  if(sb){const{data}=await sb.from('tasks').select('*').eq('id',taskId).single();task=data;}
-  else task=lsG('tasks',[]).find(t=>t.id===taskId);
-  if(!task)return;
-  const ev=getEv(task);
-  const icons={image:'🖼',pdf:'📄',video:'🎬',doc:'📝'};
-  const list=ev.map(e=>`<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--sf2);border-radius:8px;margin-bottom:6px">
-    <span style="font-size:22px">${icons[e.type]||'📄'}</span>
-    <span style="font-size:12px;flex:1;word-break:break-all">${esc(e.name)}</span>
-    <span class="badge b-green">✓</span>
-  </div>`).join('');
-  openModal(`
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
-      <div><div style="font-weight:700;font-size:16px">📎 Evidencias</div><div style="font-size:12px;color:var(--tx2);margin-top:3px">${esc(task.name)}</div></div>
-      <button class="btn btn-g btn-s" onclick="closeModal()">✕</button>
-    </div>
-    ${list}
-    <button class="btn btn-g" style="width:100%;justify-content:center;margin-top:8px" onclick="closeModal()">Cerrar</button>
-  `);
+  const task=await DDB.getTask(taskId);if(!task)return;
+  const ev=getEv(task);const icons={image:'&#x1F5BC;',pdf:'&#x1F4C4;',video:'&#x1F3AC;',doc:'&#x1F4DD;'};
+  openModal(`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><div><div style="font-weight:700;font-size:16px">&#x1F4CE; Evidencias</div><div style="font-size:12px;color:var(--tx2);margin-top:3px">${esc(task.name)}</div></div><button class="btn btn-g btn-s" onclick="closeModal()">&#x2715;</button></div>
+    ${ev.map(e=>`<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--sf2);border-radius:8px;margin-bottom:6px"><span style="font-size:22px">${icons[e.type]||'&#x1F4C4;'}</span><span style="font-size:12px;flex:1;word-break:break-all">${esc(e.name)}</span><span class="badge b-green">&#x2713;</span></div>`).join('')}
+    <button class="btn btn-g" style="width:100%;justify-content:center;margin-top:8px" onclick="closeModal()">Cerrar</button>`);
 }
 
+// ═══ RESCHEDULE ══════════════════════════════════════════════════
 async function openReschedule(taskId){
-  let task=null;
-  if(sb){const{data}=await sb.from('tasks').select('*').eq('id',taskId).single();task=data;}
-  else task=lsG('tasks',[]).find(t=>t.id===taskId);
-  if(!task)return;
-  const left=3-(task.rescheduled||0);
-  const canAdmin=SESSION.role==='admin'||SESSION.role==='superadmin';
-  openModal(`
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
-      <div><div style="font-weight:700;font-size:16px">🔄 Reprogramar Tarea</div><div style="font-size:12px;color:var(--tx2);margin-top:3px">${esc(task.name)}</div></div>
-      <button class="btn btn-g btn-s" onclick="closeModal()">✕</button>
-    </div>
-    <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:var(--ac)">
-      ⚡ Reprogramaciones disponibles: <strong>${left} de 3</strong>${!canAdmin?' · Requiere aprobación del administrador':''}
-    </div>
-    <div class="fg"><label class="lbl">Nueva fecha de inicio 📅</label><input class="inp" type="date" id="rs-start" value="${task.start_date}" onchange="updateRsDur()"></div>
-    <div class="fg"><label class="lbl">Nueva fecha de fin 📅</label><input class="inp" type="date" id="rs-end" value="${task.end_date}" onchange="updateRsDur()"></div>
-    <div id="rs-dur" style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--bl);margin-bottom:14px">
-      📅 Duración: <strong>${diffD(task.start_date,task.end_date)} días</strong>
-    </div>
-    <div class="fg"><label class="lbl">Motivo</label><textarea class="inp" id="rs-reason" rows="3" placeholder="Explica el motivo..." style="resize:none"></textarea></div>
-    <div style="display:flex;gap:10px;justify-content:flex-end">
-      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
-      <button class="btn btn-p" onclick="confirmReschedule('${taskId}',${canAdmin})">${canAdmin?'Reprogramar':'Solicitar aprobación'}</button>
-    </div>
-  `);
+  const task=await DDB.getTask(taskId);if(!task)return;
+  const left=3-(task.rescheduled||0);const canAdmin=SESSION.role==='admin'||SESSION.role==='superadmin';
+  openModal(`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><div><div style="font-weight:700;font-size:16px">&#x1F504; Reprogramar</div><div style="font-size:12px;color:var(--tx2);margin-top:3px">${esc(task.name)}</div></div><button class="btn btn-g btn-s" onclick="closeModal()">&#x2715;</button></div>
+    <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:var(--ac)">Disponibles: <strong>${left} de 3</strong>${!canAdmin?' &bull; Requiere aprobacion del administrador':''}</div>
+    <div class="fg"><label class="lbl">Nueva fecha inicio</label><input class="inp" type="date" id="rs-s" value="${task.start_date}" onchange="updRsDur()"></div>
+    <div class="fg"><label class="lbl">Nueva fecha fin</label><input class="inp" type="date" id="rs-e" value="${task.end_date}" onchange="updRsDur()"></div>
+    <div id="rs-dur" style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--bl);margin-bottom:14px">&#x1F4C5; Duracion: <strong>${diffD(task.start_date,task.end_date)} dias</strong></div>
+    <div class="fg"><label class="lbl">Motivo</label><textarea class="inp" id="rs-r" rows="3" placeholder="Explica el motivo..." style="resize:none"></textarea></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-g" onclick="closeModal()">Cancelar</button><button class="btn btn-p" onclick="confirmReschedule('${taskId}',${canAdmin})">${canAdmin?'Reprogramar':'Solicitar aprobacion'}</button></div>`);
 }
-
-function updateRsDur(){
-  const s=document.getElementById('rs-start')?.value;
-  const e=document.getElementById('rs-end')?.value;
-  const d=document.getElementById('rs-dur');
-  if(s&&e&&d)d.innerHTML=`📅 Nueva duración: <strong>${diffD(s,e)} días</strong>`;
-}
+function updRsDur(){const s=document.getElementById('rs-s')?.value,e=document.getElementById('rs-e')?.value,d=document.getElementById('rs-dur');if(s&&e&&d)d.innerHTML=`&#x1F4C5; Nueva duracion: <strong>${diffD(s,e)} dias</strong>`;}
 
 async function confirmReschedule(taskId,canAdmin){
-  const ns=document.getElementById('rs-start').value;
-  const ne=document.getElementById('rs-end').value;
-  const reason=document.getElementById('rs-reason').value;
-  let task=null;
-  if(sb){const{data}=await sb.from('tasks').select('*').eq('id',taskId).single();task=data;}
-  else task=lsG('tasks',[]).find(t=>t.id===taskId);
-  if(!task)return;
-  if((task.rescheduled||0)>=3){toast('Máximo 3 reprogramaciones','err');return;}
+  const ns=document.getElementById('rs-s').value,ne=document.getElementById('rs-e').value,reason=document.getElementById('rs-r').value;
+  const task=await DDB.getTask(taskId);if(!task)return;
+  if((task.rescheduled||0)>=3){toast('Maximo 3 reprogramaciones','err');return;}
   if(canAdmin){
-    await DB.updateTask(taskId,{start_date:ns,end_date:ne,rescheduled:(task.rescheduled||0)+1,reschedule_pending:false});
-    await addNotif(`🔄 "${task.name}" reprogramada por ${SESSION.name}`);
-    toast('Reprogramación aplicada');
-  } else {
-    await DB.updateTask(taskId,{pending_start:ns,pending_end:ne,pending_reason:reason,reschedule_pending:true});
-    await addNotif(`🔄 Solicitud de reprogramación: "${task.name}" por ${SESSION.name}`);
+    await DDB.updateTask(taskId,{start_date:ns,end_date:ne,rescheduled:(task.rescheduled||0)+1,reschedule_pending:false});
+    if(!IS_DEMO)await addNotif(`&#x1F504; "${task.name}" reprogramada por ${SESSION.name}`);
+    toast('Reprogramacion aplicada');
+  }else{
+    await DDB.updateTask(taskId,{pending_start:ns,pending_end:ne,pending_reason:reason,reschedule_pending:true});
+    if(!IS_DEMO)await addNotif(`&#x1F504; Solicitud de reprogramacion: "${task.name}" por ${SESSION.name}`);
     toast('Solicitud enviada al administrador');
   }
-  closeModal();
-  showView('tasks');
+  closeModal();showView('tasks');
 }
 
 async function approveReschedule(taskId){
-  let task=null;
-  if(sb){const{data}=await sb.from('tasks').select('*').eq('id',taskId).single();task=data;}
-  else task=lsG('tasks',[]).find(t=>t.id===taskId);
-  if(!task)return;
-  await DB.updateTask(taskId,{start_date:task.pending_start,end_date:task.pending_end,rescheduled:(task.rescheduled||0)+1,reschedule_pending:false,pending_start:null,pending_end:null,pending_reason:null});
-  await addNotif(`✅ Reprogramación aprobada: "${task.name}"`);
-  toast('Reprogramación aprobada');
-  showView('tasks');
+  const task=await DDB.getTask(taskId);if(!task)return;
+  await DDB.updateTask(taskId,{start_date:task.pending_start,end_date:task.pending_end,rescheduled:(task.rescheduled||0)+1,reschedule_pending:false,pending_start:null,pending_end:null,pending_reason:null});
+  if(!IS_DEMO)await addNotif(`&#x2705; Reprogramacion aprobada: "${task.name}"`);
+  toast('Reprogramacion aprobada');showView('tasks');
 }
 
+// ═══ HISTORY ════════════════════════════════════════════════════
+async function viewHistory(taskId){
+  const task=await DDB.getTask(taskId);if(!task)return;
+  const hist=getHist(task);
+  openModal(`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+    <div><div style="font-weight:700;font-size:16px">&#x1F4CB; Historial de Responsables</div><div style="font-size:12px;color:var(--tx2);margin-top:3px">${esc(task.name)}</div></div>
+    <button class="btn btn-g btn-s" onclick="closeModal()">&#x2715;</button>
+  </div>
+  ${hist.length===0?'<div style="color:var(--tx3);text-align:center;padding:20px">Sin historial de cambios</div>':
+    hist.map(h=>`<div style="padding:12px 14px;background:var(--sf2);border-radius:8px;margin-bottom:8px;border-left:3px solid var(--pu)">
+      <div style="font-size:12px;font-weight:600;color:var(--tx);margin-bottom:4px">${esc(h.prevName)} &#8594; <strong style="color:var(--ac)">${esc(h.newName)}</strong></div>
+      <div style="font-size:11px;color:var(--tx2)">Punto de corte: <strong>${fmtD(h.cutoffDate)}</strong></div>
+      ${h.reason?`<div style="font-size:11px;color:var(--tx3);margin-top:2px">Motivo: ${esc(h.reason)}</div>`:''}
+      <div style="font-size:10px;color:var(--tx3);margin-top:4px">${new Date(h.changedAt).toLocaleString('es-PE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}</div>
+    </div>`).join('')}
+  <button class="btn btn-g" style="width:100%;justify-content:center;margin-top:8px" onclick="closeModal()">Cerrar</button>`);
+}
+
+// ═══ PROJECT ════════════════════════════════════════════════════
+function updNpDur(){const s=document.getElementById('np-s')?.value,e=document.getElementById('np-e')?.value,d=document.getElementById('np-dur');if(s&&e&&d)d.innerHTML=`&#x1F4C5; Duracion: <strong>${diffD(s,e)} dias</strong>`;}
 async function createProject(){
-  const name=document.getElementById('np-name').value.trim();
-  const desc=document.getElementById('np-desc').value.trim();
-  const start=document.getElementById('np-start').value;
-  const end=document.getElementById('np-end').value;
+  const name=document.getElementById('np-name').value.trim(),desc=document.getElementById('np-desc').value.trim(),start=document.getElementById('np-s').value,end=document.getElementById('np-e').value;
   if(!name||!start||!end){toast('Completa los campos requeridos','err');return;}
   const id=uid('p');
   await DB.saveProject({id,name,description:desc,admin_id:SESSION.id,start_date:start,end_date:end});
-  SEL_PROJ=id;
-  await buildSidebar();
-  toast('Proyecto creado 🎉');
-  showView('stages');
+  SEL_PROJ=id;await buildSidebar();toast('Proyecto creado!');showView('stages');
 }
 
-async function saveProfile(){
-  const name=document.getElementById('pf-name').value.trim();
-  const email=document.getElementById('pf-email').value.trim();
-  const currP=document.getElementById('pf-curr').value;
-  const newP=document.getElementById('pf-new').value;
-  const confP=document.getElementById('pf-conf').value;
-  if(newP&&newP!==confP){toast('Las contraseñas no coinciden','err');return;}
-  if(newP&&currP!==SESSION.password){toast('Contraseña actual incorrecta','err');return;}
-  const patch={name,email,...(newP?{password:newP}:{})};
-  if(SESSION.role==='admin')await DB.saveAdmin({...SESSION,...patch});
-  else if(SESSION.role==='user')await DB.saveUser({...SESSION,...patch});
-  SESSION={...SESSION,...patch};
-  updateSidebarUser();
-  toast('Perfil actualizado ✓');
-}
-
-function openNewAdmin(){
-  openModal(`
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
-      <div style="font-weight:700;font-size:16px">Nuevo Administrador</div>
-      <button class="btn btn-g btn-s" onclick="closeModal()">✕</button>
-    </div>
-    <div class="fg"><label class="lbl">Nombre completo</label><input class="inp" id="na-name"></div>
-    <div class="fg"><label class="lbl">Empresa</label><input class="inp" id="na-co" placeholder="Ej: Constructora ABC SAC"></div>
-    <div class="fg"><label class="lbl">Email</label><input class="inp" type="email" id="na-email"></div>
-    <div class="fg"><label class="lbl">Contraseña</label><input class="inp" type="password" id="na-pass"></div>
-    <div style="display:flex;gap:10px;justify-content:flex-end">
-      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
-      <button class="btn btn-p" onclick="createAdmin()">Crear</button>
-    </div>
-  `);
-}
-async function createAdmin(){
-  const name=document.getElementById('na-name').value.trim();
-  const company=document.getElementById('na-co').value.trim();
-  const email=document.getElementById('na-email').value.trim();
-  const password=document.getElementById('na-pass').value;
-  if(!name||!email||!password){toast('Completa todos los campos','err');return;}
-  await DB.saveAdmin({id:uid('adm'),name,email,password,company});
-  toast('Administrador creado');closeModal();showView('admins');
-}
-async function deleteAdmin(id){
-  if(!confirm('¿Eliminar este administrador?'))return;
-  await DB.delAdmin(id);toast('Administrador eliminado');showView('admins');
-}
-
-function openNewUser(){
-  openModal(`
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
-      <div style="font-weight:700;font-size:16px">Nuevo Usuario</div>
-      <button class="btn btn-g btn-s" onclick="closeModal()">✕</button>
-    </div>
-    <div class="fg"><label class="lbl">Nombre completo</label><input class="inp" id="nu-name"></div>
-    <div class="fg"><label class="lbl">Email</label><input class="inp" type="email" id="nu-email"></div>
-    <div class="fg"><label class="lbl">Contraseña inicial</label><input class="inp" type="password" id="nu-pass"></div>
-    <div style="display:flex;gap:10px;justify-content:flex-end">
-      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
-      <button class="btn btn-p" onclick="createUser()">Crear usuario</button>
-    </div>
-  `);
-}
-async function createUser(){
-  const name=document.getElementById('nu-name').value.trim();
-  const email=document.getElementById('nu-email').value.trim();
-  const password=document.getElementById('nu-pass').value;
-  if(!name||!email||!password){toast('Completa todos los campos','err');return;}
-  await DB.saveUser({id:uid('u'),name,email,password,admin_id:SESSION.id});
-  toast('Usuario creado');closeModal();showView('team');
-}
-async function deleteUser(id){
-  if(!confirm('¿Eliminar este usuario?'))return;
-  await DB.delUser(id);toast('Usuario eliminado');showView('team');
-}
-
+// ═══ STAGES & ACTIVITIES ════════════════════════════════════════
 async function openNewStage(){
-  openModal(`
-    <div style="font-weight:700;font-size:16px;margin-bottom:18px">Nueva Etapa</div>
-    <div class="fg"><label class="lbl">Nombre</label><input class="inp" id="ns-name" placeholder="Ej: ACABADOS"></div>
-    <div style="display:flex;gap:10px;justify-content:flex-end">
-      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
-      <button class="btn btn-p" onclick="createStage()">Crear</button>
-    </div>
-  `);
+  openModal(`<div style="font-weight:700;font-size:16px;margin-bottom:18px">Nueva Etapa</div>
+    <div class="fg"><label class="lbl">Nombre</label><input class="inp" id="ns-n" placeholder="Ej: ACABADOS"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-g" onclick="closeModal()">Cancelar</button><button class="btn btn-p" onclick="createStage()">Crear</button></div>`);
 }
 async function createStage(){
-  const name=document.getElementById('ns-name').value.trim();
-  if(!name){toast('Ingresa el nombre','err');return;}
-  const existing=await DB.getStages(SEL_PROJ);
-  await DB.saveStage({id:uid('s'),project_id:SEL_PROJ,name,order_num:existing.length+1});
+  const name=document.getElementById('ns-n').value.trim();if(!name){toast('Ingresa el nombre','err');return;}
+  const ex=await DDB.getStages(SEL_PROJ);
+  await DDB.saveStage({id:uid('s'),project_id:SEL_PROJ,name,order_num:ex.length+1});
   toast('Etapa creada');closeModal();showView('stages');
 }
 
 async function openNewActivity(){
-  const stages=await DB.getStages(SEL_PROJ);
-  openModal(`
-    <div style="font-weight:700;font-size:16px;margin-bottom:18px">Nueva Actividad</div>
-    <div class="fg"><label class="lbl">Etapa</label>
-      <select class="inp" id="na2-stage">
-        <option value="">Seleccionar etapa...</option>
-        ${stages.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}
-      </select>
-    </div>
-    <div class="fg"><label class="lbl">Nombre</label><input class="inp" id="na2-name" placeholder="Ej: Excavación masiva"></div>
-    <div style="display:flex;gap:10px;justify-content:flex-end">
-      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
-      <button class="btn btn-p" onclick="createActivity()">Crear</button>
-    </div>
-  `);
+  const stages=await DDB.getStages(SEL_PROJ);
+  openModal(`<div style="font-weight:700;font-size:16px;margin-bottom:18px">Nueva Actividad</div>
+    <div class="fg"><label class="lbl">Etapa</label><select class="inp" id="na-s"><option value="">Seleccionar...</option>${stages.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div>
+    <div class="fg"><label class="lbl">Nombre</label><input class="inp" id="na-n" placeholder="Ej: Excavacion masiva"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-g" onclick="closeModal()">Cancelar</button><button class="btn btn-p" onclick="createActivity()">Crear</button></div>`);
 }
 async function createActivity(){
-  const stageId=document.getElementById('na2-stage').value;
-  const name=document.getElementById('na2-name').value.trim();
-  if(!stageId||!name){toast('Completa los campos','err');return;}
-  await DB.saveActivity({id:uid('a'),stage_id:stageId,name});
+  const sid=document.getElementById('na-s').value,name=document.getElementById('na-n').value.trim();
+  if(!sid||!name){toast('Completa los campos','err');return;}
+  await DDB.saveActivity({id:uid('a'),stage_id:sid,name});
   toast('Actividad creada');closeModal();showView('stages');
 }
 
 async function openNewTask(){
-  const stages=await DB.getStages(SEL_PROJ);
-  const users=await DB.getUsers(SESSION.id);
+  const stages=await DDB.getStages(SEL_PROJ);
+  const users=await DDB.getUsers(SESSION.admin_id||SESSION.id);
   let actOpts='<option value="">Seleccionar actividad...</option>';
-  for(const s of stages){
-    const acts=await DB.getActivities(s.id);
-    acts.forEach(a=>{actOpts+=`<option value="${a.id}">${esc(s.name)} → ${esc(a.name)}</option>`;});
-  }
-  const userOpts=users.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('');
+  for(const s of stages){const aa=await DDB.getActivities(s.id);aa.forEach(a=>{actOpts+=`<option value="${a.id}">${esc(s.name)} \u2192 ${esc(a.name)}</option>`;});}
+  const uOpts=users.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('');
   const td=fmtISO(TODAY);
-  openModal(`
-    <div style="font-weight:700;font-size:16px;margin-bottom:18px">Nueva Tarea</div>
-    <div class="fg"><label class="lbl">Actividad</label><select class="inp" id="nt-act">${actOpts}</select></div>
-    <div class="fg"><label class="lbl">Nombre de la tarea</label><input class="inp" id="nt-name" placeholder="Ej: Vaciado de concreto"></div>
-    <div class="fg"><label class="lbl">Responsable</label>
-      <select class="inp" id="nt-user"><option value="">Seleccionar usuario...</option>${userOpts}</select>
-    </div>
+  openModal(`<div style="font-weight:700;font-size:16px;margin-bottom:18px">Nueva Tarea</div>
+    <div class="fg"><label class="lbl">Actividad</label><select class="inp" id="nt-a">${actOpts}</select></div>
+    <div class="fg"><label class="lbl">Nombre de la tarea</label><input class="inp" id="nt-n" placeholder="Ej: Vaciado de concreto"></div>
+    <div class="fg"><label class="lbl">Responsable</label><select class="inp" id="nt-u"><option value="">Seleccionar...</option>${uOpts}</select></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div class="fg"><label class="lbl">Fecha inicio 📅</label><input class="inp" type="date" id="nt-start" value="${td}" onchange="updateNtDur()"></div>
-      <div class="fg"><label class="lbl">Fecha fin 📅</label><input class="inp" type="date" id="nt-end" value="${addD(TODAY,15)}" onchange="updateNtDur()"></div>
+      <div class="fg"><label class="lbl">Inicio &#x1F4C5;</label><input class="inp" type="date" id="nt-s" value="${td}" onchange="updNtDur()"></div>
+      <div class="fg"><label class="lbl">Fin &#x1F4C5;</label><input class="inp" type="date" id="nt-e" value="${addD(TODAY,15)}" onchange="updNtDur()"></div>
     </div>
-    <div id="nt-dur" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--ac);margin-bottom:14px">
-      ⏱ Duración: <strong>15 días</strong>
-    </div>
-    <div style="display:flex;gap:10px;justify-content:flex-end">
-      <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
-      <button class="btn btn-p" onclick="createTask()">Crear tarea</button>
-    </div>
-  `);
+    <div id="nt-dur" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--ac);margin-bottom:14px">&#x23F1; Duracion: <strong>15 dias</strong></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-g" onclick="closeModal()">Cancelar</button><button class="btn btn-p" onclick="createTask()">Crear tarea</button></div>`,520);
 }
-function updateNtDur(){
-  const s=document.getElementById('nt-start')?.value;
-  const e=document.getElementById('nt-end')?.value;
-  const d=document.getElementById('nt-dur');
-  if(s&&e&&d)d.innerHTML=`⏱ Duración: <strong>${diffD(s,e)} días</strong>`;
-}
+function updNtDur(){const s=document.getElementById('nt-s')?.value,e=document.getElementById('nt-e')?.value,d=document.getElementById('nt-dur');if(s&&e&&d)d.innerHTML=`&#x23F1; Duracion: <strong>${diffD(s,e)} dias</strong>`;}
 async function createTask(){
-  const actId=document.getElementById('nt-act').value;
-  const name=document.getElementById('nt-name').value.trim();
-  const responsible=document.getElementById('nt-user').value;
-  const start=document.getElementById('nt-start').value;
-  const end=document.getElementById('nt-end').value;
-  if(!actId||!name||!responsible||!start||!end){toast('Completa todos los campos','err');return;}
-  await DB.saveTask({id:uid('t'),activity_id:actId,name,responsible_id:responsible,start_date:start,end_date:end,stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false});
+  const actId=document.getElementById('nt-a').value,name=document.getElementById('nt-n').value.trim(),resp=document.getElementById('nt-u').value,start=document.getElementById('nt-s').value,end=document.getElementById('nt-e').value;
+  if(!actId||!name||!resp||!start||!end){toast('Completa todos los campos','err');return;}
+  await DDB.saveTask({id:uid('t'),activity_id:actId,name,responsible_id:resp,start_date:start,end_date:end,stars:0,evidence:'[]',rescheduled:0,reschedule_pending:false,history:'[]'});
   toast('Tarea creada');closeModal();showView('tasks');
+}
+
+// ═══ ADMINS ═════════════════════════════════════════════════════
+function openNewAdmin(){
+  openModal(`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><div style="font-weight:700;font-size:16px">Nuevo Administrador</div><button class="btn btn-g btn-s" onclick="closeModal()">&#x2715;</button></div>
+    <div class="fg"><label class="lbl">Nombre completo</label><input class="inp" id="na2-n"></div>
+    <div class="fg"><label class="lbl">Empresa</label><input class="inp" id="na2-co" placeholder="Ej: Constructora ABC SAC"></div>
+    <div class="fg"><label class="lbl">Email</label><input class="inp" type="email" id="na2-e"></div>
+    <div class="fg"><label class="lbl">Contrasena inicial</label><input class="inp" type="password" id="na2-p"></div>
+    <div style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.18);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--bl)">El administrador podra cambiar su contrasena desde Mi Perfil.</div>
+    <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-g" onclick="closeModal()">Cancelar</button><button class="btn btn-p" onclick="createAdmin()">Crear</button></div>`);
+}
+async function createAdmin(){
+  const name=document.getElementById('na2-n').value.trim(),company=document.getElementById('na2-co').value.trim(),email=document.getElementById('na2-e').value.trim(),password=document.getElementById('na2-p').value;
+  if(!name||!email||!password){toast('Completa todos los campos','err');return;}
+  await DB.saveAdmin({id:uid('adm'),name,email,password,company});
+  toast('Administrador creado');closeModal();showView('admins');
+}
+
+// ── EDIT ADMIN (Super Admin can edit name/email/company, NOT password — fix #2) ──
+async function openEditAdmin(adminId){
+  const admins=await DB.getAdmins();const adm=admins.find(a=>a.id===adminId);if(!adm)return;
+  openModal(`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><div style="font-weight:700;font-size:16px">Editar Administrador</div><button class="btn btn-g btn-s" onclick="closeModal()">&#x2715;</button></div>
+    <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--ac)">&#x26A0; La contrasena es personal y solo puede cambiarla el propio administrador desde su perfil.</div>
+    <div class="fg"><label class="lbl">Nombre completo</label><input class="inp" id="ea-n" value="${esc(adm.name)}"></div>
+    <div class="fg"><label class="lbl">Empresa</label><input class="inp" id="ea-co" value="${esc(adm.company||'')}"></div>
+    <div class="fg"><label class="lbl">Email</label><input class="inp" type="email" id="ea-e" value="${esc(adm.email)}"></div>
+    <div style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.18);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--bl)">&#x2139; Si este administrador es reemplazado, actualizar sus datos aqui conservara todos sus proyectos asociados.</div>
+    <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-g" onclick="closeModal()">Cancelar</button><button class="btn btn-p" onclick="saveEditAdmin('${adminId}')">Guardar cambios</button></div>`);
+}
+async function saveEditAdmin(adminId){
+  const name=document.getElementById('ea-n').value.trim(),company=document.getElementById('ea-co').value.trim(),email=document.getElementById('ea-e').value.trim();
+  if(!name||!email){toast('Nombre y email son requeridos','err');return;}
+  const admins=await DB.getAdmins();const adm=admins.find(a=>a.id===adminId);
+  await DB.saveAdmin({...adm,name,company,email});
+  toast('Administrador actualizado');closeModal();showView('admins');
+}
+async function deleteAdmin(id){if(!confirm('Eliminar este administrador? Sus proyectos se mantendran.'))return;await DB.delAdmin(id);toast('Administrador eliminado');showView('admins');}
+
+// ═══ USERS ═══════════════════════════════════════════════════════
+function openNewUser(){
+  openModal(`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><div style="font-weight:700;font-size:16px">Nuevo Usuario</div><button class="btn btn-g btn-s" onclick="closeModal()">&#x2715;</button></div>
+    <div class="fg"><label class="lbl">Nombre completo</label><input class="inp" id="nu-n"></div>
+    <div class="fg"><label class="lbl">Email</label><input class="inp" type="email" id="nu-e"></div>
+    <div class="fg"><label class="lbl">Contrasena inicial</label><input class="inp" type="password" id="nu-p"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-g" onclick="closeModal()">Cancelar</button><button class="btn btn-p" onclick="createUser()">Crear usuario</button></div>`);
+}
+async function createUser(){
+  const name=document.getElementById('nu-n').value.trim(),email=document.getElementById('nu-e').value.trim(),pass=document.getElementById('nu-p').value;
+  if(!name||!email||!pass){toast('Completa todos los campos','err');return;}
+  await DDB.saveUser({id:uid('u'),name,email,password:pass,admin_id:SESSION.admin_id||SESSION.id});
+  toast('Usuario creado');closeModal();showView('team');
+}
+
+// ── EDIT USER — with replacement + cutoff + history (fix #3) ──
+async function openEditUser(userId){
+  const users=await DDB.getAllUsers();const u=users.find(x=>x.id===userId);if(!u)return;
+  openModal(`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><div style="font-weight:700;font-size:16px">Editar Usuario</div><button class="btn btn-g btn-s" onclick="closeModal()">&#x2715;</button></div>
+    <div class="fg"><label class="lbl">Nombre completo</label><input class="inp" id="eu-n" value="${esc(u.name)}"></div>
+    <div class="fg"><label class="lbl">Email</label><input class="inp" type="email" id="eu-e" value="${esc(u.email)}"></div>
+    <div style="border-top:1px solid var(--bd);margin:16px 0;padding-top:16px">
+      <div style="font-weight:600;font-size:13px;color:var(--tx2);margin-bottom:12px">&#x1F504; Reemplazo de persona</div>
+      <div style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:var(--pu)">Si actualizas nombre y email con datos de una nueva persona, se registrara un historial en todas las tareas asignadas al responsable actual, con punto de corte en la fecha que indiques.</div>
+      <div class="fg"><label class="lbl">Fecha punto de corte &#x1F4C5; (si hay reemplazo)</label><input class="inp" type="date" id="eu-cut" value="${fmtISO(TODAY)}"></div>
+      <div class="fg"><label class="lbl">Motivo del reemplazo (opcional)</label><input class="inp" id="eu-reason" placeholder="Ej: Licencia medica, renuncia, etc."></div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-g" onclick="closeModal()">Cancelar</button><button class="btn btn-p" onclick="saveEditUser('${userId}')">Guardar cambios</button></div>`,520);
+}
+
+async function saveEditUser(userId){
+  const newName=document.getElementById('eu-n').value.trim(),newEmail=document.getElementById('eu-e').value.trim(),cutoff=document.getElementById('eu-cut').value,reason=document.getElementById('eu-reason').value.trim();
+  if(!newName||!newEmail){toast('Nombre y email son requeridos','err');return;}
+  const users=await DDB.getAllUsers();const u=users.find(x=>x.id===userId);if(!u)return;
+  const isReplacement=(newName!==u.name||newEmail!==u.email)&&cutoff;
+  // If replacement: update history in all tasks assigned to this user
+  if(isReplacement){
+    const stages=await DDB.getStages(SEL_PROJ);
+    for(const s of stages){
+      const acts=await DDB.getActivities(s.id);
+      for(const a of acts){
+        const tasks=await DDB.getTasks(a.id);
+        for(const task of tasks){
+          if(task.responsible_id===userId){
+            const hist=getHist(task);
+            hist.push({prevName:u.name,prevEmail:u.email,newName,newEmail,cutoffDate:cutoff,reason,changedAt:new Date().toISOString()});
+            await DDB.updateTask(task.id,{history:JSON.stringify(hist)});
+            updateTaskRowDOM(task.id,{...task,history:JSON.stringify(hist)});
+          }
+        }
+      }
+    }
+    if(!IS_DEMO)await addNotif(`&#x1F504; Responsable reemplazado: ${u.name} \u2192 ${newName} (desde ${fmtD(cutoff)})`);
+    toast('Usuario actualizado con historial de reemplazo');
+  } else {
+    toast('Datos de usuario actualizados');
+  }
+  await DDB.saveUser({...u,name:newName,email:newEmail});
+  closeModal();showView('team');
+}
+
+async function deleteUser(id){
+  if(!confirm('Eliminar este usuario?'))return;
+  await DDB.delUser(id);toast('Usuario eliminado');showView('team');
+}
+
+// ═══ PROFILE ════════════════════════════════════════════════════
+async function saveProfile(){
+  const name=document.getElementById('pf-name').value.trim(),email=document.getElementById('pf-email').value.trim();
+  const currP=document.getElementById('pf-curr').value,newP=document.getElementById('pf-new').value,confP=document.getElementById('pf-conf').value;
+  if(newP&&newP!==confP){toast('Las contrasenas no coinciden','err');return;}
+  if(newP&&currP!==SESSION.password){toast('Contrasena actual incorrecta','err');return;}
+  const patch={name,email,...(newP?{password:newP}:{})};
+  if(SESSION.role==='admin')await DB.saveAdmin({...SESSION,...patch});
+  else if(SESSION.role==='user')await DDB.saveUser({...SESSION,...patch});
+  SESSION={...SESSION,...patch};
+  updateSBUser();toast('Perfil actualizado');
 }
 </script>
 </body>
